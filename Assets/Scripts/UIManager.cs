@@ -14,7 +14,21 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        EventManager.current.onShowTimer += OnShowTimer;
+        EventManager.current.onHideTimer += OnHideTimer;
+
+    }
+
+    private void OnShowTimer()
+    {
+        //Debug log to test that event is working
+        Debug.Log("Timer UI is showing");
+    }
+
+    private void OnHideTimer()
+    {
+        //Debug log to test that event is working
+        Debug.Log("Timer UI is hidden");
     }
 
     // Update is called once per frame
