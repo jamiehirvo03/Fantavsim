@@ -2,26 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class FoodPrepScript : MonoBehaviour
 {
-
-    //Handles game startup
-
-    //Manages Saving/Loading
-
-    //Tells EventManager to start everything
-
+    //public string[] ingredient = new GameObject[] { "Follow1", "Follow2", "Curve1", "Curve2", "Click1", "Click2" };
+    Vector2 lastMouseCoordinate = Vector2.zero;
 
     // Start is called before the first frame update
     void Start()
     {
-        EventManager.OnTimerStart();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+      
+
+
     }
-    
 }

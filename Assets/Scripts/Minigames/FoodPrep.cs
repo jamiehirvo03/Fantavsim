@@ -7,6 +7,7 @@ public class FoodPrep : MonoBehaviour
     //Handles time limit
 
     //Ingredients list
+    private string[] Ingredients = new string[] { "Ingredient1", "Ingredient2", "Ingredient3" };
 
     //Prep controls
 

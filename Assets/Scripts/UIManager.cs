@@ -14,8 +14,8 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        EventManager.current.onShowTimer += OnShowTimer;
-        EventManager.current.onHideTimer += OnHideTimer;
+        //EventManager.current.onShowTimer += OnShowTimer;
+        //EventManager.current.onHideTimer += OnHideTimer;
 
     }
 
