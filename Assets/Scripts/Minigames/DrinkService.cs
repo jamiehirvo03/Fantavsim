@@ -29,7 +29,6 @@ public class DrinkService : MonoBehaviour
         pourRate = 0;
         pourSpeed = 0; 
         vesselInHand = false;
-
     }
 
     // Update is called once per frame
@@ -39,24 +38,26 @@ public class DrinkService : MonoBehaviour
         {
             if((Input.GetKeyDown(KeyCode.A)) && (vesselAngle < 30)) 
             {
-                vesselAngle = vesselAngle + 1;
+                vesselAngle += 1;
+                UpdateCurrentVolume();
             }
 
             if ((Input.GetKeyDown(KeyCode.D)) && (vesselAngle > 0))
             {
-                vesselAngle = vesselAngle - 1;
+                vesselAngle -= 1;
+                UpdateCurrentVolume();
             }
         }
 
         if ((Input.GetKeyDown(KeyCode.S)) && (nozzleSetting < 3))
         {
-            nozzleSetting = nozzleSetting + 1;
+            nozzleSetting +=1;
             ChangePour();
         }
 
         if ((Input.GetKeyDown(KeyCode.W)) && (nozzleSetting > 0))
         {
-            nozzleSetting = nozzleSetting - 1;
+            nozzleSetting -= 1;
             ChangePour();
         }
 
@@ -64,23 +65,33 @@ public class DrinkService : MonoBehaviour
         {
             nozzleSetting = 0;
         }
-        if ((Input.GetKeyDown(KeyCode.E)) && (vesselInHand = false))
-        {
 
-            NewVessel();
-        }
-        else if ((Input.GetKeyDown(KeyCode.E)) && (vesselInHand = true))
+
+
+
+        if ((nozzleSetting > 0) && (vesselInHand == true))
         {
-            currentVolume = 0;
-            vesselInHand = false;
+            StartPour();
         }
-        if ((nozzleSetting > 0) && (vesselInHand = true))
+
+       /* if (currentVolume > currentCapacity)
         {
-            currentVolume += (Time.deltaTime * pourRate);
-            while (pourSpeed > pourRate)
+            currentVolume = currentCapacity;
+        }*/
+
+
+        // This should either A) if you have no mug equipped, equip and a new one to hand, or B) if you have a mug equipped, put it aside.
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (vesselInHand == true)
             {
-                currentVolume += 1;
-                pourSpeed = pourRate;
+                currentVolume = 0;
+                vesselInHand = false;
+            }
+
+            else if (vesselInHand == false)
+            {
+                NewVessel();
             }
         }
 
@@ -89,11 +100,12 @@ public class DrinkService : MonoBehaviour
 
     public void NewVessel()
     {
+        // Player picks up a new glass, generate new size, ensure its empty
         vesselInHand = true;
         vesselSize = 2;
         currentVolume = 0;
         totalCapacity = 150 * vesselSize;
-        vesselAngle = 30;
+        vesselAngle = 15;
     }
 
     public void ChangePour()
@@ -104,5 +116,16 @@ public class DrinkService : MonoBehaviour
     public void CutPour()
     {
         pourRate = 0;
+    }
+
+    public void StartPour()
+    {
+        if (currentVolume >= currentCapacity) return;
+            currentVolume += (Time.deltaTime * pourRate);
+    }
+
+    public void UpdateCurrentVolume()
+    {
+        currentCapacity = (totalCapacity / 30) * vesselAngle;
     }
 }
