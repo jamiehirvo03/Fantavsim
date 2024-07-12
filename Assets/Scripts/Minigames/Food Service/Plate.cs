@@ -19,9 +19,9 @@ public class Plate : MonoBehaviour
     private void OnMouseDown()
     {
         //on plate click, checks to see if ingredient values are correct to order
-        if (GameManagerFS.orderValue==GameManagerFS.plateValue)
+        if (GameManagerFS.orderValue[GameManagerFS.plateNum]==GameManagerFS.plateValue[GameManagerFS.plateNum])
         {
-            Debug.Log("Order Correct");
+            Debug.Log("Order Correct"+" "+GameManagerFS.plateNum);
         }
     }
 }

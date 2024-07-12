@@ -22,25 +22,29 @@ public class ClickPlace : MonoBehaviour
 
     private void OnMouseDown()
     {
+        //all the stuff for getting ingredients to appear on plates
         if (gameObject.name == "Ingredient 1")
-            Instantiate(cloneObj, new Vector3(-7f, 2, 0), cloneObj.rotation);
+            Instantiate(cloneObj, new Vector3(GameManagerFS.plateXpos, 2, 0), cloneObj.rotation);
 
         if (gameObject.name == "Ingredient 2")
-            Instantiate(cloneObj, new Vector3(-7f, 3, 0), cloneObj.rotation);
+            Instantiate(cloneObj, new Vector3(GameManagerFS.plateXpos, 3, 0), cloneObj.rotation);
 
         if (gameObject.name == "Ingredient 3")
-            Instantiate(cloneObj, new Vector3(-7f, 4, 0), cloneObj.rotation);
+            Instantiate(cloneObj, new Vector3(GameManagerFS.plateXpos, 4, 0), cloneObj.rotation);
 
         if (gameObject.name == "Ingredient 4")
-            Instantiate(cloneObj, new Vector3(-7f, 5, 0), cloneObj.rotation);
+            Instantiate(cloneObj, new Vector3(GameManagerFS.plateXpos, 5, 0), cloneObj.rotation);
 
         if (gameObject.name == "Ingredient 5")
-            Instantiate(cloneObj, new Vector3(-7f, 6, 0), cloneObj.rotation);
+            Instantiate(cloneObj, new Vector3(GameManagerFS.plateXpos, 6, 0), cloneObj.rotation);
 
         if (gameObject.name == "Ingredient 6")
-            Instantiate(cloneObj, new Vector3(-7f, 7, 0), cloneObj.rotation);
+            Instantiate(cloneObj, new Vector3(GameManagerFS.plateXpos, 7, 0), cloneObj.rotation);
 
-        GameManagerFS.plateValue += foodValue;
+        //the checker to see if the plate value matches the order value
+        GameManagerFS.plateValue[GameManagerFS.plateNum] += foodValue;
+
+        //remove later
         Debug.Log(GameManagerFS.plateValue+ "  " +GameManagerFS.orderValue);
     }
 
