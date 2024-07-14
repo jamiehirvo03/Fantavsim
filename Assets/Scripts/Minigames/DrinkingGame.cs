@@ -5,11 +5,14 @@ using UnityEngine;
 public class DrinkingGame : MonoBehaviour
 {
     //Varaibles for points and stats tracking
+    private bool isGolden;
     private int regularDrank;
     private int goldenDrank;
     private int totalPoints;
     private float totalDrank;
-    private float timer;
+
+    private float startingTime = 120f;
+    private float currentTime;
 
     //Variables for tankard generation
     private int randomNum;
@@ -26,44 +29,47 @@ public class DrinkingGame : MonoBehaviour
         Idle,
         Drinking,
         Spilling,
-        Boosting
+        Chugging
     }
 
     private BalanceState currentState;
 
     void Start()
     {
+        //Events that listen when the game tutorial has been displayed and player has clicked start
+        EventManager.current.onStartDrinkingGame += OnStartDrinkingGame;
+    }
+
+    private void OnStartDrinkingGame()
+    {
         GameSetup();
+        GameStartCountdown(3f);
     }
 
     private void Update()
     {        
-        switch (currentState)
+        if (amountLeft <= 0)
         {
-            case BalanceState.Idle:
-                //Do nothing
-                break;
-            case BalanceState.Drinking:
-                //Gradually decrease amountLeft
-                amountLeft -= Time.deltaTime;
-                break;
-            case BalanceState.Spilling:
-                //Gradually increase spill meter
-                spillageAmount += Time.deltaTime;
-                break;
-            case BalanceState.Boosting:
-                //Decrease amountLeft by a larger value
-                amountLeft -= 2 * Time.deltaTime;
-                break;
+            if (isGolden)
+            {
+                goldenDrank++;
+                NextDrink();
+
+            }
+            else
+            {
+                regularDrank++;
+                NextDrink();
+            }
         }
-    }
 
-    private void updateTimer()
-    {
-        timer -= Time.deltaTime;
+        if (currentTime == 0)
+        {
+            Debug.Log("Game Over");
 
-        float minutes = Mathf.FloorToInt(timer / 60);
-        float seconds = Mathf.FloorToInt(timer % 60);
+            //Total and display player stats
+            Debug.Log($"Regular: {regularDrank}|Golden: {goldenDrank}|Total Drank: {totalDrank}|Amount Spilt: {spillageAmount}");
+        }
     }
 
     private void GameSetup()
@@ -71,15 +77,39 @@ public class DrinkingGame : MonoBehaviour
         randomMax = 1;
         sinceGolden = 0;
 
-        currentState = BalanceState.Idle;
-
         spillageAmount = 0f;
 
-        timer = 60.00f;
+        currentTime = startingTime;
+        EventManager.current.ShowTimer();
+    }
+
+    private void GameStartCountdown(float timeTilStart)
+    {
+        timeTilStart -= Time.deltaTime;
+
+        //Display a quick 3 second countdown when start game has been clicked
+        if (timeTilStart <= 0)
+        {
+            NextDrink();
+        }
+    }
+
+    private void GameOver()
+    {
+        EventManager.current.HideTimer();
+    }
+
+    private void NextDrink()
+    {
+        currentState = BalanceState.Idle;
+        
+        amountLeft = 100;
+
+        TankardGenerator();
     }
 
     //Generates tankard order
-    private void TankardGenerator(bool isGolden)
+    private void TankardGenerator()
     {
         //This will pick a random number, but by having the max be a variable it will allow for the chances to be easily changed
         randomNum = Random.Range(1, randomMax);
@@ -107,10 +137,43 @@ public class DrinkingGame : MonoBehaviour
     }
 
     //Handles balance mechanic
-
-    //Keeps track of spill amount
-    private void spillTracker()
+    private void BalanceMeter()
     {
+        switch (currentState)
+        {
+            case BalanceState.Idle:
+                //Do nothing
+                Debug.Log("Player is idle");
+                break;
 
+            case BalanceState.Drinking:
+                //Gradually decrease amountLeft
+                amountLeft -= Time.deltaTime;
+                totalDrank += Time.deltaTime;
+                Debug.Log("Player is drinking");
+                break;
+
+            case BalanceState.Spilling:
+                //Gradually increase spill meter
+                spillageAmount += Time.deltaTime;
+                totalDrank += 0.5f * Time.deltaTime;
+                Debug.Log("Player is spilling");
+                break;
+
+            case BalanceState.Chugging:
+                //Decrease amountLeft by a larger value
+                amountLeft -= 2 * Time.deltaTime;
+                Debug.Log("Player is chugging");
+                break;
+        }
+    }
+
+    private void UpdateTimer()
+    {
+        currentTime -= Time.deltaTime;
+
+        float minutes = Mathf.FloorToInt(currentTime / 60);
+        float seconds = Mathf.FloorToInt(currentTime % 60);
     }
 }
+

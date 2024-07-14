@@ -7,12 +7,6 @@ public class EventManager : MonoBehaviour
 {
     public static EventManager current;
 
-    //Communicates between scripts
-
-    //Listens for events to be triggered
-
-    //Calls events to start
-
     public void Awake()
     {
         current = this;
@@ -21,6 +15,14 @@ public class EventManager : MonoBehaviour
     public event Action onShowTimer;
     public event Action onHideTimer;
 
+    public event Action onShowDrinkingTutorial;
+    public event Action onHideDrinkingTutorial;
+    public event Action onStartDrinkingGame;
+
+    public event Action onShowCleanupTutorial;
+    public event Action onHideCleanupTutorial;
+    public event Action onStartCleanupGame;
+
     public void ShowTimer()
     {
         if (onShowTimer != null)
@@ -28,12 +30,53 @@ public class EventManager : MonoBehaviour
             onShowTimer();
         }
     }
-
     public void HideTimer()
     {
         if(onHideTimer != null)
         {
             onHideTimer();
+        }
+    }
+    public void ShowDrinkingTutorial()
+    {
+        if(onShowDrinkingTutorial != null)
+        {
+            onShowDrinkingTutorial();
+        }
+    }
+    public void HideDrinkingTutorial()
+    {
+        if (onHideDrinkingTutorial != null)
+        {
+            onHideDrinkingTutorial();
+        }
+    }
+    public void ShowCleanupTutorial()
+    {
+        if (onShowCleanupTutorial != null)
+        {
+            onShowCleanupTutorial();
+        }
+    }
+    public void HideCleanupTutorial()
+    {
+        if (onHideCleanupTutorial != null)
+        {
+            onHideCleanupTutorial();
+        }
+    }
+    public void StartDrinkingGame()
+    {
+        if (onStartDrinkingGame != null)
+        {
+            onStartDrinkingGame();
+        }
+    }
+    public void StartCleaningGame()
+    {
+        if (onStartCleanupGame != null)
+        {
+            onStartCleanupGame();
         }
     }
 }
