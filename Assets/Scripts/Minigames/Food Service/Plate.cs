@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Plate : MonoBehaviour
 {
+    public int thisPlate;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,5 +24,19 @@ public class Plate : MonoBehaviour
         {
             Debug.Log("Order Correct"+" "+GameManagerFS.plateNum);
         }
+
+        GameManagerFS.emptyPlateNow = transform.position.x;
+        StartCoroutine(platereset());
     }
+
+
+
+    IEnumerator platereset()
+    {
+        yield return new WaitForSeconds(.2f);
+        GameManagerFS.emptyPlateNow = -1;
+        
+    }
+
+
 }

@@ -5,8 +5,11 @@ using UnityEngine;
 public class GameManagerFS : MonoBehaviour
 {
 
-    public static int [] orderValue= { 111111, 100001, 120011 };
+    public static int [] orderValue= { 213000, 011100, 110100, 111111, 120012, 121002, 003000 };
     public static int [] plateValue = { 0, 0, 0 };
+
+    
+    
 
     //tracks what order number goes with what plate
     public static int plateNum = 0;
@@ -16,12 +19,47 @@ public class GameManagerFS : MonoBehaviour
     
     //tells unity what plate it is working with
 
-    public Transform plateSelector; 
+    public Transform plateSelector;
+    //PNG of order
+    public MeshRenderer[] currentPNG;
+
+    public Texture[] orderPNG;
+
+    public static float emptyPlateNow = -1;
+
+    public static float totalPoints = 0;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        
+     
+        for (int rep = 0; rep < 3; rep += 1)
+        {
+            if (orderValue[rep] == 003000) 
+            currentPNG[rep].GetComponent<MeshRenderer>().material.mainTexture = orderPNG[0];
+
+            if (orderValue[rep] == 011100) 
+            currentPNG[rep].GetComponent<MeshRenderer>().material.mainTexture = orderPNG[1];
+
+            if (orderValue[rep] == 110100) 
+            currentPNG[rep].GetComponent<MeshRenderer>().material.mainTexture = orderPNG[2];
+
+            if (orderValue[rep] == 110110) 
+            currentPNG[rep].GetComponent<MeshRenderer>().material.mainTexture = orderPNG[3];
+
+            if (orderValue[rep] == 111111) 
+            currentPNG[rep].GetComponent<MeshRenderer>().material.mainTexture = orderPNG[4];
+
+            if (orderValue[rep] == 120012) 
+            currentPNG[rep].GetComponent<MeshRenderer>().material.mainTexture = orderPNG[5];
+
+            if (orderValue[rep] == 121002) 
+            currentPNG[rep].GetComponent<MeshRenderer>().material.mainTexture = orderPNG[6];
+
+            if (orderValue[rep] == 213000) 
+            currentPNG[rep].GetComponent<MeshRenderer>().material.mainTexture = orderPNG[7];
+        }
     }
 
     // Update is called once per frame
@@ -41,6 +79,7 @@ public class GameManagerFS : MonoBehaviour
 
         }
 
+       
         plateSelector.transform.position = new Vector3(plateXpos, 2.5f, 0);
 
 
