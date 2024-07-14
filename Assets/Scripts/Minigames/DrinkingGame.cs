@@ -9,6 +9,7 @@ public class DrinkingGame : MonoBehaviour
     private int goldenDrank;
     private int totalPoints;
     private float totalDrank;
+    private float timer;
 
     //Variables for tankard generation
     private int randomNum;
@@ -17,12 +18,18 @@ public class DrinkingGame : MonoBehaviour
 
     //Value on balance meter, much like a speedometer
     private int balanceLevel;
-    private bool inDrinkZone;
-    private bool inBoostZone;
-    private bool inSpillZone;
     private float spillageAmount;
-
     private float amountLeft;
+
+    private enum BalanceState
+    {
+        Idle,
+        Drinking,
+        Spilling,
+        Boosting
+    }
+
+    private BalanceState currentState;
 
     void Start()
     {
@@ -31,26 +38,27 @@ public class DrinkingGame : MonoBehaviour
 
     private void Update()
     {        
-        if (inSpillZone)
+        switch (currentState)
         {
-            //Gradually increase spill meter
-            spillageAmount +=  Time.deltaTime;
-        }
-
-        if (inDrinkZone)
-        {
-            //Gradually decrease amount in tankard
-            amountLeft -= Time.deltaTime;
-        }
-
-        if (inBoostZone)
-        {
-            //Decrease amount in tankard by a larger value
-            amountLeft -= 2 * Time.deltaTime;
+            case BalanceState.Idle:
+                //Do nothing
+                break;
+            case BalanceState.Drinking:
+                //Gradually decrease amountLeft
+                amountLeft -= Time.deltaTime;
+                break;
+            case BalanceState.Spilling:
+                //Gradually increase spill meter
+                spillageAmount += Time.deltaTime;
+                break;
+            case BalanceState.Boosting:
+                //Decrease amountLeft by a larger value
+                amountLeft -= 2 * Time.deltaTime;
+                break;
         }
     }
 
-    private void updateTimer(float timer)
+    private void updateTimer()
     {
         timer -= Time.deltaTime;
 
@@ -63,8 +71,7 @@ public class DrinkingGame : MonoBehaviour
         randomMax = 1;
         sinceGolden = 0;
 
-        inDrinkZone = false;
-        inSpillZone = false;
+        currentState = BalanceState.Idle;
 
         spillageAmount = 0f;
 
