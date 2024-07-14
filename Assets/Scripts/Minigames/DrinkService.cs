@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class DrinkService : MonoBehaviour
 {
+    public float kegVolume;
     public int nozzleSetting;
-    public float pourRate;
-    public float pourSpeed;
+    private float pourRate;
     public int vesselAngle;
     public int vesselSize;
     public int currentCapacity;
@@ -15,6 +15,14 @@ public class DrinkService : MonoBehaviour
     public float currentVolume;
     public bool vesselInHand;
     public bool drinkReady;
+    private float inputTimer;
+    public float grogInTransit;
+    public float wastedGrog;
+    public float liquidVolume;
+    public float frothVolume;
+    public float liquidPercent;
+    public float frothPercent;
+    public bool nucleation;
 
     //Handles time limit
 
@@ -27,26 +35,56 @@ public class DrinkService : MonoBehaviour
     {
         nozzleSetting = 0;
         pourRate = 0;
-        pourSpeed = 0; 
         vesselInHand = false;
+        kegVolume = 50000;
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Controls the angle (and subsequently its current capacity) of a mug when in hand.
         if (vesselInHand == true)
         {
-            if((Input.GetKeyDown(KeyCode.A)) && (vesselAngle < 30)) 
+          /*  if((Input.GetKeyDown(KeyCode.A)) && (vesselAngle < 30)) 
             {
                 vesselAngle += 1;
-                UpdateCurrentVolume();
+                UpdateCurrentCapacity();
+            } */
+
+            if ((Input.GetKey(KeyCode.A)) && (vesselAngle < 30))
+                if (inputTimer <= 0)
+            {
+                vesselAngle += 1;
+                inputTimer = 1;
+                UpdateCurrentCapacity();
+
             }
 
-            if ((Input.GetKeyDown(KeyCode.D)) && (vesselAngle > 0))
+            /*  if ((Input.GetKeyDown(KeyCode.D)) && (vesselAngle > 0))
+          {
+              vesselAngle -= 1;
+              UpdateCurrentCapacity();
+          } */
+
+            if ((Input.GetKey(KeyCode.D)) && (vesselAngle > 0))
             {
-                vesselAngle -= 1;
-                UpdateCurrentVolume();
+                if (inputTimer <= 0)
+                {
+                    vesselAngle -= 1;
+                    inputTimer = 1;
+                    UpdateCurrentCapacity();
+                }
             }
+        }
+
+        if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
+        {
+            inputTimer = 0;
+        }
+
+        if (inputTimer >= 0)
+        {
+            inputTimer -= Time.deltaTime * 4;
         }
 
         if ((Input.GetKeyDown(KeyCode.S)) && (nozzleSetting < 3))
@@ -64,12 +102,13 @@ public class DrinkService : MonoBehaviour
         if ((Input.GetKeyDown(KeyCode.Space)) && (nozzleSetting > 0))
         {
             nozzleSetting = 0;
+            ChangePour();
         }
 
 
 
 
-        if ((nozzleSetting > 0) && (vesselInHand == true))
+        if (nozzleSetting > 0)
         {
             StartPour();
         }
@@ -95,6 +134,10 @@ public class DrinkService : MonoBehaviour
             }
         }
 
+        if (liquidVolume > (currentCapacity / 2))
+        {
+            nucleation = true;
+        }
 
     }
 
@@ -106,6 +149,7 @@ public class DrinkService : MonoBehaviour
         currentVolume = 0;
         totalCapacity = 150 * vesselSize;
         vesselAngle = 15;
+        UpdateCurrentCapacity();
     }
 
     public void ChangePour()
@@ -113,18 +157,53 @@ public class DrinkService : MonoBehaviour
         pourRate = nozzleSetting * 15;
     }
 
-    public void CutPour()
-    {
-        pourRate = 0;
-    }
 
     public void StartPour()
     {
-        if (currentVolume >= currentCapacity) return;
-            currentVolume += (Time.deltaTime * pourRate);
+        if (kegVolume > 0)
+        {
+            grogInTransit += (Time.deltaTime * pourRate);
+            kegVolume -= grogInTransit;
+            if (vesselInHand == true)
+            {
+                if (currentVolume <= currentCapacity)
+                {
+                    if (nucleation == true)
+                    {
+                        liquidVolume += (grogInTransit * 0.9f);
+                        frothVolume += (grogInTransit * 0.1f);
+                        // currentVolume += grogInTransit;
+                       /* if (currentVolume >= currentCapacity)
+                        {
+                            frothVolume -= grogInTransit;
+                            liquidVolume += grogInTransit;
+                        } */
+                        grogInTransit = 0;
+                    }
+
+                    else if (nucleation == false)
+                    {
+                        liquidVolume += grogInTransit;
+                        grogInTransit = 0;
+                    }
+                    currentVolume = liquidVolume + frothVolume;
+                }
+                else if (currentVolume >= currentCapacity)
+                {
+                    wastedGrog += grogInTransit;
+                    grogInTransit = 0;
+                }
+            }
+            else
+            {
+                wastedGrog += grogInTransit;
+                grogInTransit = 0;
+            }
+        }
+
     }
 
-    public void UpdateCurrentVolume()
+    public void UpdateCurrentCapacity()
     {
         currentCapacity = (totalCapacity / 30) * vesselAngle;
     }
