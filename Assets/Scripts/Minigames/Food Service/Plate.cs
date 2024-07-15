@@ -23,6 +23,7 @@ public class Plate : MonoBehaviour
         if (GameManagerFS.orderValue[GameManagerFS.plateNum]==GameManagerFS.plateValue[GameManagerFS.plateNum])
         {
             Debug.Log("Order Correct"+" "+GameManagerFS.plateNum);
+            GameManagerFS.plateValue[GameManagerFS.plateNum] = GameManagerFS.orderValue[Random.Range(0, 7)];
         }
 
         GameManagerFS.emptyPlateNow = transform.position.x;

@@ -33,31 +33,31 @@ public class GameManagerFS : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-     
+     // change to random.range []
         for (int rep = 0; rep < 3; rep += 1)
         {
             if (orderValue[rep] == 003000) 
             currentPNG[rep].GetComponent<MeshRenderer>().material.mainTexture = orderPNG[0];
 
-            if (orderValue[rep] == 011100) 
+            else if (orderValue[rep] == 011100) 
             currentPNG[rep].GetComponent<MeshRenderer>().material.mainTexture = orderPNG[1];
 
-            if (orderValue[rep] == 110100) 
+            else if (orderValue[rep] == 110100) 
             currentPNG[rep].GetComponent<MeshRenderer>().material.mainTexture = orderPNG[2];
 
-            if (orderValue[rep] == 110110) 
+            else if (orderValue[rep] == 110110) 
             currentPNG[rep].GetComponent<MeshRenderer>().material.mainTexture = orderPNG[3];
 
-            if (orderValue[rep] == 111111) 
+            else if (orderValue[rep] == 111111) 
             currentPNG[rep].GetComponent<MeshRenderer>().material.mainTexture = orderPNG[4];
 
-            if (orderValue[rep] == 120012) 
+            else if (orderValue[rep] == 120012) 
             currentPNG[rep].GetComponent<MeshRenderer>().material.mainTexture = orderPNG[5];
 
-            if (orderValue[rep] == 121002) 
+            else if (orderValue[rep] == 121002) 
             currentPNG[rep].GetComponent<MeshRenderer>().material.mainTexture = orderPNG[6];
 
-            if (orderValue[rep] == 213000) 
+            else if (orderValue[rep] == 213000) 
             currentPNG[rep].GetComponent<MeshRenderer>().material.mainTexture = orderPNG[7];
         }
     }
@@ -65,6 +65,7 @@ public class GameManagerFS : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //for loop here somewhere
         //Xpos = x position 
         //move plate selector
         if(Input.GetKeyDown("tab"))
