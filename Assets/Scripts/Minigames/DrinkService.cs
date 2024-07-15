@@ -16,13 +16,14 @@ public class DrinkService : MonoBehaviour
     public bool vesselInHand;
     public bool drinkReady;
     private float inputTimer;
-    public float grogInTransit;
+    private float grogInTransit;
     public float wastedGrog;
     public float liquidVolume;
     public float frothVolume;
     public float liquidPercent;
     public float frothPercent;
     public bool nucleation;
+    public int grade;
 
     //Handles time limit
 
@@ -124,8 +125,7 @@ public class DrinkService : MonoBehaviour
         {
             if (vesselInHand == true)
             {
-                currentVolume = 0;
-                vesselInHand = false;
+                ServeDrink();
             }
 
             else if (vesselInHand == false)
@@ -150,6 +150,16 @@ public class DrinkService : MonoBehaviour
         totalCapacity = 150 * vesselSize;
         vesselAngle = 15;
         UpdateCurrentCapacity();
+        grade = 0;
+    }
+
+    public void ServeDrink()
+    {
+        vesselAngle = 30;
+        UpdateCurrentCapacity();
+        GradeTask();
+        currentVolume = 0;
+        vesselInHand = false;
     }
 
     public void ChangePour()
@@ -187,6 +197,8 @@ public class DrinkService : MonoBehaviour
                         grogInTransit = 0;
                     }
                     currentVolume = liquidVolume + frothVolume;
+                    liquidPercent = (liquidVolume / currentVolume) * 100;
+                    frothPercent = (frothVolume / currentVolume) * 100;
                 }
                 else if (currentVolume >= currentCapacity)
                 {
@@ -206,5 +218,73 @@ public class DrinkService : MonoBehaviour
     public void UpdateCurrentCapacity()
     {
         currentCapacity = (totalCapacity / 30) * vesselAngle;
+    }
+
+    public void GradeTask()
+    {
+        if (wastedGrog < 10)
+        {
+            grade += 0;
+        }
+
+        else if ((wastedGrog > 10) && (wastedGrog < 20))
+        {
+            grade += 1;
+        } 
+
+        else if (wastedGrog > 20)
+        {
+            grade += 2;
+        }
+
+        if ((frothPercent >= 4) && (frothPercent <= 6))
+        {
+            grade += 0;
+        }
+
+        else if (frothPercent < 4)
+        {
+            //Too little froth
+            grade += 1;
+        }
+
+        else if ((frothPercent > 6) && (frothPercent < 10))
+        {
+            //Too much froth
+            grade += 1;
+        }
+
+        else if (frothPercent >= 10)
+        {
+            //WAY TOO MUCH froth
+            grade += 2;
+        }
+
+        if ((liquidPercent >= 94) && (liquidPercent <= 96))
+        {
+            grade += 0;
+        }
+
+        else if (liquidPercent > 96)
+        {
+            grade += 1;
+        }
+
+        else if ((liquidPercent < 94) && (liquidPercent >= 85))
+        {
+            grade += 2;
+        }
+
+        else if ((liquidPercent < 85) && (liquidPercent >= 60))
+        {
+            grade += 3;
+        }
+
+        else if (liquidPercent < 60)
+        {
+            grade += 4;
+        }
+
+
     }
 }
