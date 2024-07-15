@@ -7,15 +7,21 @@ using TMPro;
 public class UIManager : MonoBehaviour
 {
     //Handles timer & score display
-    [SerializeField] Text countdownText;
-    
-    [SerializeField] Text drinkingTutorial;
+    private float startingTime = 120f;
+    public float currentTime;
+    [SerializeField] private float minutes;
+    [SerializeField] private float seconds;
+
+    public TextMeshProUGUI countdownText;
+    public TextMeshProUGUI drinkingTutorial;
+    public TextMeshProUGUI cleanupTutorial;
+
     private Button drinkingStartButton;
-    [SerializeField] Text cleanupTutorial;
     private Button cleanupStartButton;
 
-    //Handles pause menu
+    public GameObject DrinkingGame;
 
+    //Handles pause menu
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +35,52 @@ public class UIManager : MonoBehaviour
         EventManager.current.onShowCleanupTutorial += OnShowCleanupTutorial;
         EventManager.current.onHideCleanupTutorial += OnHideCleanupTutorial;
 
+        currentTime = startingTime;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {        
+        if (currentTime > 0)
+        {
+            UpdateTimer();
+        }
+        if (currentTime <= 0)
+        {
+            countdownText.text = "0:00";
+        }
+
+        if ((minutes == 0) && (seconds <= 10))
+        {
+            countdownText.color = Color.red;
+        }
+
+        if ((minutes > 1) && (seconds > 10))
+        {
+            countdownText.color = Color.white;
+        }
+    }
+
+    private void StartButtonClicked()
+    {
+        countdownText.enabled = true;
+    }
+
+    private void UpdateTimer()
+    {
+        currentTime -= Time.deltaTime;
+
+        minutes = Mathf.FloorToInt(currentTime / 60);
+        seconds = Mathf.FloorToInt(currentTime % 60);
+
+        if (seconds < 10)
+        {
+            countdownText.text = $"{minutes}:0{seconds}";
+        }
+        else
+        {
+            countdownText.text = $"{minutes}:{seconds}";
+        }  
     }
 
     private void OnShowTimer()
@@ -77,11 +129,5 @@ public class UIManager : MonoBehaviour
 
         cleanupTutorial.enabled = false;
         cleanupStartButton.enabled = false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

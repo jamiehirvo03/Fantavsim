@@ -11,8 +11,7 @@ public class DrinkingGame : MonoBehaviour
     private int totalPoints;
     private float totalDrank;
 
-    private float startingTime = 120f;
-    private float currentTime;
+    
 
     //Variables for tankard generation
     private int randomNum;
@@ -24,6 +23,7 @@ public class DrinkingGame : MonoBehaviour
     private float spillageAmount;
     private float amountLeft;
 
+    [SerializeField] private List<string> TankardOrder = new List<string>();
     private enum BalanceState
     {
         Idle,
@@ -38,12 +38,21 @@ public class DrinkingGame : MonoBehaviour
     {
         //Events that listen when the game tutorial has been displayed and player has clicked start
         EventManager.current.onStartDrinkingGame += OnStartDrinkingGame;
+        EventManager.current.onTimeOver += OnTimeOver;
     }
 
     private void OnStartDrinkingGame()
     {
         GameSetup();
-        GameStartCountdown(3f);
+        
+    }
+
+    private void OnTimeOver()
+    {
+        Debug.Log("Game Over");
+
+        //Total and display player stats
+        Debug.Log($"Regular: {regularDrank}|Golden: {goldenDrank}|Total Drank: {totalDrank}|Amount Spilt: {spillageAmount}");
     }
 
     private void Update()
@@ -62,14 +71,6 @@ public class DrinkingGame : MonoBehaviour
                 NextDrink();
             }
         }
-
-        if (currentTime == 0)
-        {
-            Debug.Log("Game Over");
-
-            //Total and display player stats
-            Debug.Log($"Regular: {regularDrank}|Golden: {goldenDrank}|Total Drank: {totalDrank}|Amount Spilt: {spillageAmount}");
-        }
     }
 
     private void GameSetup()
@@ -79,20 +80,10 @@ public class DrinkingGame : MonoBehaviour
 
         spillageAmount = 0f;
 
-        currentTime = startingTime;
         EventManager.current.ShowTimer();
     }
 
-    private void GameStartCountdown(float timeTilStart)
-    {
-        timeTilStart -= Time.deltaTime;
-
-        //Display a quick 3 second countdown when start game has been clicked
-        if (timeTilStart <= 0)
-        {
-            NextDrink();
-        }
-    }
+    
 
     private void GameOver()
     {
@@ -111,28 +102,31 @@ public class DrinkingGame : MonoBehaviour
     //Generates tankard order
     private void TankardGenerator()
     {
-        //This will pick a random number, but by having the max be a variable it will allow for the chances to be easily changed
-        randomNum = Random.Range(1, randomMax);
-        
-        if (randomNum == 1)
+        for (int i = 1; i < 5; i++)
         {
-            isGolden = false;
+            //This will pick a random number, but by having the max be a variable it will allow for the chances to be easily changed
+            randomNum = Random.Range(1, randomMax);
 
-            //Increases the count everytime a tankard isnt chosen to be golden
-            sinceGolden += 1;
+            if (randomNum == 1)
+            {
+                isGolden = false;
 
-            //Every time a normal tankard is chosen, the chance for a golden tankard increases by 20%
-            randomMax = (5 - sinceGolden);  
-        }
-        else
-        {
-            isGolden = true;
+                //Increases the count everytime a tankard isnt chosen to be golden
+                sinceGolden += 1;
 
-            //Since a golden tankard was chosen, the count is reset
-            sinceGolden = 0;
+                //Every time a normal tankard is chosen, the chance for a golden tankard increases by 20%
+                randomMax = (5 - sinceGolden);
+            }
+            else
+            {
+                isGolden = true;
 
-            //Any time a tankard is selected to be golden, the next one is guaranteed to be normal
-            randomMax = 1;
+                //Since a golden tankard was chosen, the count is reset
+                sinceGolden = 0;
+
+                //Any time a tankard is selected to be golden, the next one is guaranteed to be normal
+                randomMax = 1;
+            }
         }
     }
 
@@ -168,12 +162,6 @@ public class DrinkingGame : MonoBehaviour
         }
     }
 
-    private void UpdateTimer()
-    {
-        currentTime -= Time.deltaTime;
-
-        float minutes = Mathf.FloorToInt(currentTime / 60);
-        float seconds = Mathf.FloorToInt(currentTime % 60);
-    }
+  
 }
 

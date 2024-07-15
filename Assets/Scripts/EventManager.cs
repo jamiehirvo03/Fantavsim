@@ -14,6 +14,8 @@ public class EventManager : MonoBehaviour
 
     public event Action onShowTimer;
     public event Action onHideTimer;
+    public event Action onStartTimer;
+    public event Action onTimeOver;
 
     public event Action onShowDrinkingTutorial;
     public event Action onHideDrinkingTutorial;
@@ -37,6 +39,23 @@ public class EventManager : MonoBehaviour
             onHideTimer();
         }
     }
+
+    public void StartTimer()
+    {
+        if (onStartTimer != null)
+        {
+            onStartTimer();
+        }
+    }
+
+    public void TimeOver()
+    {
+        if (onTimeOver != null)
+        {
+            onTimeOver();
+        }
+    }
+
     public void ShowDrinkingTutorial()
     {
         if(onShowDrinkingTutorial != null)
