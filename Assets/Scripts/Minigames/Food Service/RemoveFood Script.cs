@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RemoveFoodScript : MonoBehaviour
 {
+    GameManagerFS emptyPlateNow;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,9 +15,16 @@ public class RemoveFoodScript : MonoBehaviour
     void Update()
     {
         
-        if ((GameManagerFS.emptyPlateNow>transform.position.x-.4f) && (GameManagerFS.emptyPlateNow <transform.position.x + .4f))     
+        if (GameManagerFS.emptyPlateNow == true)
         {
             Destroy(gameObject);
         }
+        
+        
+        
+        //if ((GameManagerFS.emptyPlateNow>transform.position.x-.4f) && (GameManagerFS.emptyPlateNow <transform.position.x + .4f))     
+        //{
+            //Destroy(gameObject);
+        //}
     }
 }

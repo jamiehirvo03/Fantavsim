@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class Plate : MonoBehaviour
 {
+    public GameObject GM;
+    private GameManagerFS gameManagerFS;
+    
     public int thisPlate;
     // Start is called before the first frame update
     void Start()
     {
-        
+        //get by type
+        GM = GameObject.FindGameObjectWithTag ("GM");
+        gameManagerFS = GM.GetComponent<GameManagerFS> ();
     }
 
     // Update is called once per frame
@@ -23,10 +28,15 @@ public class Plate : MonoBehaviour
         if (GameManagerFS.orderValue[GameManagerFS.plateNum]==GameManagerFS.plateValue[GameManagerFS.plateNum])
         {
             Debug.Log("Order Correct"+" "+GameManagerFS.plateNum);
-            GameManagerFS.plateValue[GameManagerFS.plateNum] = GameManagerFS.orderValue[Random.Range(0, 7)];
+            //GameManagerFS.plateValue[GameManagerFS.plateNum] = GameManagerFS.orderValue[Random.Range(0, 7)];
+
+            GameManagerFS.plateNum = Random.Range(0, 7);
+            gameManagerFS.AssignSprite();
+            //Debug.Log(GameManagerFS.plateValue[GameManagerFS.plateNum]);
+            Debug.Log(GameManagerFS.orderValue[GameManagerFS.plateNum]);
         }
 
-        GameManagerFS.emptyPlateNow = transform.position.x;
+        GameManagerFS.emptyPlateNow = true;
         StartCoroutine(platereset());
     }
 
@@ -35,7 +45,7 @@ public class Plate : MonoBehaviour
     IEnumerator platereset()
     {
         yield return new WaitForSeconds(.2f);
-        GameManagerFS.emptyPlateNow = -1;
+        GameManagerFS.emptyPlateNow = false;
         
     }
 

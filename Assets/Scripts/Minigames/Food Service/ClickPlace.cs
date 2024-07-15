@@ -5,6 +5,8 @@ using UnityEngine;
 public class ClickPlace : MonoBehaviour
 {
     //allows user to assign what object gets cloned on click
+    //Change to spawn prefab
+
     public Transform cloneObj;
     //allows user to assign value to ingredients 
     public int foodValue;

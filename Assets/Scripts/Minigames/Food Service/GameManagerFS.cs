@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class GameManagerFS : MonoBehaviour
 {
-
-    public static int [] orderValue= { 213000, 011100, 110100, 111111, 120012, 121002, 003000 };
+    public static string[] order = { "213000", "11100", "110100", "111111", "120012", "121002", "03000" };
+    public static int [] orderValue = {213000, 11100, 110100, 111111, 120012, 121002, 3000};
     public static int [] plateValue = { 0, 0, 0 };
+
+   
 
     
     
@@ -20,26 +22,35 @@ public class GameManagerFS : MonoBehaviour
     //tells unity what plate it is working with
 
     public Transform plateSelector;
-    //PNG of order
+
+    //order model
     public MeshRenderer[] currentPNG;
 
+    //PNG of order
     public Texture[] orderPNG;
 
-    public static float emptyPlateNow = -1;
+    public static bool emptyPlateNow = false;
 
     public static float totalPoints = 0;
 
 
     // Start is called before the first frame update
-    void Start()
+
+  public void Start()
+    {
+        AssignSprite();
+    }
+    public void AssignSprite()
     {
      // change to random.range []
+
         for (int rep = 0; rep < 3; rep += 1)
         {
-            if (orderValue[rep] == 003000) 
+
+            if (orderValue[rep] == 3000) 
             currentPNG[rep].GetComponent<MeshRenderer>().material.mainTexture = orderPNG[0];
 
-            else if (orderValue[rep] == 011100) 
+            else if (orderValue[rep] == 11100) 
             currentPNG[rep].GetComponent<MeshRenderer>().material.mainTexture = orderPNG[1];
 
             else if (orderValue[rep] == 110100) 
@@ -66,6 +77,7 @@ public class GameManagerFS : MonoBehaviour
     void Update()
     {
         //for loop here somewhere
+
         //Xpos = x position 
         //move plate selector
         if(Input.GetKeyDown("tab"))
@@ -80,7 +92,7 @@ public class GameManagerFS : MonoBehaviour
 
         }
 
-       
+       //moves the plate selector to the corret y axis
         plateSelector.transform.position = new Vector3(plateXpos, 2.5f, 0);
 
 

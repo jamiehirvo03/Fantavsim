@@ -14,7 +14,7 @@ public class TimerScript : MonoBehaviour
     [SerializeField] private TimerType timerType;
 
     //how long can time run for
-    [SerializeField] public float timeToDisplay = 10.0f;
+    [SerializeField] public float timeToDisplay = 10f;
 
     private bool _isRunning;
 
@@ -54,16 +54,17 @@ public class TimerScript : MonoBehaviour
         //checks to see if timer is running
         if (!_isRunning) return;
         //checks to see if timer has reached time cap
-        if (timerType == TimerType.countdown && timeToDisplay < 0.0f)
+        if (timerType == TimerType.stopwatch && timeToDisplay < 0f)
         {
             EventManager.OnTimerStop();
-            return;
+           _isRunning = false;
+            timeToDisplay = 0f;
         }
 
-        timeToDisplay += timerType == TimerType.countdown ? -Time.deltaTime : Time.deltaTime;
+        timeToDisplay -= timerType == TimerType.stopwatch ? -Time.deltaTime : Time.deltaTime;
 
         //counter being displayed to on screen UI
         TimeSpan timeSpan = TimeSpan.FromSeconds(timeToDisplay);
-        _timerText.text = timeToDisplay.ToString();//timeSpan.ToString(@"mm/:ss/:ff");
+        _timerText.text = timeToDisplay.ToString();
     }
 }
