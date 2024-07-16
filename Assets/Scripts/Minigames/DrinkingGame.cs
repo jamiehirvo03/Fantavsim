@@ -11,8 +11,6 @@ public class DrinkingGame : MonoBehaviour
     private int totalPoints;
     private float totalDrank;
 
-    
-
     //Variables for tankard generation
     private int randomNum;
     private int randomMax;
@@ -38,7 +36,7 @@ public class DrinkingGame : MonoBehaviour
     {
         //Events that listen when the game tutorial has been displayed and player has clicked start
         EventManager.current.onStartDrinkingGame += OnStartDrinkingGame;
-        EventManager.current.onTimeOver += OnTimeOver;
+        EventManager.current.onDrinkingGameTimeOver += OnTimeOver;
     }
 
     private void OnStartDrinkingGame()
@@ -81,13 +79,6 @@ public class DrinkingGame : MonoBehaviour
         spillageAmount = 0f;
 
         EventManager.current.ShowTimer();
-    }
-
-    
-
-    private void GameOver()
-    {
-        EventManager.current.HideTimer();
     }
 
     private void NextDrink()

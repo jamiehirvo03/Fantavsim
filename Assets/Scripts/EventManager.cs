@@ -15,11 +15,11 @@ public class EventManager : MonoBehaviour
     public event Action onShowTimer;
     public event Action onHideTimer;
     public event Action onStartTimer;
-    public event Action onTimeOver;
 
     public event Action onShowDrinkingTutorial;
     public event Action onHideDrinkingTutorial;
     public event Action onStartDrinkingGame;
+    public event Action onDrinkingGameTimeOver;
 
     public event Action onShowCleanupTutorial;
     public event Action onHideCleanupTutorial;
@@ -48,11 +48,11 @@ public class EventManager : MonoBehaviour
         }
     }
 
-    public void TimeOver()
+    public void DrinkingGameTimeOver()
     {
-        if (onTimeOver != null)
+        if (onDrinkingGameTimeOver != null)
         {
-            onTimeOver();
+            onDrinkingGameTimeOver();
         }
     }
 

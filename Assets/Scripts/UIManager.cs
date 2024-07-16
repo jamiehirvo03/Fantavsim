@@ -11,12 +11,13 @@ public class UIManager : MonoBehaviour
     public float currentTime;
     [SerializeField] private float minutes;
     [SerializeField] private float seconds;
-
     public TextMeshProUGUI countdownText;
+    
     public TextMeshProUGUI drinkingTutorial;
-    public TextMeshProUGUI cleanupTutorial;
-
     private Button drinkingStartButton;
+    public Canvas drinkingGamePopup;
+
+    public TextMeshProUGUI cleanupTutorial;
     private Button cleanupStartButton;
 
     public GameObject DrinkingGame;
@@ -36,36 +37,43 @@ public class UIManager : MonoBehaviour
         EventManager.current.onHideCleanupTutorial += OnHideCleanupTutorial;
 
         currentTime = startingTime;
+
+        drinkingGamePopup.enabled = true;
+        countdownText.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {        
-        if (currentTime > 0)
+        if (countdownText.enabled == true)
         {
-            UpdateTimer();
-        }
-        if (currentTime <= 0)
-        {
-            countdownText.text = "0:00";
-        }
+            if (currentTime > 0)
+            {
+                UpdateTimer();
+            }
+            if (currentTime <= 0)
+            {
+                countdownText.text = "0:00";
+                EventManager.current.DrinkingGameTimeOver();
+            }
 
-        if ((minutes == 0) && (seconds <= 10))
-        {
-            countdownText.color = Color.red;
-        }
+            if ((minutes == 0) && (seconds <= 10))
+            {
+                countdownText.color = Color.red;
+            }
 
-        if ((minutes > 1) && (seconds > 10))
-        {
-            countdownText.color = Color.white;
-        }
+            if ((minutes > 1) && (seconds > 10))
+            {
+                countdownText.color = Color.white;
+            }
+        } 
     }
-
-    private void StartButtonClicked()
+    public void StartButtonClicked()
     {
         countdownText.enabled = true;
+        drinkingGamePopup.enabled = false;
+        EventManager.current.StartDrinkingGame();
     }
-
     private void UpdateTimer()
     {
         currentTime -= Time.deltaTime;
