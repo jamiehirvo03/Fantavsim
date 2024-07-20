@@ -26,9 +26,11 @@ public class DrinkingGame : MonoBehaviour
     [SerializeField] private float spillageAmount;
     [SerializeField] private float amountLeft;
 
-    [SerializeField] private List<bool> IsGolden = new List<bool>(5);
+    [SerializeField] private List<bool> UpcomingTankards = new List<bool>(5);
     //Keeps track of current bool value of list item, is used for iterating through list to move items up.
     private bool currentListValue;
+
+    private bool isCurrentGolden;
 
     //References to the 5 upcoming tankard sprites
     public GameObject FirstTankard;
@@ -82,7 +84,7 @@ public class DrinkingGame : MonoBehaviour
         {
             if (amountLeft <= 0)
             {
-                if (IsGolden[0] == true)
+                if (UpcomingTankards[0] == true)
                 {
                     goldenDrank++;
                     ClearDrink();
@@ -129,6 +131,8 @@ public class DrinkingGame : MonoBehaviour
 
     private void GameSetup()
     {
+        isCurrentGolden = false;
+
         randomMax = 1;
         sinceGolden = 0;
 
@@ -146,13 +150,22 @@ public class DrinkingGame : MonoBehaviour
 
     private void ClearDrink()
     {
-        IsGolden.RemoveAt(0);
+        if (UpcomingTankards[0] == true)
+        {
+            isCurrentGolden = true;
+        }
+        if (UpcomingTankards[0] == false)
+        {
+            isCurrentGolden = false;
+        }
+
+        UpcomingTankards.RemoveAt(0);
 
         for (int i = 1; i < 5; i++)
         {
-            currentListValue = IsGolden[i];
-            IsGolden.RemoveAt(i);
-            IsGolden.Insert(i - 1, currentListValue);
+            currentListValue = UpcomingTankards[i];
+            UpcomingTankards.RemoveAt(i);
+            UpcomingTankards.Insert(i - 1, currentListValue);
         }
     }
 
@@ -178,7 +191,7 @@ public class DrinkingGame : MonoBehaviour
 
             if (randomNum == 1)
             {
-                IsGolden.Insert((i - 1), false);
+                UpcomingTankards.Insert((i - 1), false);
 
                 //Increases the count everytime a tankard isnt chosen to be golden
                 sinceGolden += 1;
@@ -188,7 +201,7 @@ public class DrinkingGame : MonoBehaviour
             }
             else
             {
-                IsGolden.Insert((i - 1), true);
+                UpcomingTankards.Insert((i - 1), true);
 
                 //Since a golden tankard was chosen, the count is reset
                 sinceGolden = 0;
@@ -207,7 +220,7 @@ public class DrinkingGame : MonoBehaviour
 
         if (randomNum == 1)
         {
-            IsGolden.Insert(4, false);
+            UpcomingTankards.Insert(4, false);
 
             //Increases the count everytime a tankard isnt chosen to be golden
             sinceGolden += 1;
@@ -217,7 +230,7 @@ public class DrinkingGame : MonoBehaviour
         }
         else
         {
-            IsGolden.Insert(4, true);
+            UpcomingTankards.Insert(4, true);
 
             //Since a golden tankard was chosen, the count is reset
             sinceGolden = 0;
@@ -233,14 +246,14 @@ public class DrinkingGame : MonoBehaviour
         {
             if (i == 0)
             {
-                if (IsGolden[0] == true)
+                if (UpcomingTankards[0] == true)
                 {
                     //Sets reference to the sprite renderer component that is on the corresponding tankard object
                     SpriteRenderer spriteRenderer = FirstTankard.GetComponent<SpriteRenderer>();
                     //Sets the objects sprite to its correct state
                     spriteRenderer.sprite = GoldenTankard;
                 }
-                if (IsGolden[0] == false)
+                if (UpcomingTankards[0] == false)
                 {
                     //Sets reference to the sprite renderer component that is on the corresponding tankard object
                     SpriteRenderer spriteRenderer = FirstTankard.GetComponent<SpriteRenderer>();
@@ -250,14 +263,14 @@ public class DrinkingGame : MonoBehaviour
             }
             if (i == 1)
             {
-                if (IsGolden[1] == true)
+                if (UpcomingTankards[1] == true)
                 {
                     //Sets reference to the sprite renderer component that is on the corresponding tankard object
                     SpriteRenderer spriteRenderer = SecondTankard.GetComponent<SpriteRenderer>();
                     //Sets the objects sprite to its correct state
                     spriteRenderer.sprite = GoldenTankard;
                 }
-                if (IsGolden[1] == false)
+                if (UpcomingTankards[1] == false)
                 {
                     //Sets reference to the sprite renderer component that is on the corresponding tankard object
                     SpriteRenderer spriteRenderer = SecondTankard.GetComponent<SpriteRenderer>();
@@ -267,14 +280,14 @@ public class DrinkingGame : MonoBehaviour
             }
             if (i == 2)
             {
-                if (IsGolden[2] == true)
+                if (UpcomingTankards[2] == true)
                 {
                     //Sets reference to the sprite renderer component that is on the corresponding tankard object
                     SpriteRenderer spriteRenderer = ThirdTankard.GetComponent<SpriteRenderer>();
                     //Sets the objects sprite to its correct state
                     spriteRenderer.sprite = GoldenTankard;
                 }
-                if (IsGolden[2] == false)
+                if (UpcomingTankards[2] == false)
                 {
                     //Sets reference to the sprite renderer component that is on the corresponding tankard object
                     SpriteRenderer spriteRenderer = ThirdTankard.GetComponent<SpriteRenderer>();
@@ -284,14 +297,14 @@ public class DrinkingGame : MonoBehaviour
             }
             if (i == 3)
             {
-                if (IsGolden[3] == true)
+                if (UpcomingTankards[3] == true)
                 {
                     //Sets reference to the sprite renderer component that is on the corresponding tankard object
                     SpriteRenderer spriteRenderer = FourthTankard.GetComponent<SpriteRenderer>();
                     //Sets the objects sprite to its correct state
                     spriteRenderer.sprite = GoldenTankard;
                 }
-                if (IsGolden[3] == false)
+                if (UpcomingTankards[3] == false)
                 {
                     //Sets reference to the sprite renderer component that is on the corresponding tankard object
                     SpriteRenderer spriteRenderer = FourthTankard.GetComponent<SpriteRenderer>();
@@ -301,14 +314,14 @@ public class DrinkingGame : MonoBehaviour
             }
             if (i == 4)
             {
-                if (IsGolden[4] == true)
+                if (UpcomingTankards[4] == true)
                 {
                     //Sets reference to the sprite renderer component that is on the corresponding tankard object
                     SpriteRenderer spriteRenderer = FifthTankard.GetComponent<SpriteRenderer>();
                     //Sets the objects sprite to its correct state
                     spriteRenderer.sprite = GoldenTankard;
                 }
-                if (IsGolden[4] == false)
+                if (UpcomingTankards[4] == false)
                 {
                     //Sets reference to the sprite renderer component that is on the corresponding tankard object
                     SpriteRenderer spriteRenderer = FifthTankard.GetComponent<SpriteRenderer>();
@@ -320,8 +333,29 @@ public class DrinkingGame : MonoBehaviour
     }
 
     //Handles balance mechanic
-    private void BalanceMeter()
+    private void BalanceStateSwitch()
     {
+        if (balanceLevel <= 20)
+        {
+            currentState = BalanceState.Idle;
+        }
+        if ((balanceLevel > 20) && (balanceLevel <= 50))
+        {
+            currentState = BalanceState.Drinking;
+        }
+        if ((balanceLevel > 50) && (balanceLevel <= 70))
+        {
+            currentState = BalanceState.Spilling;
+        }
+        if ((balanceLevel > 70) && (balanceLevel <= 80))
+        {
+            currentState = BalanceState.Chugging;
+        }
+        if ((balanceLevel > 80) && (balanceLevel <= 100))
+        {
+            currentState = BalanceState.Spilling;
+        }
+
         switch (currentState)
         {
             case BalanceState.Idle:
@@ -350,7 +384,5 @@ public class DrinkingGame : MonoBehaviour
                 break;
         }
     }
-
-  
 }
 
