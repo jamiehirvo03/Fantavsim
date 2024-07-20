@@ -247,6 +247,16 @@ MonoBehaviour:
   drinkingGamePopup: {fileID: 1290776622}
   cleanupTutorial: {fileID: 0}
   DrinkingGame: {fileID: 757468283}
+--- !u!1 &217468593 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5287560515894067129, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+  m_PrefabInstance: {fileID: 1520671651434458610}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &269177561 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5287560515894067129, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+  m_PrefabInstance: {fileID: 1253521792}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &311649550
 GameObject:
   m_ObjectHideFlags: 0
@@ -399,7 +409,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -433,7 +443,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: 2nd Tankard
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 398497553744485425, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+    - {fileID: 6524201689613330117, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -589,7 +601,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -623,7 +635,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: 5th Tankard
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6524201689613330117, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+    - {fileID: 398497553744485425, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1012,7 +1026,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1046,7 +1060,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: 4th Tankard
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 398497553744485425, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+    - {fileID: 6524201689613330117, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1157,6 +1173,11 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &1320457966 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5287560515894067129, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+  m_PrefabInstance: {fileID: 1851311824}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1506458287
 GameObject:
   m_ObjectHideFlags: 0
@@ -1401,9 +1422,17 @@ MonoBehaviour:
   totalPoints: 0
   totalDrank: 0
   balanceLevel: 0
+  decayRate: 5
   spillageAmount: 0
   amountLeft: 0
   IsGolden: 
+  FirstTankard: {fileID: 217468593}
+  SecondTankard: {fileID: 1629316323}
+  ThirdTankard: {fileID: 1320457966}
+  FourthTankard: {fileID: 269177561}
+  FifthTankard: {fileID: 1824532689}
+  RegularTankard: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  GoldenTankard: {fileID: -2135585597343286014, guid: 5aa8b770bc43046bc8d993d0d5b7f4a5, type: 3}
 --- !u!1 &1624603292
 GameObject:
   m_ObjectHideFlags: 0
@@ -1538,6 +1567,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1624603292}
   m_CullTransparentMesh: 1
+--- !u!1 &1629316323 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5287560515894067129, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+  m_PrefabInstance: {fileID: 334584848}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1633188197
 GameObject:
   m_ObjectHideFlags: 0
@@ -1674,6 +1708,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1633188197}
   m_CullTransparentMesh: 1
+--- !u!1 &1824532689 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5287560515894067129, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+  m_PrefabInstance: {fileID: 612106676}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1851311824
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1692,7 +1731,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1726,7 +1765,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: 3rd Tankard
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 398497553744485425, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+    - {fileID: 6524201689613330117, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1841,7 +1882,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1875,7 +1916,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: 1st Tankard
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 398497553744485425, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+    - {fileID: 6524201689613330117, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

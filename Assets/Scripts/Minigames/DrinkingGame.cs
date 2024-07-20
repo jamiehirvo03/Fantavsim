@@ -27,7 +27,20 @@ public class DrinkingGame : MonoBehaviour
     [SerializeField] private float amountLeft;
 
     [SerializeField] private List<bool> IsGolden = new List<bool>(5);
+    //Keeps track of current bool value of list item, is used for iterating through list to move items up.
     private bool currentListValue;
+
+    //References to the 5 upcoming tankard sprites
+    public GameObject FirstTankard;
+    public GameObject SecondTankard;
+    public GameObject ThirdTankard;
+    public GameObject FourthTankard;
+    public GameObject FifthTankard;
+
+    //References to the sprites for the 2 tankard variations
+    public Sprite RegularTankard;
+    public Sprite GoldenTankard;
+
     private enum BalanceState
     {
         Idle,
@@ -122,6 +135,8 @@ public class DrinkingGame : MonoBehaviour
         spillageAmount = 0f;
 
         StartingTankards();
+        SpriteChanger();
+
         amountLeft = 100f;
 
         EventManager.current.ShowTimer();
@@ -148,6 +163,7 @@ public class DrinkingGame : MonoBehaviour
         amountLeft = 100f;
 
         TankardGenerator();
+        SpriteChanger();
     }
 
     //Generates the first 5 tankards
@@ -208,6 +224,98 @@ public class DrinkingGame : MonoBehaviour
 
             //Any time a tankard is selected to be golden, the next one is guaranteed to be normal
             randomMax = 1;
+        }
+    }
+
+    private void SpriteChanger()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            if (i == 0)
+            {
+                if (IsGolden[0] == true)
+                {
+                    //Sets reference to the sprite renderer component that is on the corresponding tankard object
+                    SpriteRenderer spriteRenderer = FirstTankard.GetComponent<SpriteRenderer>();
+                    //Sets the objects sprite to its correct state
+                    spriteRenderer.sprite = GoldenTankard;
+                }
+                if (IsGolden[0] == false)
+                {
+                    //Sets reference to the sprite renderer component that is on the corresponding tankard object
+                    SpriteRenderer spriteRenderer = FirstTankard.GetComponent<SpriteRenderer>();
+                    //Sets the objects sprite to its correct state
+                    spriteRenderer.sprite = RegularTankard;
+                }
+            }
+            if (i == 1)
+            {
+                if (IsGolden[1] == true)
+                {
+                    //Sets reference to the sprite renderer component that is on the corresponding tankard object
+                    SpriteRenderer spriteRenderer = SecondTankard.GetComponent<SpriteRenderer>();
+                    //Sets the objects sprite to its correct state
+                    spriteRenderer.sprite = GoldenTankard;
+                }
+                if (IsGolden[1] == false)
+                {
+                    //Sets reference to the sprite renderer component that is on the corresponding tankard object
+                    SpriteRenderer spriteRenderer = SecondTankard.GetComponent<SpriteRenderer>();
+                    //Sets the objects sprite to its correct state
+                    spriteRenderer.sprite = RegularTankard;
+                }
+            }
+            if (i == 2)
+            {
+                if (IsGolden[2] == true)
+                {
+                    //Sets reference to the sprite renderer component that is on the corresponding tankard object
+                    SpriteRenderer spriteRenderer = ThirdTankard.GetComponent<SpriteRenderer>();
+                    //Sets the objects sprite to its correct state
+                    spriteRenderer.sprite = GoldenTankard;
+                }
+                if (IsGolden[2] == false)
+                {
+                    //Sets reference to the sprite renderer component that is on the corresponding tankard object
+                    SpriteRenderer spriteRenderer = ThirdTankard.GetComponent<SpriteRenderer>();
+                    //Sets the objects sprite to its correct state
+                    spriteRenderer.sprite = RegularTankard;
+                }
+            }
+            if (i == 3)
+            {
+                if (IsGolden[3] == true)
+                {
+                    //Sets reference to the sprite renderer component that is on the corresponding tankard object
+                    SpriteRenderer spriteRenderer = FourthTankard.GetComponent<SpriteRenderer>();
+                    //Sets the objects sprite to its correct state
+                    spriteRenderer.sprite = GoldenTankard;
+                }
+                if (IsGolden[3] == false)
+                {
+                    //Sets reference to the sprite renderer component that is on the corresponding tankard object
+                    SpriteRenderer spriteRenderer = FourthTankard.GetComponent<SpriteRenderer>();
+                    //Sets the objects sprite to its correct state
+                    spriteRenderer.sprite = RegularTankard;
+                }
+            }
+            if (i == 4)
+            {
+                if (IsGolden[4] == true)
+                {
+                    //Sets reference to the sprite renderer component that is on the corresponding tankard object
+                    SpriteRenderer spriteRenderer = FifthTankard.GetComponent<SpriteRenderer>();
+                    //Sets the objects sprite to its correct state
+                    spriteRenderer.sprite = GoldenTankard;
+                }
+                if (IsGolden[4] == false)
+                {
+                    //Sets reference to the sprite renderer component that is on the corresponding tankard object
+                    SpriteRenderer spriteRenderer = FifthTankard.GetComponent<SpriteRenderer>();
+                    //Sets the objects sprite to its correct state
+                    spriteRenderer.sprite = RegularTankard;
+                }
+            }
         }
     }
 
