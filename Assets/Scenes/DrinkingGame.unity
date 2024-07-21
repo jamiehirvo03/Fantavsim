@@ -400,6 +400,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2
       objectReference: {fileID: 0}
@@ -439,6 +451,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3104101759278042166, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ccde2da4b2b75e242b4c6d31d4159c93, type: 3}
     - target: {fileID: 5287560515894067129, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
       propertyPath: m_Name
       value: 2nd Tankard
@@ -592,6 +612,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -8
       objectReference: {fileID: 0}
@@ -631,6 +663,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3104101759278042166, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ccde2da4b2b75e242b4c6d31d4159c93, type: 3}
     - target: {fileID: 5287560515894067129, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
       propertyPath: m_Name
       value: 5th Tankard
@@ -1017,6 +1057,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6
       objectReference: {fileID: 0}
@@ -1056,6 +1108,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3104101759278042166, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ccde2da4b2b75e242b4c6d31d4159c93, type: 3}
     - target: {fileID: 5287560515894067129, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
       propertyPath: m_Name
       value: 4th Tankard
@@ -1425,14 +1485,14 @@ MonoBehaviour:
   decayRate: 5
   spillageAmount: 0
   amountLeft: 0
-  IsGolden: 
+  UpcomingTankards: 
   FirstTankard: {fileID: 217468593}
   SecondTankard: {fileID: 1629316323}
   ThirdTankard: {fileID: 1320457966}
   FourthTankard: {fileID: 269177561}
   FifthTankard: {fileID: 1824532689}
-  RegularTankard: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  GoldenTankard: {fileID: -2135585597343286014, guid: 5aa8b770bc43046bc8d993d0d5b7f4a5, type: 3}
+  RegularTankard: {fileID: 21300000, guid: ccde2da4b2b75e242b4c6d31d4159c93, type: 3}
+  GoldenTankard: {fileID: 21300000, guid: 16858893d8b2d274b9855e1a0369f548, type: 3}
 --- !u!1 &1624603292
 GameObject:
   m_ObjectHideFlags: 0
@@ -1722,6 +1782,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4
       objectReference: {fileID: 0}
@@ -1761,6 +1833,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3104101759278042166, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ccde2da4b2b75e242b4c6d31d4159c93, type: 3}
     - target: {fileID: 5287560515894067129, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
       propertyPath: m_Name
       value: 3rd Tankard
@@ -1873,6 +1953,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -1912,6 +2004,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 572732634441974330, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3104101759278042166, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ccde2da4b2b75e242b4c6d31d4159c93, type: 3}
     - target: {fileID: 5287560515894067129, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
       propertyPath: m_Name
       value: 1st Tankard
