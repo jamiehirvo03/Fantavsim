@@ -51,7 +51,7 @@ public class DrinkingGame : MonoBehaviour
         Chugging
     }
 
-    private BalanceState currentState;
+    [SerializeField] private BalanceState currentState;
 
     //Bool to check if the setup steps have happened
     private bool gameIsSetup = false;
@@ -67,7 +67,6 @@ public class DrinkingGame : MonoBehaviour
     private void OnStartDrinkingGame()
     {
         GameSetup();
-        
     }
 
     private void OnTimeOver()
@@ -84,19 +83,16 @@ public class DrinkingGame : MonoBehaviour
         {
             if (amountLeft <= 0)
             {
-                if (UpcomingTankards[0] == true)
+                if (isCurrentGolden == true)
                 {
                     goldenDrank++;
-                    ClearDrink();
-                    NextDrink();
-
                 }
-                else
+                if (isCurrentGolden == false)
                 {
                     regularDrank++;
-                    ClearDrink();
-                    NextDrink();
                 }
+
+                ClearDrink();
             }
             
             if (balanceLevel >= 0)
@@ -126,6 +122,8 @@ public class DrinkingGame : MonoBehaviour
             {
                 balanceLevel = 100;
             }
+
+            BalanceStateUpdate();
         }
     }
 
@@ -153,20 +151,22 @@ public class DrinkingGame : MonoBehaviour
         if (UpcomingTankards[0] == true)
         {
             isCurrentGolden = true;
+            UpcomingTankards.RemoveAt(0);
         }
         if (UpcomingTankards[0] == false)
         {
             isCurrentGolden = false;
-        }
-
-        UpcomingTankards.RemoveAt(0);
-
-        for (int i = 1; i < 5; i++)
+            UpcomingTankards.RemoveAt(0);
+        }   
+        
+        for (int i = 0; i < 4; i++)
         {
-            currentListValue = UpcomingTankards[i];
-            UpcomingTankards.RemoveAt(i);
-            UpcomingTankards.Insert(i - 1, currentListValue);
+            currentListValue = UpcomingTankards[i+1];
+            UpcomingTankards.RemoveAt(i+1);
+            UpcomingTankards.Insert(i, currentListValue);
         }
+
+        NextDrink();
     }
 
     private void NextDrink()
@@ -333,7 +333,7 @@ public class DrinkingGame : MonoBehaviour
     }
 
     //Handles balance mechanic
-    private void BalanceStateSwitch()
+    private void BalanceStateUpdate()
     {
         if (balanceLevel <= 20)
         {
@@ -360,27 +360,23 @@ public class DrinkingGame : MonoBehaviour
         {
             case BalanceState.Idle:
                 //Do nothing
-                Debug.Log("Player is idle");
                 break;
 
             case BalanceState.Drinking:
                 //Gradually decrease amountLeft
                 amountLeft -= Time.deltaTime;
                 totalDrank += Time.deltaTime;
-                Debug.Log("Player is drinking");
                 break;
 
             case BalanceState.Spilling:
                 //Gradually increase spill meter
                 spillageAmount += Time.deltaTime;
-                totalDrank += 0.5f * Time.deltaTime;
-                Debug.Log("Player is spilling");
+                amountLeft -= 0.5f * Time.deltaTime;
                 break;
 
             case BalanceState.Chugging:
                 //Decrease amountLeft by a larger value
                 amountLeft -= 2 * Time.deltaTime;
-                Debug.Log("Player is chugging");
                 break;
         }
     }

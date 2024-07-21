@@ -12,10 +12,12 @@ public class EventManager : MonoBehaviour
         current = this;
     }
 
+    //TIMER EVENTS
     public event Action onShowTimer;
     public event Action onHideTimer;
     public event Action onStartTimer;
 
+    //POPUP TUTORIAL EVENTS
     public event Action onShowDrinkingTutorial;
     public event Action onHideDrinkingTutorial;
     public event Action onStartDrinkingGame;
