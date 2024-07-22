@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,12 @@ public class DG_GameManager : MonoBehaviour
     [SerializeField] private int goldenDrank;
     [SerializeField] private int totalPoints;
     [SerializeField] private float totalDrank;
+    [SerializeField] private float litresDrank = 0.00f;
+
+    [SerializeField] private float amountLeft;
+    [SerializeField] private float totalSpillageAmount;
+    [SerializeField] private float currentSpillageAmount;
+    [SerializeField] private float litresSpilt = 0.00f;
 
     //Variables for tankard generation
     [SerializeField] private int randomNum;
@@ -18,21 +25,19 @@ public class DG_GameManager : MonoBehaviour
     [SerializeField] private int sinceGolden;
     [SerializeField] private bool isCurrentGolden;
 
+    [SerializeField] private List<string> UpcomingTankards = new List<string>(5);
+
     //Value on balance meter, much like a speedometer
     [SerializeField] private float balanceLevel;
 
     //Multiplies the standard deltatime for greater decay rate
     public float decayRate = 20f;
 
-    [SerializeField] private float totalSpillageAmount;
-    [SerializeField] private float currentSpillageAmount;
-    [SerializeField] private float amountLeft;
-
-    [SerializeField] private List<string> UpcomingTankards = new List<string>(5);
-
+    //Bool to check if the setup steps have happened
+    private bool gameIsSetup = false;
     //Has the drink been changed, used to halt following operations until change has been made
     [SerializeField] private bool isChangeWaiting;
-
+    //Has the timer reached 0? if so end the game
     [SerializeField] private bool isGameOver;
 
     //References to the 5 upcoming tankard sprites
@@ -58,11 +63,12 @@ public class DG_GameManager : MonoBehaviour
         Spilling2
     }
 
-    //Bool to check if the setup steps have happened
-    private bool gameIsSetup = false;
+    
 
 
     public Slider ProgressSlider;
+    public TextMeshProUGUI AmountDrank;
+    public TextMeshProUGUI AmountSpilt;
 
 
     // Start is called before the first frame update
@@ -91,7 +97,7 @@ public class DG_GameManager : MonoBehaviour
         Debug.Log("Game Over!");
 
         //Total and display player stats to UI
-        Debug.Log($"Regular: {regularDrank} |Golden: {goldenDrank} |Total: {totalDrank} |Amount Spilt: {totalSpillageAmount}");
+        Debug.Log($"Regular: {regularDrank} |Golden: {goldenDrank} |Total: {(regularDrank + goldenDrank)} |Amount Drank: {litresDrank} L |Amount Spilt: {totalSpillageAmount}");
     }
 
     // Update is called once per frame
@@ -111,6 +117,7 @@ public class DG_GameManager : MonoBehaviour
                     if (amountLeft >= 0)
                     {
                         ProgressSliderUpdate();
+                        AmountDrankUpdate();
                     }
 
                     if (balanceLevel >= 0)
@@ -479,5 +486,19 @@ public class DG_GameManager : MonoBehaviour
     {
         //Update the slider (temporary solution) regularly to show amount left in current drink
         ProgressSlider.value = amountLeft;
+    }
+
+    private void AmountDrankUpdate()
+    { 
+        litresDrank = ((totalDrank / 100) * 0.5f);
+
+        AmountDrank.text = $"Amount Drank: {litresDrank} L";
+    }
+
+    private void SpillageAmountUpdate()
+    {
+        litresSpilt = ((totalSpillageAmount / 100) * 0.5f);
+
+
     }
 }
