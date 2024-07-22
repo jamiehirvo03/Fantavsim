@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,7 +19,7 @@ public class DG_GameManager : MonoBehaviour
     [SerializeField] private float amountLeft;
     [SerializeField] private float totalSpillageAmount;
     [SerializeField] private float currentSpillageAmount;
-    [SerializeField] private float litresSpilt = 0;
+    [SerializeField] private float litresSpilt = 0f;
     private float litresSpiltRounded;
 
     //Variables for tankard generation
@@ -72,12 +73,25 @@ public class DG_GameManager : MonoBehaviour
     public TextMeshProUGUI AmountDrank;
     public TextMeshProUGUI AmountSpilt;
 
+    public GameObject BalanceMeter;
+    public GameObject BalanceMeterMarker;
+    public float minRotationAngle;
+    public float maxRotationAngle;
+
+    public GameObject PlayerSprite;
+
 
     // Start is called before the first frame update
     void Start()
     {
         DG_Events.current.onStartGame += OnStartGame;
         DG_Events.current.onTimeOver += OnTimeOver;
+
+        ProgressSlider.enabled = false;
+        AmountDrank.enabled = false;
+        AmountSpilt.enabled = false;
+
+        isGameOver = false;
     }
     private void OnStartGame()
     {
@@ -90,6 +104,10 @@ public class DG_GameManager : MonoBehaviour
         totalSpillageAmount = 0;
         currentSpillageAmount = 0;
 
+        ProgressSlider.enabled = true;
+        AmountDrank.enabled = true;
+        AmountSpilt.enabled = true;
+
         GenerateStartingDrinks();
 
         gameIsSetup = true;
@@ -98,6 +116,12 @@ public class DG_GameManager : MonoBehaviour
     private void OnTimeOver()
     {
         Debug.Log("Game Over!");
+
+        ProgressSlider.enabled = false;
+        AmountDrank.enabled = false;
+        AmountSpilt.enabled = false;
+
+        isGameOver = true;
 
         //Total and display player stats to UI
         Debug.Log($"Regular: {regularDrank} |Golden: {goldenDrank} |Total: {(regularDrank + goldenDrank)} |Amount Drank: {litresDrank} L |Amount Spilt: {totalSpillageAmount}");
@@ -124,25 +148,25 @@ public class DG_GameManager : MonoBehaviour
 
                         //AmountDrankUpdate
                         litresDrank = Mathf.Round((totalDrank * 10.00f) / 10.00f);
-                        litresDrankRounded = ((litresDrank * 0.01f) * 0.50f);
+                        litresDrankRounded = ((litresDrank * 5f));
 
-                        AmountDrank.text = $"Amount Drank: {litresDrankRounded} L";
+                        AmountDrank.text = $"Amount Drank: {litresDrankRounded} mL";
 
                         if (totalDrank == 0)
                         {
-                            AmountDrank.text = "Amount Drank: 0.00 L";
+                            AmountDrank.text = "Amount Drank: 0 mL";
                         }
 
                         //AmountSpiltUpdate
                         litresSpilt = Mathf.Round((totalSpillageAmount * 10.00f) / 10.00f);
-                        litresSpiltRounded = ((litresSpilt * 0.01f) * 0.50f);
+                        litresSpiltRounded = ((litresSpilt * 5f));
 
 
-                        AmountSpilt.text = $"Amount Spilt: {litresSpiltRounded} L";
+                        AmountSpilt.text = $"Amount Spilt: {litresSpiltRounded} mL";
 
                         if (totalSpillageAmount == 0)
                         {
-                            AmountSpilt.text = "Amount Spilt: 0.00 L";
+                            AmountSpilt.text = "Amount Spilt: 0 mL";
                         }
                     }
 
@@ -177,6 +201,15 @@ public class DG_GameManager : MonoBehaviour
                     if (balanceLevel > 100)
                     {
                         balanceLevel = 100f;
+                    }
+                }
+
+                if (BalanceMeter != null)
+                {
+                    if (BalanceMeterMarker != null)
+                    {
+                        BalanceMeterMarker.transform.localEulerAngles = new Vector3(0, 0, Mathf.Lerp(minRotationAngle, maxRotationAngle, balanceLevel / 100));
+                            //new Vector3(0, 0, Mathf.Lerp(minRotationAngle, maxRotationAngle, balanceLevel / 100));
                     }
                 }
             }
@@ -240,7 +273,7 @@ public class DG_GameManager : MonoBehaviour
 
                 DG_Events.current.AddBonusTime();
             }
-
+            amountLeft = 100f;
             NewDrink();
         }
         if (isCurrentGolden == false)
@@ -248,6 +281,7 @@ public class DG_GameManager : MonoBehaviour
             regularDrank++;
 
             NewDrink();
+            amountLeft = 100f;
         }
     }
 
@@ -260,13 +294,21 @@ public class DG_GameManager : MonoBehaviour
         {
             if (UpcomingTankards[0] == "Golden")
             {
+                SpriteRenderer spriteRenderer = PlayerSprite.GetComponent<SpriteRenderer>();
+                spriteRenderer.sprite = GoldenTankard;
+                
                 isCurrentGolden = true;
+
                 UpcomingTankards[0] = "";
                 MoveListUp();
             }
             if (UpcomingTankards[0] == "Regular")
             {
+                SpriteRenderer spriteRenderer = PlayerSprite.GetComponent<SpriteRenderer>();
+                spriteRenderer.sprite = RegularTankard;
+
                 isCurrentGolden = false;
+
                 UpcomingTankards[0] = "";
                 MoveListUp();
             }
@@ -410,7 +452,7 @@ public class DG_GameManager : MonoBehaviour
                     SpriteRenderer spriteRenderer = FifthTankard.GetComponent<SpriteRenderer>();
                     //Sets the objects sprite to its correct state
                     spriteRenderer.sprite = GoldenTankard;
-                    amountLeft = 100f;
+                    
                     currentSpillageAmount = 0f;
                     isChangeWaiting = false;
                 }
@@ -420,7 +462,7 @@ public class DG_GameManager : MonoBehaviour
                     SpriteRenderer spriteRenderer = FifthTankard.GetComponent<SpriteRenderer>();
                     //Sets the objects sprite to its correct state
                     spriteRenderer.sprite = RegularTankard;
-                    amountLeft = 100f;
+                    
                     currentSpillageAmount = 0f;
                     isChangeWaiting = false;
                 }
