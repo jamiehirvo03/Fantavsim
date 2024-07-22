@@ -12,12 +12,14 @@ public class DG_GameManager : MonoBehaviour
     [SerializeField] private int goldenDrank;
     [SerializeField] private int totalPoints;
     [SerializeField] private float totalDrank;
-    [SerializeField] private float litresDrank = 0.00f;
+    [SerializeField] private float litresDrank = 0f;
+    private float litresDrankRounded;
 
     [SerializeField] private float amountLeft;
     [SerializeField] private float totalSpillageAmount;
     [SerializeField] private float currentSpillageAmount;
-    [SerializeField] private float litresSpilt = 0.00f;
+    [SerializeField] private float litresSpilt = 0;
+    private float litresSpiltRounded;
 
     //Variables for tankard generation
     [SerializeField] private int randomNum;
@@ -31,7 +33,7 @@ public class DG_GameManager : MonoBehaviour
     [SerializeField] private float balanceLevel;
 
     //Multiplies the standard deltatime for greater decay rate
-    public float decayRate = 20f;
+    public float decayRate = 20;
 
     //Bool to check if the setup steps have happened
     private bool gameIsSetup = false;
@@ -84,8 +86,9 @@ public class DG_GameManager : MonoBehaviour
         randomMax = 1;
         sinceGolden = 0;
 
-        totalSpillageAmount = 0f;
-        currentSpillageAmount = 0f;
+        totalDrank = 0;
+        totalSpillageAmount = 0;
+        currentSpillageAmount = 0;
 
         GenerateStartingDrinks();
 
@@ -116,8 +119,31 @@ public class DG_GameManager : MonoBehaviour
 
                     if (amountLeft >= 0)
                     {
-                        ProgressSliderUpdate();
-                        AmountDrankUpdate();
+                        //Update the slider (temporary solution) regularly to show amount left in current drink
+                        ProgressSlider.value = amountLeft;
+
+                        //AmountDrankUpdate
+                        litresDrank = Mathf.Round((totalDrank * 10.00f) / 10.00f);
+                        litresDrankRounded = ((litresDrank * 0.01f) * 0.50f);
+
+                        AmountDrank.text = $"Amount Drank: {litresDrankRounded} L";
+
+                        if (totalDrank == 0)
+                        {
+                            AmountDrank.text = "Amount Drank: 0.00 L";
+                        }
+
+                        //AmountSpiltUpdate
+                        litresSpilt = Mathf.Round((totalSpillageAmount * 10.00f) / 10.00f);
+                        litresSpiltRounded = ((litresSpilt * 0.01f) * 0.50f);
+
+
+                        AmountSpilt.text = $"Amount Spilt: {litresSpiltRounded} L";
+
+                        if (totalSpillageAmount == 0)
+                        {
+                            AmountSpilt.text = "Amount Spilt: 0.00 L";
+                        }
                     }
 
                     if (balanceLevel >= 0)
@@ -294,9 +320,12 @@ public class DG_GameManager : MonoBehaviour
             randomMax = 1;
         }
 
-        if ((UpcomingTankards[4] == "Regular") || (UpcomingTankards[4] == "Golden"))
+        if (isChangeWaiting)
         {
-            SpriteChanger();
+            if ((UpcomingTankards[4] == "Regular") || (UpcomingTankards[4] == "Golden"))
+            {
+                SpriteChanger();
+            }
         }
     }
 
@@ -382,6 +411,7 @@ public class DG_GameManager : MonoBehaviour
                     //Sets the objects sprite to its correct state
                     spriteRenderer.sprite = GoldenTankard;
                     amountLeft = 100f;
+                    currentSpillageAmount = 0f;
                     isChangeWaiting = false;
                 }
                 if (UpcomingTankards[4] == "Regular")
@@ -391,6 +421,7 @@ public class DG_GameManager : MonoBehaviour
                     //Sets the objects sprite to its correct state
                     spriteRenderer.sprite = RegularTankard;
                     amountLeft = 100f;
+                    currentSpillageAmount = 0f;
                     isChangeWaiting = false;
                 }
             }
@@ -480,25 +511,5 @@ public class DG_GameManager : MonoBehaviour
                 amountLeft -= 2 * Time.deltaTime;
                 break;
         }
-    }
-
-    private void ProgressSliderUpdate()
-    {
-        //Update the slider (temporary solution) regularly to show amount left in current drink
-        ProgressSlider.value = amountLeft;
-    }
-
-    private void AmountDrankUpdate()
-    { 
-        litresDrank = ((totalDrank / 100) * 0.5f);
-
-        AmountDrank.text = $"Amount Drank: {litresDrank} L";
-    }
-
-    private void SpillageAmountUpdate()
-    {
-        litresSpilt = ((totalSpillageAmount / 100) * 0.5f);
-
-
-    }
+    }     
 }
