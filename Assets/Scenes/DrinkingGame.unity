@@ -1081,10 +1081,12 @@ MonoBehaviour:
   totalPoints: 0
   totalDrank: 0
   litresDrank: 0
+  litresDrankRounded: 0
   amountLeft: 0
   totalSpillageAmount: 0
   currentSpillageAmount: 0
   litresSpilt: 0
+  litresSpiltRounded: 0
   randomNum: 0
   randomMax: 0
   sinceGolden: 0
@@ -1092,7 +1094,10 @@ MonoBehaviour:
   UpcomingTankards: []
   balanceLevel: 0
   decayRate: 20
+  isGameSetup: 0
+  isChangeStarted: 0
   isChangeWaiting: 0
+  isCurrentChanged: 0
   isGameOver: 0
   FirstTankard: {fileID: 217468593}
   SecondTankard: {fileID: 1629316323}
