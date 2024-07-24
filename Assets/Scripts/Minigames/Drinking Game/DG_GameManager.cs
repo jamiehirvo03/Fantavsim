@@ -14,13 +14,13 @@ public class DG_GameManager : MonoBehaviour
     [SerializeField] private int totalPoints;
     [SerializeField] private float totalDrank;
     [SerializeField] private float litresDrank = 0f;
-    private float litresDrankRounded;
+    [SerializeField] private float litresDrankRounded;
 
     [SerializeField] private float amountLeft;
     [SerializeField] private float totalSpillageAmount;
     [SerializeField] private float currentSpillageAmount;
     [SerializeField] private float litresSpilt = 0f;
-    private float litresSpiltRounded;
+    [SerializeField] private float litresSpiltRounded;
 
     //Variables for tankard generation
     [SerializeField] private int randomNum;
@@ -37,9 +37,13 @@ public class DG_GameManager : MonoBehaviour
     public float decayRate = 20;
 
     //Bool to check if the setup steps have happened
-    private bool gameIsSetup = false;
+    [SerializeField] private bool isGameSetup = false;
+    //Has the new drink setup started
+    [SerializeField] private bool isChangeStarted;
     //Has the drink been changed, used to halt following operations until change has been made
     [SerializeField] private bool isChangeWaiting;
+    //Has the current tankard already been changed?
+    [SerializeField] private bool isCurrentChanged;
     //Has the timer reached 0? if so end the game
     [SerializeField] private bool isGameOver;
 
@@ -66,9 +70,6 @@ public class DG_GameManager : MonoBehaviour
         Spilling2
     }
 
-    
-
-
     public Slider ProgressSlider;
     public TextMeshProUGUI AmountDrank;
     public TextMeshProUGUI AmountSpilt;
@@ -91,6 +92,10 @@ public class DG_GameManager : MonoBehaviour
         AmountDrank.enabled = false;
         AmountSpilt.enabled = false;
 
+        SpriteRenderer spriteRenderer = PlayerSprite.GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = RegularTankard;
+        
+
         isGameOver = false;
     }
     private void OnStartGame()
@@ -109,8 +114,10 @@ public class DG_GameManager : MonoBehaviour
         AmountSpilt.enabled = true;
 
         GenerateStartingDrinks();
+        amountLeft = 100f;
 
-        gameIsSetup = true;
+        isChangeStarted = false;
+        isGameSetup = true;
     }
 
     private void OnTimeOver()
@@ -125,12 +132,16 @@ public class DG_GameManager : MonoBehaviour
 
         //Total and display player stats to UI
         Debug.Log($"Regular: {regularDrank} |Golden: {goldenDrank} |Total: {(regularDrank + goldenDrank)} |Amount Drank: {litresDrank} L |Amount Spilt: {totalSpillageAmount}");
+
+        //Display final screen on UI
+
+        DG_Events.current.onTimeOver -= OnTimeOver;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (gameIsSetup)
+        if (isGameSetup)
         {
             if (!isGameOver)
             {
@@ -138,420 +149,450 @@ public class DG_GameManager : MonoBehaviour
                 {
                     if (amountLeft <= 0)
                     {
-                        DrinkEmpty();
-                    }
+                        Debug.Log("Drink is empty");
 
-                    if (amountLeft >= 0)
-                    {
-                        //Update the slider (temporary solution) regularly to show amount left in current drink
-                        ProgressSlider.value = amountLeft;
-
-                        //AmountDrankUpdate
-                        litresDrank = Mathf.Round((totalDrank * 10.00f) / 10.00f);
-                        litresDrankRounded = ((litresDrank * 5f));
-
-                        AmountDrank.text = $"Amount Drank: {litresDrankRounded} mL";
-
-                        if (totalDrank == 0)
+                        if (!isChangeStarted)
                         {
-                            AmountDrank.text = "Amount Drank: 0 mL";
-                        }
-
-                        //AmountSpiltUpdate
-                        litresSpilt = Mathf.Round((totalSpillageAmount * 10.00f) / 10.00f);
-                        litresSpiltRounded = ((litresSpilt * 5f));
-
-
-                        AmountSpilt.text = $"Amount Spilt: {litresSpiltRounded} mL";
-
-                        if (totalSpillageAmount == 0)
-                        {
-                            AmountSpilt.text = "Amount Spilt: 0 mL";
+                            DrinkEmpty();
                         }
                     }
 
-                    if (balanceLevel >= 0)
-                    {
-                        if ((balanceLevel < 100) && (amountLeft > 0))
+                        if (amountLeft >= 0)
                         {
-                            if (Input.GetKeyDown(KeyCode.Space))
+                            //Update the slider (temporary solution) regularly to show amount left in current drink
+                            ProgressSlider.value = amountLeft;
+
+                            //AmountDrankUpdate
+                            litresDrank = Mathf.Round((totalDrank * 10.00f) / 10.00f);
+                            litresDrankRounded = ((litresDrank * 5f));
+
+                            AmountDrank.text = $"Amount Drank: {litresDrankRounded} mL";
+
+                            if (totalDrank == 0)
                             {
-                                Debug.Log("Player has pressed SPACE");
+                                AmountDrank.text = "Amount Drank: 0 mL";
+                            }
 
-                                balanceLevel += 10f;
+                            //AmountSpiltUpdate
+                            litresSpilt = Mathf.Round((totalSpillageAmount * 10.00f) / 10.00f);
+                            litresSpiltRounded = ((litresSpilt * 5f));
+
+
+                            AmountSpilt.text = $"Amount Spilt: {litresSpiltRounded} mL";
+
+                            if (totalSpillageAmount == 0)
+                            {
+                                AmountSpilt.text = "Amount Spilt: 0 mL";
                             }
                         }
+
+                        if (balanceLevel >= 0)
+                        {
+                            if ((balanceLevel < 100) && (amountLeft > 0))
+                            {
+                                if (Input.GetKeyDown(KeyCode.Space))
+                                {
+                                    Debug.Log("Player has pressed SPACE");
+
+                                    balanceLevel += 10f;
+                                }
+                            }
+                        }
+
+                        if (balanceLevel > 0)
+                        {
+                            BalanceStateUpdate();
+
+                            //Constantly lower the balance meter
+                            balanceLevel -= decayRate * Time.deltaTime;
+                        }
+
+                        //Sets lower limit of balance meter to 0
+                        if (balanceLevel < 0)
+                        {
+                            balanceLevel = 0f;
+                        }
+
+                        //Sets upper limit of balance meter to 100
+                        if (balanceLevel > 100)
+                        {
+                            balanceLevel = 100f;
+                        }
                     }
 
-                    if (balanceLevel > 0)
+                    if (BalanceMeter != null)
                     {
-                        BalanceStateUpdate();
-
-                        //Constantly lower the balance meter
-                        balanceLevel -= decayRate * Time.deltaTime;
-                    }
-
-                    //Sets lower limit of balance meter to 0
-                    if (balanceLevel < 0)
-                    {
-                        balanceLevel = 0f;
-                    }
-
-                    //Sets upper limit of balance meter to 100
-                    if (balanceLevel > 100)
-                    {
-                        balanceLevel = 100f;
-                    }
-                }
-
-                if (BalanceMeter != null)
-                {
-                    if (BalanceMeterMarker != null)
-                    {
-                        BalanceMeterMarker.transform.localEulerAngles = new Vector3(0, 0, Mathf.Lerp(minRotationAngle, maxRotationAngle, balanceLevel / 100));
+                        if (BalanceMeterMarker != null)
+                        {
+                            BalanceMeterMarker.transform.localEulerAngles = new Vector3(0, 0, Mathf.Lerp(minRotationAngle, maxRotationAngle, balanceLevel / 100));
                             //new Vector3(0, 0, Mathf.Lerp(minRotationAngle, maxRotationAngle, balanceLevel / 100));
+                        }
                     }
                 }
             }
         }
-    }
 
-    //CODE FOR GENERATING THE FIRST 5 UPCOMING TANKARDS
-    private void GenerateStartingDrinks()
-    {
-        for (int i = 1; i < 6; i++)
+        //CODE FOR GENERATING THE FIRST 5 UPCOMING TANKARDS
+        private void GenerateStartingDrinks()
         {
-            Debug.Log($"Starting Tankard #{i} has been generated");
+            for (int i = 1; i < 6; i++)
+            {
+                Debug.Log($"Starting Tankard #{i} has been generated");
+
+                //This will pick a random number, but by having the max be a variable it will allow for the chances to be easily changed
+                randomNum = Random.Range(1, randomMax);
+
+                if (randomNum == 1)
+                {
+                    UpcomingTankards.Insert((i - 1), "Regular");
+
+                    //Increases the count everytime a tankard isnt chosen to be golden
+                    sinceGolden += 1;
+
+                    //Every time a normal tankard is chosen, the chance for a golden tankard increases by 20%
+                    randomMax = (5 - sinceGolden);
+
+                    if (i == 5)
+                    {
+                        SpriteChanger();
+                    }
+                }
+                else
+                {
+                    UpcomingTankards.Insert((i - 1), "Golden");
+
+                    //Since a golden tankard was chosen, the count is reset
+                    sinceGolden = 0;
+
+                    //Any time a tankard is selected to be golden, the next one is guaranteed to be normal
+                    randomMax = 1;
+
+                    if (i == 5)
+                    {
+                        SpriteChanger();
+                    }
+                }
+            }
+        }
+        //CODE FOR REMOVING EMPTY TANKARD
+        private void DrinkEmpty()
+        {
+            Debug.Log("Runnning DrinkEmpty()");
+
+            balanceLevel = 0f;
+
+            isCurrentChanged = false;
+
+            if (isCurrentGolden == true)
+            {
+                goldenDrank++;
+
+                if (currentSpillageAmount == 0)
+                {
+                    Debug.Log("Completed a golden tankard without spilling! An extra 10s has been added!");
+
+                    DG_Events.current.AddBonusTime();
+                }
+
+                isChangeStarted = true;
+
+                NewDrink();
+            }
+            if (isCurrentGolden == false)
+            {
+                regularDrank++;
+
+                isChangeStarted = true;
+
+                NewDrink();
+            }
+        }
+
+        //CODE FOR MAKING NEXT TANKARD THE CURRENT ONE
+        private void NewDrink()
+        {
+            string currentDrink = UpcomingTankards[0];
+            Debug.Log("Running NewDrink()");
+
+            isChangeWaiting = true;
+            isChangeStarted = false;
+            amountLeft = 100f;
+
+            if (!isCurrentChanged)
+            {
+                if (currentDrink == "Golden")
+                {
+                    isCurrentChanged = true;
+                    Debug.Log("Current Tankard is changed to Golden");
+
+                    isCurrentGolden = true;
+
+                    SpriteRenderer spriteRenderer = PlayerSprite.GetComponent<SpriteRenderer>();
+                    spriteRenderer.sprite = GoldenTankard;
+
+                    UpcomingTankards[0] = "";
+                    MoveListUp();
+                }
+                if (currentDrink == "Regular")
+                {
+                    isCurrentChanged = true;
+                    Debug.Log("Current Tankard is changed to Regular");
+
+                    isCurrentGolden = false;
+
+                    SpriteRenderer spriteRenderer = PlayerSprite.GetComponent<SpriteRenderer>();
+                    spriteRenderer.sprite = RegularTankard;
+
+                    UpcomingTankards[0] = "";
+                    MoveListUp();
+                }
+            }
+        }
+
+        //CODE FOR MOVING TANKARDS IN LIST
+        private void MoveListUp()
+        {
+            Debug.Log("Running MoveListUp");
+
+            string currentListValue;
+
+            for (int i = 0; i < 4; i++)
+            {
+                currentListValue = UpcomingTankards[i + 1];
+                UpcomingTankards[i] = currentListValue;
+
+                if (i == 3)
+                {
+                    UpcomingTankards[i + 1] = "";    
+
+                    if ((UpcomingTankards[4] == "") || (UpcomingTankards[4] == null))
+                    {
+                        FillLastSlot();
+                    }
+                }
+            }
+        }
+
+        //CODE FOR ADDING NEW TANKARD TO LAST SLOT
+        private void FillLastSlot()
+        {
+            Debug.Log("Running FillLastSlot");
 
             //This will pick a random number, but by having the max be a variable it will allow for the chances to be easily changed
             randomNum = Random.Range(1, randomMax);
 
             if (randomNum == 1)
             {
-                UpcomingTankards.Insert((i - 1), "Regular");
-
+                UpcomingTankards[4] = "Regular";
                 //Increases the count everytime a tankard isnt chosen to be golden
                 sinceGolden += 1;
 
                 //Every time a normal tankard is chosen, the chance for a golden tankard increases by 20%
                 randomMax = (5 - sinceGolden);
-
-                if (i == 5)
-                {
-                    SpriteChanger();
-                }
             }
             else
             {
-                UpcomingTankards.Insert((i - 1), "Golden");
+                UpcomingTankards[4] = "Golden";
 
                 //Since a golden tankard was chosen, the count is reset
                 sinceGolden = 0;
 
                 //Any time a tankard is selected to be golden, the next one is guaranteed to be normal
                 randomMax = 1;
+            }
 
-                if (i == 5)
+            if (isChangeWaiting)
+            {
+                if ((UpcomingTankards[4] == "Regular") || (UpcomingTankards[4] == "Golden"))
                 {
                     SpriteChanger();
                 }
             }
-        }  
-    }
-    //CODE FOR REMOVING EMPTY TANKARD
-    private void DrinkEmpty()
-    {
-        balanceLevel = 0f;
-
-        if (isCurrentGolden == true)
-        {
-            goldenDrank++;
-
-            if (currentSpillageAmount == 0)
-            {
-                Debug.Log("Completed a golden tankard without spilling! An extra 10s has been added!");
-
-                DG_Events.current.AddBonusTime();
-            }
-            amountLeft = 100f;
-            NewDrink();
-        }
-        if (isCurrentGolden == false)
-        {
-            regularDrank++;
-
-            NewDrink();
-            amountLeft = 100f;
-        }
-    }
-
-    //CODE FOR MAKING NEXT TANKARD THE CURRENT ONE
-    private void NewDrink()
-    {
-        isChangeWaiting = true;
-
-        if ((UpcomingTankards[0] == "Regular") || (UpcomingTankards[0] == "Golden"))
-        {
-            if (UpcomingTankards[0] == "Golden")
-            {
-                SpriteRenderer spriteRenderer = PlayerSprite.GetComponent<SpriteRenderer>();
-                spriteRenderer.sprite = GoldenTankard;
-                
-                isCurrentGolden = true;
-
-                UpcomingTankards[0] = "";
-                MoveListUp();
-            }
-            if (UpcomingTankards[0] == "Regular")
-            {
-                SpriteRenderer spriteRenderer = PlayerSprite.GetComponent<SpriteRenderer>();
-                spriteRenderer.sprite = RegularTankard;
-
-                isCurrentGolden = false;
-
-                UpcomingTankards[0] = "";
-                MoveListUp();
-            }
-        } 
-    }
-
-    //CODE FOR MOVING TANKARDS IN LIST
-    private void MoveListUp()
-    {
-        string currentListValue;
-
-        for (int i = 0; i < 4; i++)
-        {
-            currentListValue = UpcomingTankards[i + 1];
-            UpcomingTankards.RemoveAt(i + 1);
-            UpcomingTankards.Insert(i, currentListValue);
-
-            if (i == 3)
-            {
-                if ((UpcomingTankards[4] == "") || (UpcomingTankards[4] == null))
-                {
-                    FillLastSlot();
-                }
-            }
-        }
-    }
-
-    //CODE FOR ADDING NEW TANKARD TO LAST SLOT
-    private void FillLastSlot()
-    {
-        //This will pick a random number, but by having the max be a variable it will allow for the chances to be easily changed
-        randomNum = Random.Range(1, randomMax);
-
-        if (randomNum == 1)
-        {
-            UpcomingTankards[4] = "Regular";
-            //Increases the count everytime a tankard isnt chosen to be golden
-            sinceGolden += 1;
-
-            //Every time a normal tankard is chosen, the chance for a golden tankard increases by 20%
-            randomMax = (5 - sinceGolden);
-        }
-        else
-        {
-            UpcomingTankards[4] = "Golden";
-
-            //Since a golden tankard was chosen, the count is reset
-            sinceGolden = 0;
-
-            //Any time a tankard is selected to be golden, the next one is guaranteed to be normal
-            randomMax = 1;
         }
 
-        if (isChangeWaiting)
+
+        private void SpriteChanger()
         {
-            if ((UpcomingTankards[4] == "Regular") || (UpcomingTankards[4] == "Golden"))
+            Debug.Log("Running SpriteChanger()");
+
+            for (int i = 0; i < 5; i++)
             {
-                SpriteChanger();
+                if (i == 0)
+                {
+                    if (UpcomingTankards[0] == "Golden")
+                    {
+                        //Sets reference to the sprite renderer component that is on the corresponding tankard object
+                        SpriteRenderer spriteRenderer = FirstTankard.GetComponent<SpriteRenderer>();
+                        //Sets the objects sprite to its correct state
+                        spriteRenderer.sprite = GoldenTankard;
+                    }
+                    if (UpcomingTankards[0] == "Regular")
+                    {
+                        //Sets reference to the sprite renderer component that is on the corresponding tankard object
+                        SpriteRenderer spriteRenderer = FirstTankard.GetComponent<SpriteRenderer>();
+                        //Sets the objects sprite to its correct state
+                        spriteRenderer.sprite = RegularTankard;
+                    }
+                }
+                if (i == 1)
+                {
+                    if (UpcomingTankards[1] == "Golden")
+                    {
+                        //Sets reference to the sprite renderer component that is on the corresponding tankard object
+                        SpriteRenderer spriteRenderer = SecondTankard.GetComponent<SpriteRenderer>();
+                        //Sets the objects sprite to its correct state
+                        spriteRenderer.sprite = GoldenTankard;
+                    }
+                    if (UpcomingTankards[1] == "Regular")
+                    {
+                        //Sets reference to the sprite renderer component that is on the corresponding tankard object
+                        SpriteRenderer spriteRenderer = SecondTankard.GetComponent<SpriteRenderer>();
+                        //Sets the objects sprite to its correct state
+                        spriteRenderer.sprite = RegularTankard;
+                    }
+                }
+                if (i == 2)
+                {
+                    if (UpcomingTankards[2] == "Golden")
+                    {
+                        //Sets reference to the sprite renderer component that is on the corresponding tankard object
+                        SpriteRenderer spriteRenderer = ThirdTankard.GetComponent<SpriteRenderer>();
+                        //Sets the objects sprite to its correct state
+                        spriteRenderer.sprite = GoldenTankard;
+                    }
+                    if (UpcomingTankards[2] == "Regular")
+                    {
+                        //Sets reference to the sprite renderer component that is on the corresponding tankard object
+                        SpriteRenderer spriteRenderer = ThirdTankard.GetComponent<SpriteRenderer>();
+                        //Sets the objects sprite to its correct state
+                        spriteRenderer.sprite = RegularTankard;
+                    }
+                }
+                if (i == 3)
+                {
+                    if (UpcomingTankards[3] == "Golden")
+                    {
+                        //Sets reference to the sprite renderer component that is on the corresponding tankard object
+                        SpriteRenderer spriteRenderer = FourthTankard.GetComponent<SpriteRenderer>();
+                        //Sets the objects sprite to its correct state
+                        spriteRenderer.sprite = GoldenTankard;
+                    }
+                    if (UpcomingTankards[3] == "Regular")
+                    {
+                        //Sets reference to the sprite renderer component that is on the corresponding tankard object
+                        SpriteRenderer spriteRenderer = FourthTankard.GetComponent<SpriteRenderer>();
+                        //Sets the objects sprite to its correct state
+                        spriteRenderer.sprite = RegularTankard;
+                    }
+                }
+                if (i == 4)
+                {
+                    if (UpcomingTankards[4] == "Golden")
+                    {
+                        //Sets reference to the sprite renderer component that is on the corresponding tankard object
+                        SpriteRenderer spriteRenderer = FifthTankard.GetComponent<SpriteRenderer>();
+                        //Sets the objects sprite to its correct state
+                        spriteRenderer.sprite = GoldenTankard;
+
+                        currentSpillageAmount = 0f;
+                        isChangeWaiting = false;
+                }
+                    if (UpcomingTankards[4] == "Regular")
+                    {
+                        //Sets reference to the sprite renderer component that is on the corresponding tankard object
+                        SpriteRenderer spriteRenderer = FifthTankard.GetComponent<SpriteRenderer>();
+                        //Sets the objects sprite to its correct state
+                        spriteRenderer.sprite = RegularTankard;
+
+                        currentSpillageAmount = 0f;
+                        isChangeWaiting = false;
+                    }
+                }
             }
         }
-    }
 
-
-    private void SpriteChanger()
-    {
-        for (int i = 0; i < 5; i++)
+        //Handles balance mechanic
+        private void BalanceStateUpdate()
         {
-            if (i == 0)
+            if (balanceLevel <= 20)
             {
-                if (UpcomingTankards[0] == "Golden")
+                //Do nothing
+
+                if (currentState != BalanceState.Idle)
                 {
-                    //Sets reference to the sprite renderer component that is on the corresponding tankard object
-                    SpriteRenderer spriteRenderer = FirstTankard.GetComponent<SpriteRenderer>();
-                    //Sets the objects sprite to its correct state
-                    spriteRenderer.sprite = GoldenTankard;
-                }
-                if (UpcomingTankards[0] == "Regular")
-                {
-                    //Sets reference to the sprite renderer component that is on the corresponding tankard object
-                    SpriteRenderer spriteRenderer = FirstTankard.GetComponent<SpriteRenderer>();
-                    //Sets the objects sprite to its correct state
-                    spriteRenderer.sprite = RegularTankard;
+                    Debug.Log("State: Idle");
+                    DG_Events.current.Idle();
+                    currentState = BalanceState.Idle;
                 }
             }
-            if (i == 1)
+            if ((balanceLevel > 20) && (balanceLevel <= 50))
             {
-                if (UpcomingTankards[1] == "Golden")
+                if (currentState != BalanceState.Drinking)
                 {
-                    //Sets reference to the sprite renderer component that is on the corresponding tankard object
-                    SpriteRenderer spriteRenderer = SecondTankard.GetComponent<SpriteRenderer>();
-                    //Sets the objects sprite to its correct state
-                    spriteRenderer.sprite = GoldenTankard;
-                }
-                if (UpcomingTankards[1] == "Regular")
-                {
-                    //Sets reference to the sprite renderer component that is on the corresponding tankard object
-                    SpriteRenderer spriteRenderer = SecondTankard.GetComponent<SpriteRenderer>();
-                    //Sets the objects sprite to its correct state
-                    spriteRenderer.sprite = RegularTankard;
+                    Debug.Log("State: Drinking");
+                    DG_Events.current.Drinking();
+                    currentState = BalanceState.Drinking;
                 }
             }
-            if (i == 2)
+            if ((balanceLevel > 50) && (balanceLevel <= 70))
             {
-                if (UpcomingTankards[2] == "Golden")
+                if (currentState != BalanceState.Spilling1)
                 {
-                    //Sets reference to the sprite renderer component that is on the corresponding tankard object
-                    SpriteRenderer spriteRenderer = ThirdTankard.GetComponent<SpriteRenderer>();
-                    //Sets the objects sprite to its correct state
-                    spriteRenderer.sprite = GoldenTankard;
-                }
-                if (UpcomingTankards[2] == "Regular")
-                {
-                    //Sets reference to the sprite renderer component that is on the corresponding tankard object
-                    SpriteRenderer spriteRenderer = ThirdTankard.GetComponent<SpriteRenderer>();
-                    //Sets the objects sprite to its correct state
-                    spriteRenderer.sprite = RegularTankard;
+                    Debug.Log("State: Spilling 1");
+                    DG_Events.current.Spilling1();
+                    currentState = BalanceState.Spilling1;
                 }
             }
-            if (i == 3)
+            if ((balanceLevel > 70) && (balanceLevel <= 85))
             {
-                if (UpcomingTankards[3] == "Golden")
+                if (currentState != BalanceState.Chugging)
                 {
-                    //Sets reference to the sprite renderer component that is on the corresponding tankard object
-                    SpriteRenderer spriteRenderer = FourthTankard.GetComponent<SpriteRenderer>();
-                    //Sets the objects sprite to its correct state
-                    spriteRenderer.sprite = GoldenTankard;
-                }
-                if (UpcomingTankards[3] == "Regular")
-                {
-                    //Sets reference to the sprite renderer component that is on the corresponding tankard object
-                    SpriteRenderer spriteRenderer = FourthTankard.GetComponent<SpriteRenderer>();
-                    //Sets the objects sprite to its correct state
-                    spriteRenderer.sprite = RegularTankard;
+                    Debug.Log("State: Chugging");
+                    DG_Events.current.Chugging();
+                    currentState = BalanceState.Chugging;
                 }
             }
-            if (i == 4)
+            if ((balanceLevel > 85) && (balanceLevel <= 100))
             {
-                if (UpcomingTankards[4] == "Golden")
+                if (currentState != BalanceState.Spilling2)
                 {
-                    //Sets reference to the sprite renderer component that is on the corresponding tankard object
-                    SpriteRenderer spriteRenderer = FifthTankard.GetComponent<SpriteRenderer>();
-                    //Sets the objects sprite to its correct state
-                    spriteRenderer.sprite = GoldenTankard;
-                    
-                    currentSpillageAmount = 0f;
-                    isChangeWaiting = false;
+                    Debug.Log("State: Spilling 2");
+                    DG_Events.current.Spilling2();
+                    currentState = BalanceState.Spilling2;
                 }
-                if (UpcomingTankards[4] == "Regular")
-                {
-                    //Sets reference to the sprite renderer component that is on the corresponding tankard object
-                    SpriteRenderer spriteRenderer = FifthTankard.GetComponent<SpriteRenderer>();
-                    //Sets the objects sprite to its correct state
-                    spriteRenderer.sprite = RegularTankard;
-                    
-                    currentSpillageAmount = 0f;
-                    isChangeWaiting = false;
-                }
+            }
+
+            switch (currentState)
+            {
+                case BalanceState.Idle:
+
+                    break;
+
+                case BalanceState.Drinking:
+                    //Gradually decrease amountLeft
+                    amountLeft -= 2 * Time.deltaTime;
+                    totalDrank += 2 * Time.deltaTime;
+                    break;
+
+                case BalanceState.Spilling1:
+                    //Gradually increase spill meter and decrease amount left at a slower rate
+                    currentSpillageAmount += Time.deltaTime;
+                    totalSpillageAmount += Time.deltaTime;
+                    amountLeft -= Time.deltaTime;
+                    totalDrank += Time.deltaTime;
+                    break;
+
+                case BalanceState.Chugging:
+                    //Decrease amountLeft by a larger value
+                    amountLeft -= 6 * Time.deltaTime;
+                    totalDrank += 6 * Time.deltaTime;
+                    break;
+                case BalanceState.Spilling2:
+                    //Gradually increase spill meter at a larger rate
+                    currentSpillageAmount += 2 * Time.deltaTime;
+                    totalSpillageAmount += 2 * Time.deltaTime;
+                    amountLeft -= 2 * Time.deltaTime;
+                    break;
             }
         }
     }
-
-    //Handles balance mechanic
-    private void BalanceStateUpdate()
-    {
-        if (balanceLevel <= 20)
-        {
-            //Do nothing
-
-            if (currentState != BalanceState.Idle)
-            {
-                Debug.Log("State: Idle");
-                DG_Events.current.Idle();
-                currentState = BalanceState.Idle;
-            }
-        }
-        if ((balanceLevel > 20) && (balanceLevel <= 50))
-        {
-            if (currentState != BalanceState.Drinking)
-            {
-                Debug.Log("State: Drinking");
-                DG_Events.current.Drinking();
-                currentState = BalanceState.Drinking;
-            }
-        }
-        if ((balanceLevel > 50) && (balanceLevel <= 70))
-        {
-            if (currentState != BalanceState.Spilling1)
-            {
-                Debug.Log("State: Spilling 1");
-                DG_Events.current.Spilling1();
-                currentState = BalanceState.Spilling1;
-            }
-        }
-        if ((balanceLevel > 70) && (balanceLevel <= 85))
-        {
-            if (currentState != BalanceState.Chugging)
-            {
-                Debug.Log("State: Chugging");
-                DG_Events.current.Chugging();
-                currentState = BalanceState.Chugging;
-            }
-        }
-        if ((balanceLevel > 85) && (balanceLevel <= 100))
-        {
-            if (currentState != BalanceState.Spilling2)
-            {
-                Debug.Log("State: Spilling 2");
-                DG_Events.current.Spilling2();
-                currentState = BalanceState.Spilling2;
-            }
-        }
-
-        switch (currentState)
-        {
-            case BalanceState.Idle:
-                
-                break;
-
-            case BalanceState.Drinking:
-                //Gradually decrease amountLeft
-                amountLeft -= 2 * Time.deltaTime;
-                totalDrank += 2 * Time.deltaTime;
-                break;
-
-            case BalanceState.Spilling1:
-                //Gradually increase spill meter and decrease amount left at a slower rate
-                currentSpillageAmount += Time.deltaTime;
-                totalSpillageAmount += Time.deltaTime;
-                amountLeft -= Time.deltaTime;
-                totalDrank += Time.deltaTime;
-                break;
-
-            case BalanceState.Chugging:
-                //Decrease amountLeft by a larger value
-                amountLeft -= 6 * Time.deltaTime;
-                totalDrank += 6 * Time.deltaTime;
-                break;
-            case BalanceState.Spilling2:
-                //Gradually increase spill meter at a larger rate
-                currentSpillageAmount += 2 * Time.deltaTime;
-                totalSpillageAmount += 2 * Time.deltaTime;
-                amountLeft -= 2 * Time.deltaTime;
-                break;
-        }
-    }     
-}
