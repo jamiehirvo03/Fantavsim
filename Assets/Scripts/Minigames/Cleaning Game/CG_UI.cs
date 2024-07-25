@@ -20,6 +20,8 @@ public class CG_UI : MonoBehaviour
     public float taskTimeLimit = 10f;
     [SerializeField] private float currentTaskTime;
 
+    public TextMeshProUGUI incorrectPlacementText;
+
     private bool isInTask = false;
     private bool isPlayerFired = false;
 
@@ -31,6 +33,7 @@ public class CG_UI : MonoBehaviour
         CG_Events.current.onGameOver += OnGameOver;
         CG_Events.current.onStartCleaningTask += OnStartCleaningTask;
         CG_Events.current.onCloseCleaningTask += OnCloseCleaningTask;
+        CG_Events.current.onMessPlacementIncorrect += OnMessPlacementIncorrect;
         CG_Events.current.onTaskFailed += OnTaskFailed;
     }
 
@@ -99,7 +102,13 @@ public class CG_UI : MonoBehaviour
         //Disable cleaning timer bar
         taskTimer.enabled = false;
     }
+    private void OnMessPlacementIncorrect()
+    {
+        //Display 'incorrect placement text'
+        incorrectPlacementText.enabled = true;
 
+        //Wait a few seconds then remove text
+    }
     private void OnTaskFailed()
     {
         //Add to the strike count

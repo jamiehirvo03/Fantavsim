@@ -902,6 +902,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6146937803301755776, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
   m_PrefabInstance: {fileID: 1523055382}
   m_PrefabAsset: {fileID: 0}
+--- !u!223 &1523055384 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 6863928135182717688, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
+  m_PrefabInstance: {fileID: 1523055382}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1627789581
 GameObject:
   m_ObjectHideFlags: 0
@@ -1074,6 +1079,7 @@ GameObject:
   - component: {fileID: 1808722667}
   - component: {fileID: 1808722672}
   - component: {fileID: 1808722671}
+  - component: {fileID: 1808722673}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1235,6 +1241,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bff09498abb48b946b1a865ea7a5e12d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1808722673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1808722665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf79b80c63dac8a4db8278cb55f8b20a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTaskActive: 0
+  range: 10
+  minMessCount: 7
+  maxMessCount: 15
+  taskMessCount: 0
+  mess: []
+  messList: []
 --- !u!1 &1819552104
 GameObject:
   m_ObjectHideFlags: 0
@@ -1405,6 +1430,7 @@ GameObject:
   - component: {fileID: 1847408664}
   - component: {fileID: 1847408663}
   - component: {fileID: 1847408662}
+  - component: {fileID: 1847408666}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -1495,6 +1521,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1847408666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847408661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f5bcf7bde50f64439955f42fb989f9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorialPopup: {fileID: 1523055384}
+  gameUI: {fileID: 0}
+  taskWindow: {fileID: 0}
+  taskFailedPopup: {fileID: 0}
+  winScreen: {fileID: 0}
+  firedScreen: {fileID: 0}
+  strikeDisplay: {fileID: 0}
+  taskTimer: {fileID: 0}
+  taskTimeLimit: 0
+  currentTaskTime: 0
 --- !u!1 &2035099723
 GameObject:
   m_ObjectHideFlags: 0

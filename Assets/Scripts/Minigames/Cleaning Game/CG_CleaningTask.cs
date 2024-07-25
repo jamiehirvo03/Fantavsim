@@ -22,6 +22,7 @@ public class CG_CleaningTask : MonoBehaviour
     {
         CG_Events.current.onStartCleaningTask += OnStartCleaningTask;
         CG_Events.current.onCloseCleaningTask += OnCloseCleaningTask;
+        CG_Events.current.onMessPlacementCorrect += OnMessPlacementCorrect;
     }
     // Update is called once per frame
     void Update()
@@ -61,16 +62,9 @@ public class CG_CleaningTask : MonoBehaviour
             messList.Clear();
         }
     }
-    private void MessRemovalCorrect()
+    private void OnMessPlacementCorrect()
     {
         //Remove mess item from list
-
-    }
-    private void MessRemovalIncorrect()
-    {
-        //Display 'incorrect' popup
-
-        //Reset item back to where it was found
 
     }
 }
