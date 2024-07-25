@@ -1,10 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CG_CleaningTask : MonoBehaviour
 {
-    [SerializeField] private List<string> messList = new List<string>();
+    [SerializeField] private bool isTaskActive = false;
+
+    public float range = 10;
+    public int minMessCount = 7;
+    public int maxMessCount = 15;
+    [SerializeField] private int taskMessCount;
+
+    public GameObject[] mess;
+    [SerializeField] private List<GameObject> messList = new List<GameObject>();
+
+    private float x, y, z;
 
     // Start is called before the first frame update
     void Start()
@@ -15,15 +26,51 @@ public class CG_CleaningTask : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //Only allow task controls when it is active
+        if (isTaskActive)
+        {
+            
+        }
     }
     private void OnStartCleaningTask()
     {
         //Initiate cleaning task
+        isTaskActive = true;
+
+        //Randomly decide how many mess items will be generated
+        taskMessCount = Random.Range(minMessCount,maxMessCount);
+
         //Generate mess items randomly
+        for (int i = 0; i < taskMessCount; i++)
+        {
+            x = Random.Range(-range, range);
+            y = Random.Range(-range, range);
+            z = Random.Range(-range, range);
+            GameObject newMess = (GameObject)Instantiate(mess[Random.Range(0, mess.Length)], new Vector3 (x, y, z), Quaternion.identity);
+
+            messList.Add(newMess);
+        }
     }
     private void OnCloseCleaningTask()
     {
         //End cleaning task
+
+        //Remove all mess items left in list
+        if (messList.Count > 0)
+        {
+            messList.Clear();
+        }
+    }
+    private void MessRemovalCorrect()
+    {
+        //Remove mess item from list
+
+    }
+    private void MessRemovalIncorrect()
+    {
+        //Display 'incorrect' popup
+
+        //Reset item back to where it was found
+
     }
 }

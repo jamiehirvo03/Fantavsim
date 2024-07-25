@@ -16,6 +16,10 @@ public class CG_Events : MonoBehaviour
     public event Action onGameOver;
     public event Action onStartCleaningTask;
     public event Action onCloseCleaningTask;
+    public event Action onTaskFailed;
+    public event Action onCreateMessItem;
+    public event Action onMessPlacementCorrect;
+    public event Action onMessPlacementIncorrect;
 
     public void StartGame()
     {
@@ -43,6 +47,34 @@ public class CG_Events : MonoBehaviour
         if (onCloseCleaningTask != null)
         {
             onCloseCleaningTask();
+        }
+    }
+    public void TaskFailed()
+    {
+        if (onTaskFailed != null)
+        {
+            onTaskFailed();
+        }
+    }
+    public void CreateMessItem()
+    {
+        if (onCreateMessItem != null)
+        {
+            onCreateMessItem();
+        }
+    }
+    public void MessPlacementCorrect()
+    {
+        if (onMessPlacementCorrect != null)
+        {
+            onMessPlacementCorrect();
+        }
+    }
+    public void MessPlacementIncorrect()
+    {
+        if (onMessPlacementIncorrect != null)
+        {
+            onMessPlacementIncorrect();
         }
     }
 }
