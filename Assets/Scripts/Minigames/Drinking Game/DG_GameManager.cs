@@ -70,6 +70,7 @@ public class DG_GameManager : MonoBehaviour
         Spilling2
     }
 
+    // VVVVV PUT IN UI SCRIPT VVVVV
     public Slider ProgressSlider;
     public TextMeshProUGUI AmountDrank;
     public TextMeshProUGUI AmountSpilt;
@@ -80,6 +81,7 @@ public class DG_GameManager : MonoBehaviour
     public float maxRotationAngle;
 
     public GameObject PlayerSprite;
+    // ^^^^^ PUT IN UI SCRIPT ^^^^^
 
 
     // Start is called before the first frame update
