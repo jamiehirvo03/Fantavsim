@@ -5,6 +5,7 @@ using UnityEngine;
 public class RemoveFoodScript : MonoBehaviour
 {
     GameManagerFS emptyPlateNow;
+    public GameObject clone;
     // Start is called before the first frame update
     void Start()
     {
