@@ -108,7 +108,16 @@ public class CG_UI : MonoBehaviour
         incorrectPlacementText.enabled = true;
 
         //Wait a few seconds then remove text
+        CloseIncorrectPlacementText();
     }
+
+    IEnumerator CloseIncorrectPlacementText()
+    {
+        yield return new WaitForSeconds(3);
+
+        incorrectPlacementText.enabled = false;
+    }
+
     private void OnTaskFailed()
     {
         //Add to the strike count

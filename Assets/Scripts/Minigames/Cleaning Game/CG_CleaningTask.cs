@@ -27,10 +27,9 @@ public class CG_CleaningTask : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Only allow task controls when it is active
         if (isTaskActive)
         {
-            
+
         }
     }
     private void OnStartCleaningTask()
@@ -46,7 +45,7 @@ public class CG_CleaningTask : MonoBehaviour
         {
             x = Random.Range(-range, range);
             y = Random.Range(-range, range);
-            z = Random.Range(-range, range);
+            z = -0.75f;
             GameObject newMess = (GameObject)Instantiate(mess[Random.Range(0, mess.Length)], new Vector3 (x, y, z), Quaternion.identity);
 
             messList.Add(newMess);
@@ -65,6 +64,12 @@ public class CG_CleaningTask : MonoBehaviour
     private void OnMessPlacementCorrect()
     {
         //Remove mess item from list
-
+        for (int i = 0; i < messList.Count; i++)
+        {
+            if (messList[i].GetComponent<CG_Mess>().placedCorrectly == true)
+            {
+                messList.RemoveAt(i);
+            }
+        }
     }
 }

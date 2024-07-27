@@ -18,6 +18,10 @@ public class CG_Events : MonoBehaviour
     public event Action onCloseCleaningTask;
     public event Action onTaskFailed;
     public event Action onCreateMessItem;
+    public event Action onOverTankardBin;
+    public event Action onOverScrapsBin;
+    public event Action onOverDustBin;
+    public event Action onOverRodentBin;
     public event Action onMessPlacementCorrect;
     public event Action onMessPlacementIncorrect;
 
@@ -61,6 +65,34 @@ public class CG_Events : MonoBehaviour
         if (onCreateMessItem != null)
         {
             onCreateMessItem();
+        }
+    }
+    public void OverTankardBin()
+    {
+        if (onOverTankardBin != null)
+        {
+            onOverTankardBin();
+        }
+    }
+    public void OverScrapsBin()
+    {
+        if (onOverScrapsBin != null)
+        {
+            onOverScrapsBin();
+        }
+    }
+    public void OverDustBin()
+    {
+        if (onOverDustBin != null)
+        {
+            onOverDustBin();
+        }
+    }
+    public void OverRodentBin()
+    {
+        if (onOverRodentBin != null)
+        {
+            onOverRodentBin();
         }
     }
     public void MessPlacementCorrect()
