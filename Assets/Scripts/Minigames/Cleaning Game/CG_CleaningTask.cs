@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class CG_CleaningTask : MonoBehaviour
 {
+    private int tasksLeft;
+
     [SerializeField] private bool isTaskActive = false;
 
     public float range = 10;
@@ -13,7 +15,7 @@ public class CG_CleaningTask : MonoBehaviour
     [SerializeField] private int taskMessCount;
 
     public GameObject[] mess;
-    [SerializeField] private List<GameObject> messList = new List<GameObject>();
+    [SerializeField] public List<GameObject> messList = new List<GameObject>();
 
     private float x, y, z;
 
@@ -22,7 +24,10 @@ public class CG_CleaningTask : MonoBehaviour
     {
         CG_Events.current.onStartCleaningTask += OnStartCleaningTask;
         CG_Events.current.onCloseCleaningTask += OnCloseCleaningTask;
+        CG_Events.current.onTaskSuccess += OnTaskSuccess;
         CG_Events.current.onMessPlacementCorrect += OnMessPlacementCorrect;
+
+        tasksLeft = 3;
     }
     // Update is called once per frame
     void Update()
@@ -30,6 +35,13 @@ public class CG_CleaningTask : MonoBehaviour
         if (isTaskActive)
         {
 
+        }
+        if (!isTaskActive)
+        {
+            if (tasksLeft <= 0)
+            {
+                CG_Events.current.GameWin();
+            }
         }
     }
     private void OnStartCleaningTask()
@@ -51,6 +63,11 @@ public class CG_CleaningTask : MonoBehaviour
             messList.Add(newMess);
         }
     }
+    private void OnTaskSuccess()
+    {
+        tasksLeft -= 1;
+    }
+
     private void OnCloseCleaningTask()
     {
         //End cleaning task

@@ -14,8 +14,12 @@ public class CG_Events : MonoBehaviour
 
     public event Action onStartGame;
     public event Action onGameOver;
+    public event Action onGameWin;
+    public event Action onShowTablePrompt;
+    public event Action onHideTablePrompt;
     public event Action onStartCleaningTask;
     public event Action onCloseCleaningTask;
+    public event Action onTaskSuccess;
     public event Action onTaskFailed;
     public event Action onCreateMessItem;
     public event Action onOverTankardBin;
@@ -39,6 +43,27 @@ public class CG_Events : MonoBehaviour
             onGameOver();
         }
     }
+    public void GameWin()
+    {
+        if (onGameWin != null)
+        {
+            onGameWin();
+        }
+    }
+    public void ShowTablePrompt()
+    {
+        if (onShowTablePrompt != null)
+        {
+            onShowTablePrompt();
+        }
+    }
+    public void HideTablePrompt()
+    {
+        if (onHideTablePrompt != null)
+        {
+            onHideTablePrompt();
+        }
+    }
     public void StartCleaningTask()
     {
         if (onStartCleaningTask != null)
@@ -51,6 +76,13 @@ public class CG_Events : MonoBehaviour
         if (onCloseCleaningTask != null)
         {
             onCloseCleaningTask();
+        }
+    }
+    public void TaskSuccess()
+    {
+        if (onTaskSuccess != null)
+        {
+            onTaskSuccess();
         }
     }
     public void TaskFailed()

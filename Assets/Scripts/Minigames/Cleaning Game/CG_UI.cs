@@ -30,7 +30,10 @@ public class CG_UI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        CG_Events.current.onGameWin += OnGameWin;
         CG_Events.current.onGameOver += OnGameOver;
+        CG_Events.current.onShowTablePrompt += OnShowTablePrompt;
+        CG_Events.current.onHideTablePrompt += OnHideTablePrompt;
         CG_Events.current.onStartCleaningTask += OnStartCleaningTask;
         CG_Events.current.onCloseCleaningTask += OnCloseCleaningTask;
         CG_Events.current.onMessPlacementIncorrect += OnMessPlacementIncorrect;
@@ -62,23 +65,35 @@ public class CG_UI : MonoBehaviour
         gameUI.enabled = true;
 
     }
+    private void OnShowTablePrompt()
+    {
+
+    }
+    private void OnHideTablePrompt()
+    {
+        
+    }
+
+    private void OnGameWin()
+    {
+        gameUI.enabled = false;
+
+        winScreen.enabled = true;
+    }
 
     private void OnGameOver()
     {
         //Disable game UI
         gameUI.enabled = false;
 
-        //Display end screen
-        winScreen.enabled = true;
-
-        if (isPlayerFired)
-        {
-            firedScreen.enabled = true;
-        }
+        firedScreen.enabled = true;
     }
     
     private void OnStartCleaningTask()
     {
+        //Disable table prompt
+        OnHideTablePrompt();
+
         //Display cleaning window
         taskWindow.enabled = true;
         
