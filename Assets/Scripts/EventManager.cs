@@ -24,16 +24,6 @@ public class EventManager : MonoBehaviour
     public event Action onHideTimer;
     public event Action onStartTimer;
 
-    //POPUP TUTORIAL EVENTS
-    public event Action onShowDrinkingTutorial;
-    public event Action onHideDrinkingTutorial;
-    public event Action onStartDrinkingGame;
-    public event Action onDrinkingGameTimeOver;
-
-    public event Action onShowCleanupTutorial;
-    public event Action onHideCleanupTutorial;
-    public event Action onStartCleanupGame;
-
     public void ShowTimer()
     {
         if (onShowTimer != null)
@@ -54,57 +44,6 @@ public class EventManager : MonoBehaviour
         if (onStartTimer != null)
         {
             onStartTimer();
-        }
-    }
-
-    public void DrinkingGameTimeOver()
-    {
-        if (onDrinkingGameTimeOver != null)
-        {
-            onDrinkingGameTimeOver();
-        }
-    }
-
-    public void ShowDrinkingTutorial()
-    {
-        if(onShowDrinkingTutorial != null)
-        {
-            onShowDrinkingTutorial();
-        }
-    }
-    public void HideDrinkingTutorial()
-    {
-        if (onHideDrinkingTutorial != null)
-        {
-            onHideDrinkingTutorial();
-        }
-    }
-    public void ShowCleanupTutorial()
-    {
-        if (onShowCleanupTutorial != null)
-        {
-            onShowCleanupTutorial();
-        }
-    }
-    public void HideCleanupTutorial()
-    {
-        if (onHideCleanupTutorial != null)
-        {
-            onHideCleanupTutorial();
-        }
-    }
-    public void StartDrinkingGame()
-    {
-        if (onStartDrinkingGame != null)
-        {
-            onStartDrinkingGame();
-        }
-    }
-    public void StartCleaningGame()
-    {
-        if (onStartCleanupGame != null)
-        {
-            onStartCleanupGame();
         }
     }
 }
