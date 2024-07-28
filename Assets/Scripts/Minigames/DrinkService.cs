@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using TMPro;
 
 public class DrinkService : MonoBehaviour
 {
+    //Content Warning: Spaghetti code
+
     public float kegVolume;
     public int nozzleSetting;
     private float pourRate;
@@ -24,13 +27,18 @@ public class DrinkService : MonoBehaviour
     public float frothPercent;
     public bool nucleation;
     public int grade;
+    public GameObject MugPrefab;
+    public DrinkServiceAngle AngleScript;
+
+    public TextMeshProUGUI notifyUI;
+    public TextMeshProUGUI nozzleDisplay;
 
     //Handles time limit
 
     //Generates customer orders
 
     //Handles drink selections
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +46,7 @@ public class DrinkService : MonoBehaviour
         pourRate = 0;
         vesselInHand = false;
         kegVolume = 50000;
+        currentCapacity = 0;
     }
 
     // Update is called once per frame
@@ -46,13 +55,9 @@ public class DrinkService : MonoBehaviour
         // Controls the angle (and subsequently its current capacity) of a mug when in hand.
         if (vesselInHand == true)
         {
-          /*  if((Input.GetKeyDown(KeyCode.A)) && (vesselAngle < 30)) 
-            {
-                vesselAngle += 1;
-                UpdateCurrentCapacity();
-            } */
 
-            if ((Input.GetKey(KeyCode.A)) && (vesselAngle < 30))
+            //Increases angle and current capacity
+            if ((Input.GetKey(KeyCode.D)) && (vesselAngle < 30))
                 if (inputTimer <= 0)
             {
                 vesselAngle += 1;
@@ -61,13 +66,8 @@ public class DrinkService : MonoBehaviour
 
             }
 
-            /*  if ((Input.GetKeyDown(KeyCode.D)) && (vesselAngle > 0))
-          {
-              vesselAngle -= 1;
-              UpdateCurrentCapacity();
-          } */
-
-            if ((Input.GetKey(KeyCode.D)) && (vesselAngle > 0))
+            //Decreases angle and current capacity.
+            if ((Input.GetKey(KeyCode.A)) && (vesselAngle > 0))
             {
                 if (inputTimer <= 0)
                 {
@@ -77,29 +77,29 @@ public class DrinkService : MonoBehaviour
                 }
             }
         }
-
+        //Angle adjust support
         if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
         {
             inputTimer = 0;
         }
-
+        // Speed of angle adjust
         if (inputTimer >= 0)
         {
-            inputTimer -= Time.deltaTime * 4;
+            inputTimer -= Time.deltaTime * 15;
         }
-
+        // Increases flow of booze
         if ((Input.GetKeyDown(KeyCode.S)) && (nozzleSetting < 3))
         {
             nozzleSetting +=1;
             ChangePour();
         }
-
+        //Decreases flow of booze
         if ((Input.GetKeyDown(KeyCode.W)) && (nozzleSetting > 0))
         {
             nozzleSetting -= 1;
             ChangePour();
         }
-
+        //Cuts flow of booze
         if ((Input.GetKeyDown(KeyCode.Space)) && (nozzleSetting > 0))
         {
             nozzleSetting = 0;
@@ -108,19 +108,15 @@ public class DrinkService : MonoBehaviour
 
 
 
-
+        //Trigger flow of booze
         if (nozzleSetting > 0)
         {
             StartPour();
         }
 
-       /* if (currentVolume > currentCapacity)
-        {
-            currentVolume = currentCapacity;
-        }*/
 
 
-        // This should either A) if you have no mug equipped, equip and a new one to hand, or B) if you have a mug equipped, put it aside.
+        // This should either A) if you have no mug equipped, equip and a new one to hand, or B) if you have a mug equipped, serve it.
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (vesselInHand == true)
@@ -134,9 +130,14 @@ public class DrinkService : MonoBehaviour
             }
         }
 
-        if (liquidVolume > (currentCapacity / 2))
+        if (liquidVolume > (totalCapacity - currentCapacity))
         {
             nucleation = true;
+        }
+
+        else
+        {
+            nucleation = false;
         }
 
     }
@@ -149,22 +150,31 @@ public class DrinkService : MonoBehaviour
         currentVolume = 0;
         totalCapacity = 150 * vesselSize;
         vesselAngle = 15;
-        UpdateCurrentCapacity();
         grade = 0;
+        Instantiate(MugPrefab);
+        AngleScript = FindObjectOfType<DrinkServiceAngle>();
+        UpdateCurrentCapacity();
     }
 
     public void ServeDrink()
     {
+        // Player serves drink to client. Grades performance and resets values.
         vesselAngle = 30;
         UpdateCurrentCapacity();
         GradeTask();
-        currentVolume = 0;
+        liquidVolume = 0;
+        frothVolume = 0;
+        wastedGrog = 0;
+        currentCapacity = 0;
         vesselInHand = false;
+        AngleScript.ServeDrink();
     }
 
     public void ChangePour()
     {
+        // Math for flow settings
         pourRate = nozzleSetting * 15;
+        nozzleDisplay.text = "" + nozzleSetting;
     }
 
 
@@ -217,11 +227,14 @@ public class DrinkService : MonoBehaviour
 
     public void UpdateCurrentCapacity()
     {
+        // Updates current capacity with angle adjustments
         currentCapacity = (totalCapacity / 30) * vesselAngle;
+        AngleScript.UpdateAngle();
     }
 
     public void GradeTask()
     {
+        // Review task, assign a grade and clear
         if (wastedGrog < 10)
         {
             grade += 0;
@@ -285,6 +298,39 @@ public class DrinkService : MonoBehaviour
             grade += 4;
         }
 
+        if (grade == 0)
+        {
+            notifyUI.text = "PERFECT!";
+        }
 
+        if (grade == 1)
+        {
+            notifyUI.text = "Great!";
+        }
+
+        if (grade == 2)
+        {
+            notifyUI.text = "Good!";
+        }
+
+        if (grade == 3)
+        {
+            notifyUI.text = "Alright...";
+        }
+
+        if (grade >= 4)
+        {
+            notifyUI.text = "Bad.";
+        }
+
+        grade = 0;
+        StartCoroutine(ClearTimer());
+    }
+
+    IEnumerator ClearTimer()
+    {
+        yield return new WaitForSeconds(2f);
+        Debug.Log("Clearing log.");
+        notifyUI.text = "";
     }
 }
