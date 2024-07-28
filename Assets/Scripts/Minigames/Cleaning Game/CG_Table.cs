@@ -27,17 +27,18 @@ public class CG_Table : MonoBehaviour
     {
         if (!taskActive)
         {
-            if (isInTableRange)
+            if (!taskCompleted)
             {
-                
-
-                if (Input.GetKeyDown(KeyCode.E))
+                if (isInTableRange)
                 {
-                    CG_Events.current.StartCleaningTask();
+                    if (Input.GetKeyDown(KeyCode.E))
+                    {
+                        CG_Events.current.StartCleaningTask();
 
-                    taskActive = true;
+                        taskActive = true;
+                    }
                 }
-            }
+            }            
         }
     }
 

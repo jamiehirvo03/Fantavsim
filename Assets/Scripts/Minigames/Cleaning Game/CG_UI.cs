@@ -51,6 +51,11 @@ public class CG_UI : MonoBehaviour
             //Display timer value to slider UI
             taskTimer.value = currentTaskTime;
         }
+
+        if (isPlayerFired)
+        {
+            OnGameOver();
+        }
     }
 
     public void StartButtonClicked()
@@ -79,6 +84,8 @@ public class CG_UI : MonoBehaviour
         gameUI.enabled = false;
 
         winScreen.enabled = true;
+
+        isPlayerFired = false;
     }
 
     private void OnGameOver()
