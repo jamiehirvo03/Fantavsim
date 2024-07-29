@@ -102,6 +102,7 @@ public class DG_GameManager : MonoBehaviour
     }
     private void OnStartGame()
     {
+        
         isCurrentGolden = false;
 
         randomMax = 1;
@@ -120,6 +121,8 @@ public class DG_GameManager : MonoBehaviour
 
         isChangeStarted = false;
         isGameSetup = true;
+
+        Debug.Log("Game is set up");
     }
 
     private void OnTimeOver()
