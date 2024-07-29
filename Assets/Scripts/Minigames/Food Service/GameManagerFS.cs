@@ -24,7 +24,7 @@ public class GameManagerFS : MonoBehaviour
     public Transform plateSelector;
 
     //order model
-    public MeshRenderer[] currentPNG;
+    public SpriteRenderer[] currentPNG;
 
     //PNG of order
     public Texture[] orderPNG;
