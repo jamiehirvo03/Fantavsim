@@ -285,7 +285,7 @@ Transform:
   m_GameObject: {fileID: 224488063}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.3, y: 1.6, z: -100}
+  m_LocalPosition: {x: 2.3, y: 1.6, z: -2}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -458,7 +458,7 @@ Transform:
   m_GameObject: {fileID: 359873458}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.5900004, y: 0.4400014, z: -100.000015}
+  m_LocalPosition: {x: 3.5900004, y: 0.4400014, z: -2}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -541,7 +541,7 @@ Transform:
   m_GameObject: {fileID: 593833663}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 50}
+  m_LocalPosition: {x: 0, y: 0, z: -2}
   m_LocalScale: {x: 107.9403, y: 107.9403, z: 107.9403}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2117,9 +2117,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 94639286}
     m_Modifications:
+    - target: {fileID: 535759582481018710, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2
+      objectReference: {fileID: 0}
     - target: {fileID: 2641561381514242069, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
       propertyPath: m_Name
       value: Tutorial Popup
+      objectReference: {fileID: 0}
+    - target: {fileID: 4748470680063698138, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 6146937803301755776, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
       propertyPath: m_Pivot.x
@@ -2209,6 +2217,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 94639288}
+    - target: {fileID: 9112568083924795505, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
