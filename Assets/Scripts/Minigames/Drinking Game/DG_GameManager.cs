@@ -102,6 +102,7 @@ public class DG_GameManager : MonoBehaviour
     }
     private void OnStartGame()
     {
+        
         isCurrentGolden = false;
 
         randomMax = 1;
@@ -120,6 +121,8 @@ public class DG_GameManager : MonoBehaviour
 
         isChangeStarted = false;
         isGameSetup = true;
+
+        Debug.Log("Game is set up");
     }
 
     private void OnTimeOver()
@@ -192,9 +195,9 @@ public class DG_GameManager : MonoBehaviour
                         {
                             if ((balanceLevel < 100) && (amountLeft > 0))
                             {
-                                if (Input.GetKeyDown(KeyCode.Space))
+                                if (Input.GetKeyDown(KeyCode.E))
                                 {
-                                    Debug.Log("Player has pressed SPACE");
+                                    Debug.Log("Player has pressed E");
 
                                     balanceLevel += 10f;
                                 }
@@ -237,6 +240,8 @@ public class DG_GameManager : MonoBehaviour
         //CODE FOR GENERATING THE FIRST 5 UPCOMING TANKARDS
         private void GenerateStartingDrinks()
         {
+
+
             for (int i = 1; i < 6; i++)
             {
                 Debug.Log($"Starting Tankard #{i} has been generated");

@@ -32,6 +32,7 @@ public class DrinkService : MonoBehaviour
 
     public TextMeshProUGUI notifyUI;
     public TextMeshProUGUI nozzleDisplay;
+    public TextMeshProUGUI notifySpill;
 
     //Handles time limit
 
@@ -214,6 +215,11 @@ public class DrinkService : MonoBehaviour
                 {
                     wastedGrog += grogInTransit;
                     grogInTransit = 0;
+                    if (notifySpill.text == "")
+                    {
+                        notifySpill.text = "You're spilling it!";
+                        StartCoroutine(ClearTimer2());
+                    }
                 }
             }
             else
@@ -330,7 +336,12 @@ public class DrinkService : MonoBehaviour
     IEnumerator ClearTimer()
     {
         yield return new WaitForSeconds(2f);
-        Debug.Log("Clearing log.");
         notifyUI.text = "";
+    }
+
+    IEnumerator ClearTimer2()
+    {
+        yield return new WaitForSeconds(2f);
+        notifySpill.text = "";
     }
 }

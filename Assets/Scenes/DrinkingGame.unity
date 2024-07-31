@@ -247,6 +247,7 @@ MonoBehaviour:
   minutes: 0
   seconds: 0
   countdownText: {fileID: 1624603294}
+  startButton: {fileID: 1305176634}
   tutorialPopup: {fileID: 1290776622}
   DrinkingGame: {fileID: 757468283}
 --- !u!1 &217468593 stripped
@@ -285,7 +286,11 @@ Transform:
   m_GameObject: {fileID: 224488063}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+<<<<<<< HEAD
   m_LocalPosition: {x: 2.3, y: 1.6, z: -2}
+=======
+  m_LocalPosition: {x: 2.3, y: 1.6, z: -5}
+>>>>>>> origin/Jamie
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -458,7 +463,11 @@ Transform:
   m_GameObject: {fileID: 359873458}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+<<<<<<< HEAD
   m_LocalPosition: {x: 3.5900004, y: 0.4400014, z: -2}
+=======
+  m_LocalPosition: {x: 3.5900004, y: 0.4400014, z: 0}
+>>>>>>> origin/Jamie
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -502,8 +511,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 833797103
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a9cb12fe401959c4d9a09a0464a7a75a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -751,7 +760,7 @@ MonoBehaviour:
   isCurrentGolden: 0
   UpcomingTankards: []
   balanceLevel: 0
-  decayRate: 20
+  decayRate: 50
   isGameSetup: 0
   isChangeStarted: 0
   isChangeWaiting: 0
@@ -1033,6 +1042,17 @@ Canvas:
   m_CorrespondingSourceObject: {fileID: 6863928135182717688, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
   m_PrefabInstance: {fileID: 6325020273527520183}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1305176634 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8651647466366985998, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
+  m_PrefabInstance: {fileID: 6325020273527520183}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1320457966 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5287560515894067129, guid: 3ec38593e4b4c33469ac2d578003e51b, type: 3}
@@ -1592,7 +1612,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -44, y: -39.405}
+  m_AnchoredPosition: {x: -44, y: -39.40503}
   m_SizeDelta: {x: 168.76, y: 69.76}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1624603294
@@ -2155,11 +2175,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6146937803301755776, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1920
+      value: 1919.2
       objectReference: {fileID: 0}
     - target: {fileID: 6146937803301755776, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 1080
+      value: 1044.4
       objectReference: {fileID: 0}
     - target: {fileID: 6146937803301755776, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2191,11 +2211,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6146937803301755776, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -0.0045839
       objectReference: {fileID: 0}
     - target: {fileID: 6146937803301755776, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 0.0053816
       objectReference: {fileID: 0}
     - target: {fileID: 6146937803301755776, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2213,13 +2233,29 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 2005248597}
+    - target: {fileID: 7941994983076933747, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
+      propertyPath: m_text
+      value: '- Press E repeatedly to raise the drink meter
+
+
+        - Remaining
+        in the Red part of the meter will add to your spill count
+
+
+        - Drink
+        as much as you can before time runs out'
+      objectReference: {fileID: 0}
     - target: {fileID: 8651647466366985998, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 94639288}
     - target: {fileID: 9112568083924795505, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
       propertyPath: m_LocalPosition.z
+<<<<<<< HEAD
       value: -2
+=======
+      value: 0
+>>>>>>> origin/Jamie
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
