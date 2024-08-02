@@ -575,28 +575,28 @@ public class DG_GameManager : MonoBehaviour
 
                 case BalanceState.Drinking:
                     //Gradually decrease amountLeft
-                    amountLeft -= 2 * Time.deltaTime;
-                    totalDrank += 2 * Time.deltaTime;
+                    amountLeft -= 4 * Time.deltaTime;
+                    totalDrank += 4 * Time.deltaTime;
                     break;
 
                 case BalanceState.Spilling1:
                     //Gradually increase spill meter and decrease amount left at a slower rate
-                    currentSpillageAmount += Time.deltaTime;
-                    totalSpillageAmount += Time.deltaTime;
-                    amountLeft -= Time.deltaTime;
-                    totalDrank += Time.deltaTime;
+                    currentSpillageAmount += 2 * Time.deltaTime;
+                    totalSpillageAmount += 2 * Time.deltaTime;
+                    amountLeft -= 4 * Time.deltaTime;
+                    totalDrank += 2 * Time.deltaTime;
                     break;
 
                 case BalanceState.Chugging:
                     //Decrease amountLeft by a larger value
-                    amountLeft -= 6 * Time.deltaTime;
-                    totalDrank += 6 * Time.deltaTime;
+                    amountLeft -= 12 * Time.deltaTime;
+                    totalDrank += 12 * Time.deltaTime;
                     break;
                 case BalanceState.Spilling2:
                     //Gradually increase spill meter at a larger rate
-                    currentSpillageAmount += 2 * Time.deltaTime;
-                    totalSpillageAmount += 2 * Time.deltaTime;
-                    amountLeft -= 2 * Time.deltaTime;
+                    currentSpillageAmount += 4 * Time.deltaTime;
+                    totalSpillageAmount += 4 * Time.deltaTime;
+                    amountLeft -= 4 * Time.deltaTime;
                     break;
             }
         }
