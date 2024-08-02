@@ -6,7 +6,7 @@ using TMPro;
 
 public class DG_UI : MonoBehaviour
 {
-    private float startingTime = 60f;
+    private float startingTime = 120f;
     public float currentTime;
     [SerializeField] private float minutes;
     [SerializeField] private float seconds;
@@ -46,7 +46,7 @@ public class DG_UI : MonoBehaviour
 
 
         //DEFAULT TIMER COLOUR
-        if (seconds > 10)
+        if ((minutes > 0) && (seconds > 10))
         {
             countdownText.color = Color.white;
         }

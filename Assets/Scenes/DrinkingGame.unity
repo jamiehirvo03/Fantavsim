@@ -458,7 +458,7 @@ Transform:
   m_GameObject: {fileID: 359873458}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.5900004, y: 0.4400014, z: -7.5}
+  m_LocalPosition: {x: 3.5900004, y: 0.4400014, z: -5}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1221,7 +1221,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1498950892}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -2121,22 +2121,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tutorial Popup
       objectReference: {fileID: 0}
-    - target: {fileID: 5807628334127303730, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0.005127
-      objectReference: {fileID: 0}
-    - target: {fileID: 5807628334127303730, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5807628334127303730, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -0.0024414062
-      objectReference: {fileID: 0}
-    - target: {fileID: 5807628334127303730, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0.000061035156
-      objectReference: {fileID: 0}
     - target: {fileID: 6146937803301755776, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2163,11 +2147,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6146937803301755776, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1919.2
+      value: 1920
       objectReference: {fileID: 0}
     - target: {fileID: 6146937803301755776, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 1078.8
+      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 6146937803301755776, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2199,11 +2183,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6146937803301755776, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.0056613
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6146937803301755776, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.0064812
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6146937803301755776, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2221,34 +2205,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 2005248597}
-    - target: {fileID: 7941994983076933747, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
-      propertyPath: m_text
-      value: '- Press SPACE repeatedly to raise the drink meter
-
-
-        - Remaining
-        in the Red part of the meter will add to your spill count
-
-
-        - Drink
-        as much as you can before time runs out
-
-
-        - Completing a Golden Tankard
-        without spilling any of it will award a bonus 10 seconds'
-      objectReference: {fileID: 0}
-    - target: {fileID: 7941994983076933747, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
-      propertyPath: m_fontSize
-      value: 25.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 7941994983076933747, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
-      propertyPath: m_isRightToLeft
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7941994983076933747, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
-      propertyPath: m_TextStyleHashCode
-      value: -1183493901
-      objectReference: {fileID: 0}
     - target: {fileID: 8651647466366985998, guid: 8bd36386af3f77240806b5214557d20d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
