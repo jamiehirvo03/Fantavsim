@@ -12,7 +12,7 @@ public class DG_UI : MonoBehaviour
     [SerializeField] private float seconds;
     public TextMeshProUGUI countdownText;
 
-    public Button startButton;
+    private Button startButton;
     public Canvas tutorialPopup;
 
     public GameObject DrinkingGame;
@@ -26,7 +26,6 @@ public class DG_UI : MonoBehaviour
 
         tutorialPopup.enabled = true;
         countdownText.enabled = false;
-        startButton.interactable = true;
     }
 
     // Update is called once per frame
@@ -116,6 +115,5 @@ public class DG_UI : MonoBehaviour
         Debug.Log("Drinking tutorial is hidden");
 
         tutorialPopup.enabled = false;
-        startButton.interactable = false;
     }
 }
