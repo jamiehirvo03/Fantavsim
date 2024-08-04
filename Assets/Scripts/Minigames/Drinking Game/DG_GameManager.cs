@@ -313,6 +313,7 @@ public class DG_GameManager : MonoBehaviour
 
                 isChangeStarted = true;
 
+
                 NewDrink();
             }
             if (isCurrentGolden == false)
@@ -322,7 +323,7 @@ public class DG_GameManager : MonoBehaviour
                 isChangeStarted = true;
 
                 NewDrink();
-            }
+            }     
         }
 
         //CODE FOR MAKING NEXT TANKARD THE CURRENT ONE
@@ -331,9 +332,10 @@ public class DG_GameManager : MonoBehaviour
             string currentDrink = UpcomingTankards[0];
             Debug.Log("Running NewDrink()");
 
+            amountLeft = 100f;
+
             isChangeWaiting = true;
             isChangeStarted = false;
-            amountLeft = 100f;
 
             if (!isCurrentChanged)
             {
@@ -418,10 +420,7 @@ public class DG_GameManager : MonoBehaviour
 
             if (isChangeWaiting)
             {
-                if ((UpcomingTankards[4] == "Regular") || (UpcomingTankards[4] == "Golden"))
-                {
-                    SpriteChanger();
-                }
+                SpriteChanger();
             }
         }
 

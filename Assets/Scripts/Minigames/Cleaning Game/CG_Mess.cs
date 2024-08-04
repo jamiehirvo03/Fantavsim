@@ -12,7 +12,7 @@ public class CG_Mess : MonoBehaviour
     private Vector3 offset;
 
     private List<string> messType = new List<string>(4) {"Tankard", "Scraps", "Dust", "Rodents"};
-    private string thisMessType;
+    [SerializeField] private string thisMessType;
 
     [SerializeField] private Vector3 thisMessOrigin;
 
@@ -27,13 +27,21 @@ public class CG_Mess : MonoBehaviour
     void Start()
     {
         CG_Events.current.onCreateMessItem += OnCreateMessItem;
+
+        CG_Events.current.onOverTankardBin += OnOverTankardBin;
+        CG_Events.current.onOverScrapsBin += OnOverScrapsBin;
+        CG_Events.current.onOverDustBin += OnOverDustBin;
+        CG_Events.current.onOverRodentBin += OnOverRodentBin;
+        CG_Events.current.onOverNoBin += OnOverNoBin;
+
+        hoveringOver = "None";
     }
 
     private void OnCreateMessItem()
     {
-        thisMessType = messType[Random.Range(0,messType.Count)];
+        thisMessType = messType[Random.Range(0,3)];
 
-        Sprite thisMessSprite = this.gameObject.GetComponent<SpriteRenderer>().sprite;
+        Sprite thisMessSprite = gameObject.GetComponent<SpriteRenderer>().sprite;
 
         if (thisMessType == "Tankard")
         {
@@ -51,6 +59,26 @@ public class CG_Mess : MonoBehaviour
         {
             thisMessSprite = Rodents;
         }
+    }
+    private void OnOverTankardBin()
+    {
+        hoveringOver = "Tankard";
+    }
+    private void OnOverDustBin()
+    {
+        hoveringOver = "Dust";
+    }
+    private void OnOverScrapsBin()
+    {
+        hoveringOver = "Scraps";
+    }
+    private void OnOverRodentBin()
+    {
+        hoveringOver = "Rodents";
+    }
+    private void OnOverNoBin()
+    {
+        hoveringOver = "None";
     }
 
     // Update is called once per frame
@@ -90,6 +118,8 @@ public class CG_Mess : MonoBehaviour
             //Check if the object is hovering over the correct bin
             if (hoveringOver == thisMessType)
             {
+                Debug.Log($"{thisMessType} has been placed correctly!");
+                
                 //Trigger correct placement event
                 CG_Events.current.MessPlacementCorrect();
 
@@ -97,6 +127,7 @@ public class CG_Mess : MonoBehaviour
             }
             else
             {
+                if (hoveringOver != "None")
                 //Trigger incorrect placement event
                 CG_Events.current.MessPlacementIncorrect();
 

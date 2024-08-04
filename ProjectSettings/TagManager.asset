@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - GM
+  - Tankard Bin
+  - Food Bin
+  - Dust Bin
+  - Rodent Bin
   layers:
   - Default
   - TransparentFX
