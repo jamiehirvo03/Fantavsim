@@ -5,6 +5,7 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DG_GameManager : MonoBehaviour
 {
@@ -34,7 +35,7 @@ public class DG_GameManager : MonoBehaviour
     [SerializeField] private float balanceLevel;
 
     //Multiplies the standard deltatime for greater decay rate
-    public float decayRate = 20;
+    public float decayRate = 20f;
 
     //Bool to check if the setup steps have happened
     [SerializeField] private bool isGameSetup = false;
@@ -74,13 +75,13 @@ public class DG_GameManager : MonoBehaviour
     public Slider ProgressSlider;
     public TextMeshProUGUI AmountDrank;
     public TextMeshProUGUI AmountSpilt;
+    public Canvas GameOverPopup;
+    public TextMeshProUGUI GameOverText;
 
     public GameObject BalanceMeter;
     public GameObject BalanceMeterMarker;
     public float minRotationAngle;
     public float maxRotationAngle;
-
-    public GameObject PlayerSprite;
     // ^^^^^ PUT IN UI SCRIPT ^^^^^
 
 
@@ -93,11 +94,8 @@ public class DG_GameManager : MonoBehaviour
         ProgressSlider.enabled = false;
         AmountDrank.enabled = false;
         AmountSpilt.enabled = false;
-
-        SpriteRenderer spriteRenderer = PlayerSprite.GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = RegularTankard;
+        GameOverPopup.enabled = false;
         
-
         isGameOver = false;
     }
     private void OnStartGame()
@@ -136,11 +134,25 @@ public class DG_GameManager : MonoBehaviour
         isGameOver = true;
 
         //Total and display player stats to UI
-        Debug.Log($"Regular: {regularDrank} |Golden: {goldenDrank} |Total: {(regularDrank + goldenDrank)} |Amount Drank: {litresDrank} L |Amount Spilt: {totalSpillageAmount}");
+        Debug.Log($"Regular: {regularDrank} |Golden: {goldenDrank} |Amount Drank: {litresDrank} L |Amount Spilt: {totalSpillageAmount}");
+
+        GameOverPopup.enabled = true;
+
+        GameOverText.text = $"Regular: {regularDrank} \nGolden: {goldenDrank} \nAmount Drank: {litresDrank} L \nAmount Spilt: {totalSpillageAmount}";
 
         //Display final screen on UI
 
         DG_Events.current.onTimeOver -= OnTimeOver;
+    }
+
+    public void RestartButtonClicked()
+    {
+        SceneManager.LoadScene("DrinkingGame");
+    }
+
+    public void ExitButtonClicked()
+    {
+        SceneManager.LoadScene("CleanupMinigame");
     }
 
     // Update is called once per frame
@@ -332,8 +344,7 @@ public class DG_GameManager : MonoBehaviour
 
                     isCurrentGolden = true;
 
-                    SpriteRenderer spriteRenderer = PlayerSprite.GetComponent<SpriteRenderer>();
-                    spriteRenderer.sprite = GoldenTankard;
+                    DG_Events.current.CurrentDrinkGolden();    
 
                     UpcomingTankards[0] = "";
                     MoveListUp();
@@ -345,8 +356,7 @@ public class DG_GameManager : MonoBehaviour
 
                     isCurrentGolden = false;
 
-                    SpriteRenderer spriteRenderer = PlayerSprite.GetComponent<SpriteRenderer>();
-                    spriteRenderer.sprite = RegularTankard;
+                    DG_Events.current.CurrentDrinkRegular();
 
                     UpcomingTankards[0] = "";
                     MoveListUp();
@@ -526,44 +536,44 @@ public class DG_GameManager : MonoBehaviour
                 if (currentState != BalanceState.Idle)
                 {
                     Debug.Log("State: Idle");
-                    DG_Events.current.Idle();
                     currentState = BalanceState.Idle;
-                }
+                    DG_Events.current.Idle();
+            }
             }
             if ((balanceLevel > 20) && (balanceLevel <= 50))
             {
                 if (currentState != BalanceState.Drinking)
                 {
                     Debug.Log("State: Drinking");
-                    DG_Events.current.Drinking();
                     currentState = BalanceState.Drinking;
-                }
+                    DG_Events.current.Drinking();
+            }
             }
             if ((balanceLevel > 50) && (balanceLevel <= 70))
             {
                 if (currentState != BalanceState.Spilling1)
                 {
-                    Debug.Log("State: Spilling 1");
-                    DG_Events.current.Spilling1();
+                    Debug.Log("State: Spilling 1");                    
                     currentState = BalanceState.Spilling1;
+                    DG_Events.current.Spilling1();
                 }
             }
             if ((balanceLevel > 70) && (balanceLevel <= 85))
             {
                 if (currentState != BalanceState.Chugging)
                 {
-                    Debug.Log("State: Chugging");
-                    DG_Events.current.Chugging();
+                    Debug.Log("State: Chugging");                    
                     currentState = BalanceState.Chugging;
+                    DG_Events.current.Chugging();
                 }
             }
             if ((balanceLevel > 85) && (balanceLevel <= 100))
             {
                 if (currentState != BalanceState.Spilling2)
                 {
-                    Debug.Log("State: Spilling 2");
-                    DG_Events.current.Spilling2();
+                    Debug.Log("State: Spilling 2");                    
                     currentState = BalanceState.Spilling2;
+                    DG_Events.current.Spilling2();
                 }
             }
 
