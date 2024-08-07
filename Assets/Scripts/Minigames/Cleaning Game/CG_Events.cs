@@ -13,14 +13,14 @@ public class CG_Events : MonoBehaviour
     }
 
     public event Action onStartGame;
-    public event Action onPlayerFired;
-    public event Action onGameWin;
-    public event Action onCreateMessItem;
+    public event Action onGameOver;
+
     public event Action onOverTankardBin;
     public event Action onOverScrapsBin;
     public event Action onOverDustBin;
     public event Action onOverRodentBin;
     public event Action onOverNoBin;
+
     public event Action onMessPlacementCorrect;
     public event Action onMessPlacementIncorrect;
 
@@ -31,25 +31,11 @@ public class CG_Events : MonoBehaviour
             onStartGame();
         }
     }
-    public void PlayerFired()
-    {
-        if (onPlayerFired != null)
-        {
-            onPlayerFired();
-        }
-    }
     public void GameWin()
     {
-        if (onGameWin != null)
+        if (onGameOver != null)
         {
-            onGameWin();
-        }
-    }
-    public void CreateMessItem()
-    {
-        if (onCreateMessItem != null)
-        {
-            onCreateMessItem();
+            onGameOver();
         }
     }
     public void OverTankardBin()

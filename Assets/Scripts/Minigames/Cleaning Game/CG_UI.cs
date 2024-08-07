@@ -8,10 +8,9 @@ public class CG_UI : MonoBehaviour
 {
     public Canvas tutorialPopup;
     public Canvas gameOverPopup;
-    public Canvas firedScreen;
 
-    public TextMeshProUGUI strikeDisplay;
-    private int strikeCount = 0;
+    public TextMeshProUGUI pointsDisplay;
+    private int pointsCount = 0;
 
     public float startingTime = 60f;
     private float minutes;
@@ -27,8 +26,8 @@ public class CG_UI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CG_Events.current.onGameWin += OnGameWin;
-        CG_Events.current.onPlayerFired += OnPlayerFired;
+        CG_Events.current.onGameOver += OnGameOver;
+        CG_Events.current.onMessPlacementCorrect += OnMessPlacementCorrect;
         CG_Events.current.onMessPlacementIncorrect += OnMessPlacementIncorrect;
 
         currentTime = startingTime;
@@ -37,7 +36,7 @@ public class CG_UI : MonoBehaviour
 
         countdownText.enabled = false;
 
-        strikeDisplay.enabled = false;
+        pointsDisplay.enabled = false;
     }
 
     // Update is called once per frame
@@ -58,12 +57,6 @@ public class CG_UI : MonoBehaviour
                 CG_Events.current.GameWin();
             }
         }
-
-        if (strikeCount >= 3)
-        {
-            OnPlayerFired();
-        }
-
         if (seconds < 10)
         {
             countdownText.color = Color.white;
@@ -83,13 +76,13 @@ public class CG_UI : MonoBehaviour
         tutorialPopup.enabled = false;
 
         countdownText.enabled = true;
+        countdownText.color = Color.white;
 
-        strikeDisplay.enabled = true;
+        pointsDisplay.enabled = true;
 
         isGameStarted = true;
 
     }
-
     private void UpdateTimer()
     {
         currentTime -= Time.deltaTime;
@@ -106,31 +99,25 @@ public class CG_UI : MonoBehaviour
             countdownText.text = $"{minutes}:{seconds}";
         }
     }
-
-    private void OnShowTablePrompt()
+    private void OnGameOver()
     {
+        countdownText.enabled = false;
 
-    }
-    private void OnHideTablePrompt()
-    {
-        
-    }
+        pointsDisplay.enabled = false;
 
-    private void OnGameWin()
-    {
         gameOverPopup.enabled = true;
     }
 
-    private void OnPlayerFired()
+    private void OnMessPlacementCorrect()
     {
-        firedScreen.enabled = true;
+        pointsCount++;
+
+        pointsDisplay.text = $"Points: {pointsCount}";
     }
-    
+
     private void OnMessPlacementIncorrect()
     {
-        strikeCount++;
-
-        strikeDisplay.text = $"Strikes: {strikeCount}";
+        Debug.Log("Incorrect Placment Text is showing");
 
         //Display 'incorrect placement text'
         incorrectPlacementText.enabled = true;
@@ -141,7 +128,11 @@ public class CG_UI : MonoBehaviour
 
     IEnumerator CloseIncorrectPlacementText()
     {
+        Debug.Log("Text removal timer has started");
+
         yield return new WaitForSeconds(3);
+
+        Debug.Log("Incorrect Placement Text has been removed after 3 seconds");
 
         incorrectPlacementText.enabled = false;
     }
