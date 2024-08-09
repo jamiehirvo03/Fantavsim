@@ -130,7 +130,7 @@ public class DrinkService : MonoBehaviour
                 NewVessel();
             }
         }
-
+        // Rules for when to apply froth
         if (liquidVolume > (totalCapacity - currentCapacity))
         {
             nucleation = true;
