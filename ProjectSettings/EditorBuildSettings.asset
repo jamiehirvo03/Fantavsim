@@ -6,6 +6,24 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/StartMenu.unity
+    guid: 2b31cdd48a0f0e544a1ac993b6dde787
+  - enabled: 1
+    path: Assets/Scenes/TheTavern.unity
+    guid: 30f6bd43cb36dc7498c52bf080b101f0
+  - enabled: 1
+    path: Assets/Scenes/DrinkService.unity
+    guid: 57c328279957f4a4d9791b271ee69656
+  - enabled: 1
+    path: Assets/Scenes/Food Service.unity
+    guid: 16b147f447825094f99726e0f316f36d
+  - enabled: 1
+    path: Assets/Scenes/Food Prep.unity
+    guid: 79aa6e93f5c4b3d479ee698663a6cc7d
+  - enabled: 1
+    path: Assets/Scenes/DrinkingGame.unity
+    guid: 6592a9a8b83d3c345a83f03ddba9e42d
+  - enabled: 1
+    path: Assets/Scenes/CleanupMinigame.unity
+    guid: 8f6b83dd2e82bf34fab45dd008ebb08a
   m_configObjects: {}
