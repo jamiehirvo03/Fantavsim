@@ -9,6 +9,7 @@ TagManager:
   - Food Bin
   - Dust Bin
   - Rodent Bin
+  - Ingredient
   layers:
   - Default
   - TransparentFX

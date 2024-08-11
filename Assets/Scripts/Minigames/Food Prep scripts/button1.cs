@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class S_button1 : MonoBehaviour
+public class button1 : MonoBehaviour
 {
-    S_Ingredient ingredientHealth;
+    IngredientScript ingredientHealth;
+    IngredientScript ingredientCurrentHealth;
+    FoodPrep_GM Ingredients;
+    
+   
     int n;
-    public int ingredientDamage = 1;
+    public int amount;
 
 
     //public int for linked ingredient
@@ -32,6 +36,10 @@ public class S_button1 : MonoBehaviour
     {
         n++;
         Debug.Log("Button clicker" + n + "times");
-        
+       
+       
+
     }
+        
+ 
 }
