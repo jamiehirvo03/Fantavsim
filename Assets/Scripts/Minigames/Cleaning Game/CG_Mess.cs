@@ -12,45 +12,79 @@ public class CG_Mess : MonoBehaviour
     private Vector3 offset;
 
     private List<string> messType = new List<string>(4) {"Tankard", "Scraps", "Dust", "Rodents"};
-    private string thisMessType;
+    [SerializeField] private string thisMessType;
 
     [SerializeField] private Vector3 thisMessOrigin;
 
     [SerializeField] private string hoveringOver;
 
-    public Sprite EmptyTankard;
-    public Sprite FoodScraps;
-    public Sprite Dust;
-    public Sprite Rodents;
+    public Sprite emptyTankardSprite;
+    public Sprite foodScrapSprite;
+    public Sprite dustSprite;
+    public Sprite rodentSprite;
+
+    public GameObject messItem;
 
     // Start is called before the first frame update
     void Start()
     {
-        CG_Events.current.onCreateMessItem += OnCreateMessItem;
+        CG_Events.current.onOverTankardBin += OnOverTankardBin;
+        CG_Events.current.onOverScrapsBin += OnOverScrapsBin;
+        CG_Events.current.onOverDustBin += OnOverDustBin;
+        CG_Events.current.onOverRodentBin += OnOverRodentBin;
+        CG_Events.current.onOverNoBin += OnOverNoBin;
+
+        hoveringOver = "None";
+
+        CreateMessItem();
     }
 
-    private void OnCreateMessItem()
+    private void CreateMessItem()
     {
-        thisMessType = messType[Random.Range(0,messType.Count)];
+        thisMessType = messType[Random.Range(0,3)];
 
-        Sprite thisMessSprite = this.gameObject.GetComponent<SpriteRenderer>().sprite;
+        Debug.Log($"This mess is: {thisMessType}");
 
         if (thisMessType == "Tankard")
         {
-            thisMessSprite = EmptyTankard;
+            messItem.GetComponent<SpriteRenderer>().sprite = emptyTankardSprite;
+            Debug.Log("Tankard Sprite has loaded");
         }
         if (thisMessType == "Scraps")
         {
-            thisMessSprite = FoodScraps;
+            messItem.GetComponent<SpriteRenderer>().sprite = foodScrapSprite;
+            Debug.Log("Food Scraps Sprite has loaded");
         }
         if (thisMessType == "Dust")
         {
-            thisMessSprite = Dust;
+            messItem.GetComponent<SpriteRenderer>().sprite = dustSprite;
+            Debug.Log("Dust Sprite has loaded");
         }
         if (thisMessType == "Rodents")
         {
-            thisMessSprite = Rodents;
+            messItem.GetComponent<SpriteRenderer>().sprite = rodentSprite;
+            Debug.Log("Rodents Sprite has loaded");
         }
+    }
+    private void OnOverTankardBin()
+    {
+        hoveringOver = "Tankard";
+    }
+    private void OnOverDustBin()
+    {
+        hoveringOver = "Dust";
+    }
+    private void OnOverScrapsBin()
+    {
+        hoveringOver = "Scraps";
+    }
+    private void OnOverRodentBin()
+    {
+        hoveringOver = "Rodents";
+    }
+    private void OnOverNoBin()
+    {
+        hoveringOver = "None";
     }
 
     // Update is called once per frame
@@ -90,6 +124,8 @@ public class CG_Mess : MonoBehaviour
             //Check if the object is hovering over the correct bin
             if (hoveringOver == thisMessType)
             {
+                Debug.Log($"{thisMessType} has been placed correctly!");
+                
                 //Trigger correct placement event
                 CG_Events.current.MessPlacementCorrect();
 
@@ -97,8 +133,13 @@ public class CG_Mess : MonoBehaviour
             }
             else
             {
-                //Trigger incorrect placement event
-                CG_Events.current.MessPlacementIncorrect();
+                if (hoveringOver != "None")
+                {
+                    Debug.Log($"{thisMessType} has been placed incorrectly");
+
+                    //Trigger incorrect placement event
+                    CG_Events.current.MessPlacementIncorrect();
+                }
 
                 //Reset mess back to its origin
                 transform.position = thisMessOrigin;

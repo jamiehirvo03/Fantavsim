@@ -1,75 +1,73 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CG_GameManager : MonoBehaviour
 {
-    private bool isMovementAllowed;
+    [SerializeField] private bool isGameActive = false;
 
-    Rigidbody2D player;
+    public float range = 7;
+    public int minMessCount = 5;
+    public int maxMessCount = 15;
+    [SerializeField] private int taskMessCount;
 
-    private float horizontal;
-    private float vertical;
-    private float moveLimiter = 0.7f;
+    public GameObject mess;
+    [SerializeField] public List<GameObject> messList = new List<GameObject>();
 
-    public float runSpeed = 7.0f;
+    private float x, y, z;
 
     // Start is called before the first frame update
     void Start()
     {
         CG_Events.current.onStartGame += OnStartGame;
-        CG_Events.current.onGameOver += OnGameOver;
-        CG_Events.current.onStartCleaningTask += OnStartCleaningTask;
-        CG_Events.current.onCloseCleaningTask += OnCloseCleaningTask;
-
-
-        player = GetComponent<Rigidbody2D>();
-
-        isMovementAllowed = false;
+        CG_Events.current.onMessPlacementCorrect += OnMessPlacementCorrect;
     }
     // Update is called once per frame
     void Update()
     {
-        if (isMovementAllowed == true)
+        if (isGameActive)
         {
-            //Gives a value between -1 and 1
-            horizontal = Input.GetAxisRaw("Horizontal"); //-1 is left
-            vertical = Input.GetAxisRaw("Vertical"); //-1 is down
-        }
-    }
-    private void FixedUpdate()
-    {
-        if (isMovementAllowed == true)
-        {
-            if (horizontal != 0 && vertical != 0)
+            if (messList.Count < minMessCount)
             {
-                //Limit movement speed diagonally, so you move at 70% speed
-                horizontal *= moveLimiter;
-                vertical *= moveLimiter;
-            }
+                x = Random.Range(-range, range);
+                y = Random.Range(-range, range);
+                z = -0.75f;
+                GameObject newMess = (GameObject)Instantiate(mess, new Vector3(x, y, z), Quaternion.identity);
 
-            player.velocity = new Vector2(horizontal * runSpeed, vertical * runSpeed);
+                messList.Add(newMess);
+            }
         }
     }
     private void OnStartGame()
     {
-        //Allow player movement
-        isMovementAllowed = true;
+        //Initiate cleaning task
+        isGameActive = true;
 
+        //Randomly decide how many mess items will be generated
+        taskMessCount = Random.Range(minMessCount, maxMessCount);
+
+        //Generate mess items randomly
+        for (int i = 0; i < taskMessCount; i++)
+        {
+            x = Random.Range(-range, range);
+            y = Random.Range(-range, range);
+            z = -0.75f;
+            GameObject newMess = (GameObject)Instantiate(mess, new Vector3(x, y, z), Quaternion.identity);
+
+            messList.Add(newMess);
+        }
     }
-    private void OnGameOver()
+
+    private void OnMessPlacementCorrect()
     {
-        //Disable player movement
-        isMovementAllowed = false;
-    }
-    private void OnStartCleaningTask()
-    {
-        //Disable player movement
-        isMovementAllowed = false;
-    }
-    private void OnCloseCleaningTask()
-    {
-        //Enable player movement
-        isMovementAllowed = true;
+        //Remove mess item from list
+        for (int i = 0; i < messList.Count; i++)
+        {
+            if (messList[i].GetComponent<CG_Mess>().placedCorrectly == true)
+            {
+                messList.RemoveAt(i);
+            }
+        }
     }
 }

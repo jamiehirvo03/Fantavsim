@@ -130,14 +130,14 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4394508155979296645}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -162,9 +162,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   placedCorrectly: 0
+  thisMessType: 
   thisMessOrigin: {x: 0, y: 0, z: 0}
   hoveringOver: 
-  EmptyTankard: {fileID: 21300000, guid: 58d465149d6a96948971493a043b36fd, type: 3}
-  FoodScraps: {fileID: 21300000, guid: dee376c02de768749b468f51c2344459, type: 3}
-  Dust: {fileID: 21300000, guid: df991b5e7883d33478072f9be87ac44c, type: 3}
-  Rodents: {fileID: 21300000, guid: 2695a48cb4f05c2449914a02e6b6d3c3, type: 3}
+  emptyTankardSprite: {fileID: 21300000, guid: 58d465149d6a96948971493a043b36fd, type: 3}
+  foodScrapSprite: {fileID: 21300000, guid: dee376c02de768749b468f51c2344459, type: 3}
+  dustSprite: {fileID: 21300000, guid: df991b5e7883d33478072f9be87ac44c, type: 3}
+  rodentSprite: {fileID: 21300000, guid: 2695a48cb4f05c2449914a02e6b6d3c3, type: 3}
+  messItem: {fileID: 4394508155979296645}

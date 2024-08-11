@@ -4,7 +4,22 @@ using UnityEngine;
 
 public class DG_Player : MonoBehaviour
 {
-    private bool isCurrentDrinkGolden;
+    [SerializeField] private bool isCurrentDrinkGolden = false;
+
+    public GameObject playerSprite;
+    private SpriteRenderer spriteRenderer;
+
+    public Sprite regularIdle;
+    public Sprite regularDrinking;
+    public Sprite regularSpilling1;
+    public Sprite regularChugging;
+    public Sprite regularSpilling2;
+
+    public Sprite goldenIdle;
+    public Sprite goldenDrinking;
+    public Sprite goldenSpilling1;
+    public Sprite goldenChugging;
+    public Sprite goldenSpilling2;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +31,10 @@ public class DG_Player : MonoBehaviour
         DG_Events.current.onSpilling1 += OnSpilling1;
         DG_Events.current.onChugging += OnChugging;
         DG_Events.current.onSpilling2 += OnSpilling2;
+
+        SpriteRenderer spriteRenderer = playerSprite.GetComponent<SpriteRenderer>();
+
+        spriteRenderer.sprite = regularIdle;
     }
 
     // Update is called once per frame
@@ -39,10 +58,12 @@ public class DG_Player : MonoBehaviour
         if (!isCurrentDrinkGolden)
         {
             //REGULAR IDLE SPRITE
+            playerSprite.GetComponent<SpriteRenderer>().sprite = regularIdle;
         }
         else
         {
             //GOLDEN IDLE SPRITE
+            playerSprite.GetComponent<SpriteRenderer>().sprite = goldenIdle;
         }
     }
 
@@ -51,10 +72,12 @@ public class DG_Player : MonoBehaviour
         if (!isCurrentDrinkGolden)
         {
             //REGULAR DRINKING SPRITE
+            playerSprite.GetComponent<SpriteRenderer>().sprite = regularDrinking;
         }
         else
         {
             //GOLDEN DRINKING SPRITE
+            playerSprite.GetComponent<SpriteRenderer>().sprite = goldenDrinking;
         }
     }
 
@@ -63,10 +86,12 @@ public class DG_Player : MonoBehaviour
         if (!isCurrentDrinkGolden)
         {
             //REGULAR SPILLING 1 SPRITE
+            playerSprite.GetComponent<SpriteRenderer>().sprite = regularSpilling1;
         }
         else
         {
             //GOLDEN SPILLING 1 SPRITE
+            playerSprite.GetComponent<SpriteRenderer>().sprite = goldenSpilling1;
         }
     }
 
@@ -75,10 +100,12 @@ public class DG_Player : MonoBehaviour
         if (!isCurrentDrinkGolden)
         {
             //REGULAR CHUGGING SPRITE
+            playerSprite.GetComponent<SpriteRenderer>().sprite = regularChugging;
         }
         else
         {
             //GOLDEN CHUGGING SPRITE
+            playerSprite.GetComponent<SpriteRenderer>().sprite = goldenChugging;
         }
     }
 
@@ -87,10 +114,12 @@ public class DG_Player : MonoBehaviour
         if (!isCurrentDrinkGolden)
         {
             //REGULAR SPILLING 2 SPRITE
+            playerSprite.GetComponent<SpriteRenderer>().sprite = regularSpilling2;
         }
         else
         {
             //GOLDEN SPILLING 2 SPRITE
+            playerSprite.GetComponent<SpriteRenderer>().sprite = goldenSpilling2;
         }
     }
 
