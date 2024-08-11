@@ -9,6 +9,7 @@ TagManager:
   - Food Bin
   - Dust Bin
   - Rodent Bin
+  - NPC
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - SolidObjects
   - SolidObjectDetails
   - Player
-  - 
+  - NPC
   - 
   - 
   - 

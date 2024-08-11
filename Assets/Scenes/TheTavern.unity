@@ -140,7 +140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &220042081
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2254,7 +2254,7 @@ MonoBehaviour:
   taskNotifiy: {fileID: 361484538}
   solidObjetsLayer:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 2816
 --- !u!212 &469472552
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2411,7 +2411,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &636872346
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2541,7 +2541,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &663401361
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2787,7 +2787,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &746886907
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3320,7 +3320,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &1285888800
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3666,6 +3666,11 @@ MonoBehaviour:
   DrinkDrinking: {fileID: 220042080}
   CleaningOne: {fileID: 1285888799}
   CleaningTwo: {fileID: 746886906}
+  PatronPrefab: {fileID: 5695724962114402955, guid: ef8419d8aad1af343b090bb54d77430c, type: 3}
+  Table1Mess: {fileID: 1685293777576176048, guid: 837d7a0b2d19e7549a9c0d87447aa5f4, type: 3}
+  Table2Mess: {fileID: 6299048072638005676, guid: 9dcff5ce57d96044094ede2f40028740, type: 3}
+  dirtyTable1: 0
+  dirtyTable2: 0
 --- !u!212 &1543857545
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -15558,7 +15563,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &1905067548
 BoxCollider2D:
   m_ObjectHideFlags: 0

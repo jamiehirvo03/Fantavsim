@@ -19,6 +19,7 @@ public class DrinkService : MonoBehaviour
     public int totalCapacity;
     public float currentVolume;
     public bool vesselInHand;
+    private bool taskComplete;
     public bool drinkReady;
     private float inputTimer;
     private float grogInTransit;
@@ -49,6 +50,7 @@ public class DrinkService : MonoBehaviour
         nozzleSetting = 0;
         pourRate = 0;
         vesselInHand = false;
+        taskComplete = false;
         kegVolume = 50000;
         currentCapacity = 0;
         ScoreTrack = FindObjectOfType<ScoreTrack>();
@@ -130,7 +132,7 @@ public class DrinkService : MonoBehaviour
                 ServeDrink();
             }
 
-            else if (vesselInHand == false)
+            else if ((vesselInHand == false) && (taskComplete ==  false))
             {
                 NewVessel();
                 ScoreTrack.ScoreTest();
@@ -177,6 +179,8 @@ public class DrinkService : MonoBehaviour
         AngleScript.ServeDrink();
         if (grade <= 3)
         {
+            Debug.Log("Task Complete. Returning to Tavern.");
+            taskComplete = true;
             SceneManager.LoadScene(1);
         }
 
