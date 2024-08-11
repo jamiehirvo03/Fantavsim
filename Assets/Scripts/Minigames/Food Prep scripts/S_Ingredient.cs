@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class S_Ingredient : MonoBehaviour
 {
+    public int ingredientHealth;
     // Start is called before the first frame update
     void Start()
     {
