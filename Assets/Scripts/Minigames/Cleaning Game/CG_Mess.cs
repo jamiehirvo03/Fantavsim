@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 public class CG_Mess : MonoBehaviour
 {
     public bool placedCorrectly = false;
-    private bool dragging = false;
+    public bool dragging = false;
     private Vector3 offset;
 
     private List<string> messType = new List<string>(4) {"Tankard", "Scraps", "Dust", "Rodents"};
@@ -33,6 +33,7 @@ public class CG_Mess : MonoBehaviour
         CG_Events.current.onOverDustBin += OnOverDustBin;
         CG_Events.current.onOverRodentBin += OnOverRodentBin;
         CG_Events.current.onOverNoBin += OnOverNoBin;
+        CG_Events.current.onOverTable += OnOverTable;
 
         hoveringOver = "None";
 
@@ -41,7 +42,7 @@ public class CG_Mess : MonoBehaviour
 
     private void CreateMessItem()
     {
-        thisMessType = messType[Random.Range(0,3)];
+        thisMessType = messType[Random.Range(0,4)];
 
         Debug.Log($"This mess is: {thisMessType}");
 
@@ -85,6 +86,10 @@ public class CG_Mess : MonoBehaviour
     private void OnOverNoBin()
     {
         hoveringOver = "None";
+    }
+    private void OnOverTable()
+    {
+        hoveringOver = "Table";
     }
 
     // Update is called once per frame
@@ -130,10 +135,12 @@ public class CG_Mess : MonoBehaviour
                 CG_Events.current.MessPlacementCorrect();
 
                 placedCorrectly = true;
+
+                CG_Events.current.OverTable();
             }
             else
             {
-                if (hoveringOver != "None")
+                if (hoveringOver != "Table")
                 {
                     Debug.Log($"{thisMessType} has been placed incorrectly");
 

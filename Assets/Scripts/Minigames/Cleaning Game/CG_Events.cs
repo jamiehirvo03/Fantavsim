@@ -15,11 +15,13 @@ public class CG_Events : MonoBehaviour
     public event Action onStartGame;
     public event Action onGameOver;
 
+    //Events that relate to what area the mess object is hovering over
     public event Action onOverTankardBin;
     public event Action onOverScrapsBin;
     public event Action onOverDustBin;
     public event Action onOverRodentBin;
     public event Action onOverNoBin;
+    public event Action onOverTable;
 
     public event Action onMessPlacementCorrect;
     public event Action onMessPlacementIncorrect;
@@ -71,6 +73,13 @@ public class CG_Events : MonoBehaviour
         if (onOverNoBin != null)
         {
             onOverNoBin();
+        }
+    }
+    public void OverTable()
+    {
+        if (onOverTable != null)
+        {
+            onOverTable();
         }
     }
     public void MessPlacementCorrect()

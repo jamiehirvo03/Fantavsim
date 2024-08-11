@@ -59,6 +59,16 @@ public class CG_GameManager : MonoBehaviour
         }
     }
 
+    public void RestartButtonClicked()
+    {
+        SceneManager.LoadScene("CleanupMinigame");
+    }
+
+    public void ExitButtonClicked()
+    {
+        SceneManager.LoadScene("TheTavern");
+    }
+
     private void OnMessPlacementCorrect()
     {
         //Remove mess item from list

@@ -154,7 +154,7 @@ public class DG_GameManager : MonoBehaviour
 
     public void ExitButtonClicked()
     {
-        SceneManager.LoadScene("CleanupMinigame");
+        SceneManager.LoadScene("TheTavern");
     }
 
     // Update is called once per frame
