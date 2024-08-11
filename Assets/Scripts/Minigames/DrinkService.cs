@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class DrinkService : MonoBehaviour
 {
     //Content Warning: Spaghetti code
+    public GameObject ScoreManager;
 
     public float kegVolume;
     public int nozzleSetting;
@@ -29,6 +31,7 @@ public class DrinkService : MonoBehaviour
     public int grade;
     public GameObject MugPrefab;
     public DrinkServiceAngle AngleScript;
+    public ScoreTrack ScoreTrack;
 
     public TextMeshProUGUI notifyUI;
     public TextMeshProUGUI nozzleDisplay;
@@ -48,6 +51,8 @@ public class DrinkService : MonoBehaviour
         vesselInHand = false;
         kegVolume = 50000;
         currentCapacity = 0;
+        ScoreTrack = FindObjectOfType<ScoreTrack>();
+
     }
 
     // Update is called once per frame
@@ -128,9 +133,10 @@ public class DrinkService : MonoBehaviour
             else if (vesselInHand == false)
             {
                 NewVessel();
+                ScoreTrack.ScoreTest();
             }
         }
-
+        // Rules for when to apply froth
         if (liquidVolume > (totalCapacity - currentCapacity))
         {
             nucleation = true;
@@ -169,6 +175,16 @@ public class DrinkService : MonoBehaviour
         currentCapacity = 0;
         vesselInHand = false;
         AngleScript.ServeDrink();
+        if (grade <= 3)
+        {
+            SceneManager.LoadScene(1);
+        }
+
+        else
+        {
+            grade = 0;
+            StartCoroutine(ClearTimer());
+        }
     }
 
     public void ChangePour()
@@ -304,33 +320,39 @@ public class DrinkService : MonoBehaviour
             grade += 4;
         }
 
+        if (currentVolume < 225)
+        {
+            grade += 4;
+        }
+
         if (grade == 0)
         {
             notifyUI.text = "PERFECT!";
+            ScoreTrack.goldAmount += 5;
         }
 
         if (grade == 1)
         {
             notifyUI.text = "Great!";
+            ScoreTrack.goldAmount += 4;
         }
 
         if (grade == 2)
         {
             notifyUI.text = "Good!";
+            ScoreTrack.goldAmount += 3;
         }
 
         if (grade == 3)
         {
-            notifyUI.text = "Alright...";
+            notifyUI.text = "Passable.";
+            ScoreTrack.goldAmount += 2;
         }
 
         if (grade >= 4)
         {
-            notifyUI.text = "Bad.";
+            notifyUI.text = "Bad. Try again.";
         }
-
-        grade = 0;
-        StartCoroutine(ClearTimer());
     }
 
     IEnumerator ClearTimer()
