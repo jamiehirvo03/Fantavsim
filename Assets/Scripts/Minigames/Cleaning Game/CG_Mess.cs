@@ -11,6 +11,11 @@ public class CG_Mess : MonoBehaviour
     public bool dragging = false;
     private Vector3 offset;
 
+    public Vector3 tankardSize;
+    public Vector3 foodscrapsSize;
+    public Vector3 dustSize;
+    public Vector3 rodentsSize;
+
     private List<string> messType = new List<string>(4) {"Tankard", "Scraps", "Dust", "Rodents"};
     [SerializeField] private string thisMessType;
 
@@ -50,6 +55,8 @@ public class CG_Mess : MonoBehaviour
         {
             messItem.GetComponent<SpriteRenderer>().sprite = emptyTankardSprite;
             Debug.Log("Tankard Sprite has loaded");
+
+            messItem.GetComponent<Transform>().localScale = tankardSize;
         }
         if (thisMessType == "Scraps")
         {

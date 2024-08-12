@@ -28,15 +28,17 @@ public class CG_GameManager : MonoBehaviour
     {
         if (isGameActive)
         {
-            if (messList.Count < minMessCount)
-            {
-                x = Random.Range(-range, range);
-                y = Random.Range(-range, range);
-                z = -0.75f;
-                GameObject newMess = (GameObject)Instantiate(mess, new Vector3(x, y, z), Quaternion.identity);
+            //vvvvv REMOVED RESPAWNING OF MESS ITEMS TO FIT SCOPE AND KEEP MINIGAME SHORT AND BRIEF vvvvv
 
-                messList.Add(newMess);
-            }
+            //if (messList.Count < minMessCount)
+            //{
+                //x = Random.Range(-range, range);
+                //y = Random.Range(-range, range);
+                //z = -0.75f;
+                //GameObject newMess = (GameObject)Instantiate(mess, new Vector3(x, y, z), Quaternion.identity);
+
+                //messList.Add(newMess);
+            //}
         }
     }
     private void OnStartGame()
