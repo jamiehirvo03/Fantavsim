@@ -30,6 +30,8 @@ public class CG_UI : MonoBehaviour
         CG_Events.current.onMessPlacementCorrect += OnMessPlacementCorrect;
         CG_Events.current.onMessPlacementIncorrect += OnMessPlacementIncorrect;
 
+        gameOverPopup.enabled = false;
+
         currentTime = startingTime;
 
         incorrectPlacementText.enabled = false;
@@ -123,13 +125,11 @@ public class CG_UI : MonoBehaviour
         incorrectPlacementText.enabled = true;
 
         //Wait a few seconds then remove text
-        CloseIncorrectPlacementText();
+        
+        StartCoroutine (WaitForTextRemoval());
     }
-
-    IEnumerator CloseIncorrectPlacementText()
+    private IEnumerator WaitForTextRemoval()
     {
-        Debug.Log("Text removal timer has started");
-
         yield return new WaitForSeconds(3);
 
         Debug.Log("Incorrect Placement Text has been removed after 3 seconds");
