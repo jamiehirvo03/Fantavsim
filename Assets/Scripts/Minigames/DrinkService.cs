@@ -135,7 +135,6 @@ public class DrinkService : MonoBehaviour
             else if ((vesselInHand == false) && (taskComplete ==  false))
             {
                 NewVessel();
-                ScoreTrack.ScoreTest();
             }
         }
         // Rules for when to apply froth
