@@ -51,6 +51,7 @@ public class TavernPlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
+            // ScoreTrack.playerPosition = x, y
             if (taskVicinity == "")
             {
                 Debug.Log("No task in vicinity");
@@ -83,7 +84,7 @@ public class TavernPlayerController : MonoBehaviour
             else if (taskVicinity == "Cleaning")
             {
                 Debug.Log("Launch Cleaning miningame");
-                SceneManager.LoadScene(6);
+                SceneManager.LoadScene(6);  
             }
         }
     }
