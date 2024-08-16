@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class CG_UI : MonoBehaviour
 {
+    //Add at top    
+    public ScoreTrack ScoreTrack;
+
     public Canvas tutorialPopup;
     public Canvas gameOverPopup;
 
@@ -26,6 +30,9 @@ public class CG_UI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Add at void Start
+        ScoreTrack = FindObjectOfType<ScoreTrack>();
+
         CG_Events.current.onGameOver += OnGameOver;
         CG_Events.current.onMessPlacementCorrect += OnMessPlacementCorrect;
         CG_Events.current.onMessPlacementIncorrect += OnMessPlacementIncorrect;
@@ -56,7 +63,7 @@ public class CG_UI : MonoBehaviour
             if (currentTime <= 0)
             {
                 countdownText.text = "0:00";
-                CG_Events.current.GameWin();
+                CG_Events.current.GameOver();
             }
         }
         if (seconds < 10)
@@ -108,6 +115,21 @@ public class CG_UI : MonoBehaviour
         pointsDisplay.enabled = false;
 
         gameOverPopup.enabled = true;
+
+        //Add where game ends
+        //ScoreTrack.messValue -= 1;
+
+        //if (ScoreTrack.atTable1 == true)
+        //{
+            //ScoreTrack.dirtyTable1 = false;
+            //ScoreTrack.atTable1 = false}
+
+
+        //else if (ScoreTrack.atTable2 == true)
+        //{
+            //ScoreTrack.dirtyTable2 = false
+    
+        //ScoreTrack.atTable2 = false}
     }
 
     private void OnMessPlacementCorrect()

@@ -163,11 +163,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   placedCorrectly: 0
   dragging: 0
+  tankardSize: {x: 0, y: 0, z: 0}
+  foodscrapsSize: {x: 0, y: 0, z: 0}
+  dustSize: {x: 0, y: 0, z: 0}
+  pestSize: {x: 0, y: 0, z: 0}
   thisMessType: 
   thisMessOrigin: {x: 0, y: 0, z: 0}
   hoveringOver: 
   emptyTankardSprite: {fileID: 21300000, guid: 58d465149d6a96948971493a043b36fd, type: 3}
   foodScrapSprite: {fileID: 21300000, guid: c6c0260daf3959d4cb258185c87d2db0, type: 3}
   dustSprite: {fileID: 21300000, guid: aa9659a949aced14488706392f2bee0a, type: 3}
-  rodentSprite: {fileID: 21300000, guid: 34f2d0641c8e83446ab297694b3ebd5f, type: 3}
+  pestSprite: {fileID: 21300000, guid: 34f2d0641c8e83446ab297694b3ebd5f, type: 3}
   messItem: {fileID: 4394508155979296645}

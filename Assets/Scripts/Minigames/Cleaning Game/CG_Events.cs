@@ -19,7 +19,7 @@ public class CG_Events : MonoBehaviour
     public event Action onOverTankardBin;
     public event Action onOverScrapsBin;
     public event Action onOverDustBin;
-    public event Action onOverRodentBin;
+    public event Action onOverPestBin;
     public event Action onOverNoBin;
     public event Action onOverTable;
 
@@ -33,7 +33,7 @@ public class CG_Events : MonoBehaviour
             onStartGame();
         }
     }
-    public void GameWin()
+    public void GameOver()
     {
         if (onGameOver != null)
         {
@@ -61,11 +61,11 @@ public class CG_Events : MonoBehaviour
             onOverDustBin();
         }
     }
-    public void OverRodentBin()
+    public void OverPestBin()
     {
-        if (onOverRodentBin != null)
+        if (onOverPestBin != null)
         {
-            onOverRodentBin();
+            onOverPestBin();
         }
     }
     public void OverNoBin()

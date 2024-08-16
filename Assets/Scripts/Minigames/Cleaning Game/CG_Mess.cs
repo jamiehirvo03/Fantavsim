@@ -11,12 +11,7 @@ public class CG_Mess : MonoBehaviour
     public bool dragging = false;
     private Vector3 offset;
 
-    public Vector3 tankardSize;
-    public Vector3 foodscrapsSize;
-    public Vector3 dustSize;
-    public Vector3 rodentsSize;
-
-    private List<string> messType = new List<string>(4) {"Tankard", "Scraps", "Dust", "Rodents"};
+    private List<string> messType = new List<string>(4) {"Tankard", "Scraps", "Dust", "Pest"};
     [SerializeField] private string thisMessType;
 
     [SerializeField] private Vector3 thisMessOrigin;
@@ -26,7 +21,7 @@ public class CG_Mess : MonoBehaviour
     public Sprite emptyTankardSprite;
     public Sprite foodScrapSprite;
     public Sprite dustSprite;
-    public Sprite rodentSprite;
+    public Sprite pestSprite;
 
     public GameObject messItem;
 
@@ -36,7 +31,7 @@ public class CG_Mess : MonoBehaviour
         CG_Events.current.onOverTankardBin += OnOverTankardBin;
         CG_Events.current.onOverScrapsBin += OnOverScrapsBin;
         CG_Events.current.onOverDustBin += OnOverDustBin;
-        CG_Events.current.onOverRodentBin += OnOverRodentBin;
+        CG_Events.current.onOverPestBin += OnOverPestBin;
         CG_Events.current.onOverNoBin += OnOverNoBin;
         CG_Events.current.onOverTable += OnOverTable;
 
@@ -55,8 +50,6 @@ public class CG_Mess : MonoBehaviour
         {
             messItem.GetComponent<SpriteRenderer>().sprite = emptyTankardSprite;
             Debug.Log("Tankard Sprite has loaded");
-
-            messItem.GetComponent<Transform>().localScale = tankardSize;
         }
         if (thisMessType == "Scraps")
         {
@@ -68,10 +61,10 @@ public class CG_Mess : MonoBehaviour
             messItem.GetComponent<SpriteRenderer>().sprite = dustSprite;
             Debug.Log("Dust Sprite has loaded");
         }
-        if (thisMessType == "Rodents")
+        if (thisMessType == "Pest")
         {
-            messItem.GetComponent<SpriteRenderer>().sprite = rodentSprite;
-            Debug.Log("Rodents Sprite has loaded");
+            messItem.GetComponent<SpriteRenderer>().sprite = pestSprite;
+            Debug.Log("Pest Sprite has loaded");
         }
     }
     private void OnOverTankardBin()
@@ -86,9 +79,9 @@ public class CG_Mess : MonoBehaviour
     {
         hoveringOver = "Scraps";
     }
-    private void OnOverRodentBin()
+    private void OnOverPestBin()
     {
-        hoveringOver = "Rodents";
+        hoveringOver = "Pest";
     }
     private void OnOverNoBin()
     {
