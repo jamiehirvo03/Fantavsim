@@ -30,7 +30,7 @@ public class DrinkServiceAngle : MonoBehaviour
         // Translate angle adjusts to visible mug (instantiated by E)
         float x = 0;
         float y = 0;
-        float z = (DrinkService.vesselAngle * 3) * -1;
+        float z = (DrinkService.vesselAngle * -3) + 90;
         //  Vector3 systemAngle = new Vector3(0, 0, z);
         // Rotate(x, y, z);
         transform.eulerAngles = new Vector3(x, y, z);
