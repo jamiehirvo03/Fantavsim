@@ -3,12 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-<<<<<<< HEAD
   tags: []
-=======
-  tags:
-  - NPC
->>>>>>> origin/Josh
   layers:
   - Default
   - TransparentFX
@@ -17,19 +12,12 @@ TagManager:
   - Water
   - UI
   - 
-<<<<<<< HEAD
-=======
-  - Solid Objects
->>>>>>> origin/Josh
   - 
   - 
   - 
   - 
   - 
-<<<<<<< HEAD
   - 
-=======
->>>>>>> origin/Josh
   - 
   - 
   - 
@@ -53,15 +41,3 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-<<<<<<< HEAD
-=======
-  - name: Background
-    uniqueID: 2731024387
-    locked: 0
-  - name: Objects
-    uniqueID: 1811677107
-    locked: 0
-  - name: Foreground
-    uniqueID: 2771054215
-    locked: 0
->>>>>>> origin/Josh
