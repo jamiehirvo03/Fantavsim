@@ -8,10 +8,10 @@ public class GameManagerFS : MonoBehaviour
     public static int [] orderValue = {213000, 11100, 110100, 111111, 120012, 121002, 3000};
     public static int [] plateValue = { 0, 0, 0 };
 
-   
+    public ScoreTrack ScoreTrack;
 
-    
-    
+
+
 
     //tracks what order number goes with what plate
     public static int plateNum = 0;
@@ -39,6 +39,7 @@ public class GameManagerFS : MonoBehaviour
   public void Start()
     {
         AssignSprite();
+        ScoreTrack = FindObjectOfType<ScoreTrack>();
     }
     public void AssignSprite()
     {
