@@ -17,7 +17,7 @@ public class GameManagerFS : MonoBehaviour
     public static int plateNum = 0;
     
     //will tell engine were to move ingredients too
-    public static float plateXpos = 0;
+    public static float plateXpos = -3.08f;
     
     //tells unity what plate it is working with
 
@@ -88,12 +88,12 @@ public class GameManagerFS : MonoBehaviour
         if (plateNum>2)
         {
             plateNum = 0;
-            plateXpos = 0;
+            plateXpos = -3.18f;
 
         }
 
        //moves the plate selector to the corret y axis
-        plateSelector.transform.position = new Vector3(plateXpos, 2.5f, 0);
+        plateSelector.transform.position = new Vector3(plateXpos, 0.06f, 0);
 
 
 

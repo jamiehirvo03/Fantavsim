@@ -26,7 +26,7 @@ public class ClickPlace : MonoBehaviour
     {
         //all the stuff for getting ingredients to appear on plates
         if (gameObject.name == "Ingredient 1")
-            Instantiate(cloneObj, new Vector3(GameManagerFS.plateXpos, 2, 0), cloneObj.rotation);
+            Instantiate(cloneObj, new Vector3(GameManagerFS.plateXpos, -1.17f, 0), cloneObj.rotation);
 
         if (gameObject.name == "Ingredient 2")
             Instantiate(cloneObj, new Vector3(GameManagerFS.plateXpos, 3, 0), cloneObj.rotation);
