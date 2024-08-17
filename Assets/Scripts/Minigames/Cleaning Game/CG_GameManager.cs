@@ -8,9 +8,10 @@ public class CG_GameManager : MonoBehaviour
     [SerializeField] private bool isGameActive = false;
 
     public float range = 7;
-    public int minMessCount = 5;
-    public int maxMessCount = 15;
+    public int minMessCount = 15;
+    public int maxMessCount = 30;
     [SerializeField] private int taskMessCount;
+    [SerializeField] private int pointsCount;
 
     public GameObject mess;
     [SerializeField] public List<GameObject> messList = new List<GameObject>();
@@ -28,6 +29,11 @@ public class CG_GameManager : MonoBehaviour
     {
         if (isGameActive)
         {
+            if (pointsCount == taskMessCount)
+            {
+                CG_Events.current.GameOver();
+            }
+
             //vvvvv REMOVED RESPAWNING OF MESS ITEMS TO FIT SCOPE AND KEEP MINIGAME SHORT AND BRIEF vvvvv
 
             //if (messList.Count < minMessCount)
@@ -73,6 +79,8 @@ public class CG_GameManager : MonoBehaviour
 
     private void OnMessPlacementCorrect()
     {
+        pointsCount++;
+
         //Remove mess item from list
         for (int i = 0; i < messList.Count; i++)
         {

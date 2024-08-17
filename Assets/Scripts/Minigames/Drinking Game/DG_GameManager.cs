@@ -9,6 +9,9 @@ using UnityEngine.SceneManagement;
 
 public class DG_GameManager : MonoBehaviour
 {
+    //Add at top    
+    public ScoreTrack ScoreTrack;
+
     //Variables for points and stats tracking
     [SerializeField] private int regularDrank;
     [SerializeField] private int goldenDrank;
@@ -90,6 +93,9 @@ public class DG_GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Add at void Start
+        ScoreTrack = FindObjectOfType<ScoreTrack>();
+
         DG_Events.current.onStartGame += OnStartGame;
         DG_Events.current.onTimeOver += OnTimeOver;
 
@@ -141,6 +147,10 @@ public class DG_GameManager : MonoBehaviour
         GameOverPopup.enabled = true;
 
         GameOverText.text = $"Regular: {regularDrank} \nGolden: {goldenDrank} \nAmount Drank: {litresDrank} L \nAmount Spilt: {totalSpillageAmount}";
+
+        //Add where game ends
+        ScoreTrack.moodValue += 1;
+        SceneManager.LoadScene(1);
 
         //Display final screen on UI
 

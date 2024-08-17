@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CG_RodentBin : MonoBehaviour
+public class CG_PestBin : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Over Rodent Bin");
+        Debug.Log("Over Pest Bin");
 
-        CG_Events.current.OverRodentBin();
+        CG_Events.current.OverPestBin();
     }
 
     private void OnTriggerExit2D(Collider2D collision)
