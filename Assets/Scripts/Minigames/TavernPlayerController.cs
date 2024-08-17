@@ -7,6 +7,8 @@ using TMPro;
 
 public class TavernPlayerController : MonoBehaviour
 {
+    public ScoreTrack ScoreTrack;
+
     private bool isMoving;
     public float moveSpeed;
     public TextMeshProUGUI taskNotifiy;
@@ -18,8 +20,10 @@ public class TavernPlayerController : MonoBehaviour
 
     private void Start()
     {
+        ScoreTrack = FindObjectOfType<ScoreTrack>();
         taskVicinity = "";
         taskNotifiy.text = "";
+        // transform.position = ScoreTrack.lastPositionX, 
     }
 
 
@@ -145,6 +149,15 @@ public class TavernPlayerController : MonoBehaviour
         if ((target.transform.name == "CleaningZone1") || (target.transform.name == "CleaningZone2"))
         {
             Debug.Log("Offer Cleaning Miningame");
+            ScoreTrack.atTable1 = true;
+            taskNotifiy.text = "(E) Clean table.";
+            taskVicinity = "Cleaning";
+        }
+
+        if (target.transform.name == "CleaningZone2")
+        {
+            Debug.Log("Offer Cleaning Miningame");
+            ScoreTrack.atTable2 = true;
             taskNotifiy.text = "(E) Clean table.";
             taskVicinity = "Cleaning";
         }

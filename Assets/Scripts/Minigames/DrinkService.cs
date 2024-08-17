@@ -4,6 +4,7 @@ using System.Threading;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 public class DrinkService : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class DrinkService : MonoBehaviour
     public float currentVolume;
     public bool vesselInHand;
     private bool taskComplete;
+    private bool instructionsVisible;
     public bool drinkReady;
     private float inputTimer;
     private float grogInTransit;
@@ -31,11 +33,18 @@ public class DrinkService : MonoBehaviour
     public bool nucleation;
     public int grade;
     public GameObject MugPrefab;
+    public GameObject KegTap;
     public DrinkServiceAngle AngleScript;
     public ScoreTrack ScoreTrack;
 
+    public SpriteRenderer tapRenderer;
+    public Sprite tapSprite0;
+    public Sprite tapSprite1;
+    public Sprite tapSprite2;
+    public Sprite tapSprite3;
+
     public TextMeshProUGUI notifyUI;
-    public TextMeshProUGUI nozzleDisplay;
+    public TextMeshProUGUI instructions;
     public TextMeshProUGUI notifySpill;
 
     //Handles time limit
@@ -51,6 +60,7 @@ public class DrinkService : MonoBehaviour
         pourRate = 0;
         vesselInHand = false;
         taskComplete = false;
+        instructionsVisible = false;
         kegVolume = 50000;
         currentCapacity = 0;
         ScoreTrack = FindObjectOfType<ScoreTrack>();
@@ -65,21 +75,21 @@ public class DrinkService : MonoBehaviour
         {
 
             //Increases angle and current capacity
-            if ((Input.GetKey(KeyCode.D)) && (vesselAngle < 30))
+            if ((Input.GetKey(KeyCode.A)) && (vesselAngle > 10))
                 if (inputTimer <= 0)
             {
-                vesselAngle += 1;
+                vesselAngle -= 1;
                 inputTimer = 1;
                 UpdateCurrentCapacity();
 
             }
 
             //Decreases angle and current capacity.
-            if ((Input.GetKey(KeyCode.A)) && (vesselAngle > 0))
+            if ((Input.GetKey(KeyCode.D)) && (vesselAngle < 30))
             {
                 if (inputTimer <= 0)
                 {
-                    vesselAngle -= 1;
+                    vesselAngle += 1;
                     inputTimer = 1;
                     UpdateCurrentCapacity();
                 }
@@ -112,6 +122,27 @@ public class DrinkService : MonoBehaviour
         {
             nozzleSetting = 0;
             ChangePour();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Tab)) 
+        {
+            if (!instructionsVisible)
+            {
+                instructions.text = "PRESS TAB TO HIDE<br><br>" +
+                    "HOW TO PLAY:<br><br>" +
+                    "You are to pour the ideal mug of beer, 95% liquid and 5% froth.<br><br>" +
+                    "The closer, the better the score!<br>Use the (E) key to get a new mug.<br><br>" +
+                    "Use the (A) and (D) keys to change the angle of the vessel.<br><br>" +
+                    "Use the (S) and (W) keys to change the flow from the nozzle.<br><br>" +
+                    "You can also press (SPACE) to cut the nozzle to 0.<br><br>" +
+                    "At the end, press (E) again to serve!";
+                instructionsVisible = true;
+            }
+            else if (instructionsVisible)
+            {
+                instructions.text = "PRESS TAB TO SHOW INSTRUCTIONS";
+                instructionsVisible = false;
+            }
         }
 
 
@@ -180,6 +211,7 @@ public class DrinkService : MonoBehaviour
         {
             Debug.Log("Task Complete. Returning to Tavern.");
             taskComplete = true;
+            ScoreTrack.drinkOpen = false;
             SceneManager.LoadScene(1);
         }
 
@@ -194,7 +226,22 @@ public class DrinkService : MonoBehaviour
     {
         // Math for flow settings
         pourRate = nozzleSetting * 15;
-        nozzleDisplay.text = "" + nozzleSetting;
+        if (nozzleSetting == 0)
+        {
+            tapRenderer.sprite = tapSprite0;
+        }
+        else if (nozzleSetting == 1)
+        {
+            tapRenderer.sprite = tapSprite1;
+        }
+        else if (nozzleSetting == 2)
+        {
+            tapRenderer.sprite = tapSprite2;
+        }
+        else if (nozzleSetting == 3)
+        {
+            tapRenderer.sprite = tapSprite3;
+        }
     }
 
 
@@ -331,25 +378,25 @@ public class DrinkService : MonoBehaviour
         if (grade == 0)
         {
             notifyUI.text = "PERFECT!";
-            ScoreTrack.goldAmount += 5;
+            ScoreTrack.goldAmount += 10;
         }
 
         if (grade == 1)
         {
             notifyUI.text = "Great!";
-            ScoreTrack.goldAmount += 4;
+            ScoreTrack.goldAmount += 8;
         }
 
         if (grade == 2)
         {
             notifyUI.text = "Good!";
-            ScoreTrack.goldAmount += 3;
+            ScoreTrack.goldAmount += 6;
         }
 
         if (grade == 3)
         {
             notifyUI.text = "Passable.";
-            ScoreTrack.goldAmount += 2;
+            ScoreTrack.goldAmount += 4;
         }
 
         if (grade >= 4)

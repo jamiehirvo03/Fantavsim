@@ -4,16 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - GM
-  - Tankard Bin
-  - Food Bin
-  - Dust Bin
-  - Rodent Bin
-<<<<<<< HEAD
   - Ingredient
-=======
   - NPC
->>>>>>> origin/Josh
   layers:
   - Default
   - TransparentFX
@@ -22,12 +14,12 @@ TagManager:
   - Water
   - UI
   - 
-  - ObstructingWalls
-  - SolidObjects
-  - SolidObjectDetails
-  - Player
-  - NPC
   - 
+  - Background
+  - Background Details
+  - Objects
+  - Objects Details
+  - Player and NPCs
   - 
   - 
   - 
@@ -52,17 +44,8 @@ TagManager:
     uniqueID: 0
     locked: 0
   - name: Background
-    uniqueID: 502458213
+    uniqueID: 1897071681
     locked: 0
   - name: Foreground
-    uniqueID: 4038961345
-    locked: 0
-  - name: ForegroundDetails
-    uniqueID: 3946884295
-    locked: 0
-  - name: Characters
-    uniqueID: 2618360529
-    locked: 0
-  - name: UI
-    uniqueID: 833797103
+    uniqueID: 279810127
     locked: 0
