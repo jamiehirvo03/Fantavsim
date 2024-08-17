@@ -117,19 +117,21 @@ public class CG_UI : MonoBehaviour
         gameOverPopup.enabled = true;
 
         //Add where game ends
-        //ScoreTrack.messValue -= 1;
+        ScoreTrack.messValue -= 1;
 
-        //if (ScoreTrack.atTable1 == true)
-        //{
-            //ScoreTrack.dirtyTable1 = false;
-            //ScoreTrack.atTable1 = false}
+        if (ScoreTrack.atTable1 == true)
+        {
+            ScoreTrack.dirtyTable1 = false;
+            ScoreTrack.atTable1 = false;
+        }
 
 
-        //else if (ScoreTrack.atTable2 == true)
-        //{
-            //ScoreTrack.dirtyTable2 = false
-    
-        //ScoreTrack.atTable2 = false}
+        else if (ScoreTrack.atTable2 == true)
+        {
+            ScoreTrack.dirtyTable2 = false;
+
+            ScoreTrack.atTable2 = false;
+        }
     }
 
     private void OnMessPlacementCorrect()

@@ -149,7 +149,7 @@ public class DG_GameManager : MonoBehaviour
         GameOverText.text = $"Regular: {regularDrank} \nGolden: {goldenDrank} \nAmount Drank: {litresDrank} L \nAmount Spilt: {totalSpillageAmount}";
 
         //Add where game ends
-        //ScoreTrack.moodValue += 1;
+        ScoreTrack.moodValue += 1;
         SceneManager.LoadScene(1);
 
         //Display final screen on UI
